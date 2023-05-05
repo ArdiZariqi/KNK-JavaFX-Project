@@ -1,115 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+        <?import javafx.scene.control.Button?>
+        <?import javafx.scene.control.Label?>
+        <?import javafx.scene.layout.AnchorPane?>
+        <?import javafx.scene.layout.BorderPane?>
+        <?import javafx.scene.shape.Line?>
+        <?import javafx.scene.text.Font?>
+
 
 <AnchorPane prefHeight="533.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KNK_Projekti.faqja2Controller ">
-   <children>
-      <AnchorPane layoutX="185.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" />
-      <BorderPane layoutX="9.0" layoutY="-28.0" prefHeight="561.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-         <top>
-            <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <AnchorPane layoutX="214.0" layoutY="-69.0" prefHeight="35.0" prefWidth="1100.0" style="-fx-background-color: WHITE; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <FontAwesomeIcon fill="#2a166b" glyphName="USERS" layoutX="14.0" layoutY="27.0" size="1.5em" />
-                        <Label layoutX="43.0" layoutY="10.0" text="Student Managment System" textFill="#2a166b">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="855.0" layoutY="11.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="53.0">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
-                           </graphic>
-                        </Button>
-                        <Button layoutX="791.0" layoutY="11.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="53.0">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-         </top>
-         <left>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <AnchorPane prefHeight="488.0" prefWidth="200.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <FontAwesomeIcon fill="#2a166beb" glyphName="USER" layoutX="67.0" layoutY="115.0" size="7em" />
-                        <Label layoutX="61.0" layoutY="127.0" text="Welcome" textFill="#2a166b">
-                           <font>
-                              <Font name="Tahoma Bold" size="17.0" />
-                           </font>
-                        </Label>
-                        <Line endX="52.83332824707031" endY="1.52587890625E-5" layoutX="124.0" layoutY="163.0" startX="-100.0" stroke="#2a166b" />
-                        <Button layoutX="10.0" layoutY="189.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Home" />
-                        <FontAwesomeIcon fill="#2a166b" glyphName="HOME" layoutX="59.0" layoutY="213.0" size="1.5em" />
-                        <Button layoutX="10.0" layoutY="235.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Add Students" />
-                        <FontAwesomeIcon fill="#2a166b" glyphName="PLUS" layoutX="47.0" layoutY="257.0" size="1.2em" />
-                        <Button layoutX="10.0" layoutY="278.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Avaliable Courses" />
-                        <FontAwesomeIcon fill="#2a166b" glyphName="BOOK" layoutX="35.0" layoutY="300.0" size="1.2em" />
-                        <Button layoutX="10.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Student Absences" />
-                        <Button layoutX="16.0" layoutY="446.0" mnemonicParsing="false" style="-fx-background-color: WHITE;">
-                           <graphic>
-                              <FontAwesomeIcon fill="#2a166b" glyphName="SIGN_OUT" size="1.3em" />
-                           </graphic>
-                        </Button>
-                        <Label layoutX="53.0" layoutY="450.0" text="Sign Out" textFill="#2a166b">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <FontAwesomeIcon fill="#2a166b" glyphName="FILE" layoutX="29.0" layoutY="344.0" size="1.2em" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-         </left>
-         <right>
-            <AnchorPane prefHeight="150.0" prefWidth="700.0" style="-fx-background-radius: 20PX; -fx-background-color: #E6E4E6;" BorderPane.alignment="CENTER">
-               <children>
-                  <AnchorPane prefHeight="214.0" prefWidth="706.0" style="-fx-background-radius: 20px;">
-                     <children>
-                        <TextField layoutX="14.0" layoutY="7.0" prefHeight="30.0" AnchorPane.bottomAnchor="185.79999999999998" />
-                        <FontAwesomeIcon glyphName="SEARCH" layoutX="23.0" layoutY="27.0" />
-                        <TableView layoutX="9.0" layoutY="43.0" prefHeight="180.0" prefWidth="685.0">
-                          <columns>
-                            <TableColumn prefWidth="85.0" text="ID" />
-                            <TableColumn prefWidth="85.0" text="First Name" />
-                              <TableColumn prefWidth="85.0" text="Last Name" />
-                              <TableColumn prefWidth="85.0" text="Email" />
-                              <TableColumn prefWidth="85.0" text="Class" />
-                              <TableColumn prefWidth="85.0" text="Course" />
-                              <TableColumn prefWidth="85.0" text="Gender" />
-                              <TableColumn prefWidth="85.0" text="Birth Date" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="10.0" layoutY="230.0" prefHeight="247.0" prefWidth="684.0" style="-fx-background-color: WHITE;">
-                     <children>
-                        <Label layoutX="14.0" layoutY="21.0" text="ID: ">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="76.0" layoutY="18.0" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-         </right>
-      </BorderPane>
-   </children>
+    <children>
+        <AnchorPane layoutX="185.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" />
+        <BorderPane layoutX="9.0" layoutY="10.0" prefHeight="531.0" prefWidth="795.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+            <top>
+                <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane layoutX="214.0" layoutY="-69.0" prefHeight="35.0" prefWidth="1100.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <FontAwesomeIcon fill="#2a166b" glyphName="USERS" layoutX="14.0" layoutY="27.0" size="1.5em" />
+                                <Label layoutX="43.0" layoutY="10.0" text="Student Managment System" textFill="#2a166b">
+                                    <font>
+                                        <Font name="System Bold" size="15.0" />
+                                    </font>
+                                </Label>
+                                <Button layoutX="618.0" layoutY="11.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="53.0">
+                                    <graphic>
+                                        <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
+                                    </graphic>
+                                </Button>
+                                <Button layoutX="553.0" layoutY="11.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="53.0">
+                                    <graphic>
+                                        <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </top>
+            <left>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane prefHeight="488.0" prefWidth="200.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <FontAwesomeIcon fill="#2a166beb" glyphName="USER" layoutX="67.0" layoutY="115.0" size="7em" />
+                                <Label layoutX="61.0" layoutY="127.0" text="Welcome" textFill="#2a166b">
+                                    <font>
+                                        <Font name="Tahoma Bold" size="17.0" />
+                                    </font>
+                                </Label>
+                                <Line endX="52.83332824707031" endY="1.52587890625E-5" layoutX="124.0" layoutY="163.0" startX="-100.0" stroke="#2a166b" />
+                                <Button layoutX="10.0" layoutY="189.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Home" />
+                                <FontAwesomeIcon fill="#2a166b" glyphName="HOME" layoutX="59.0" layoutY="213.0" size="1.5em" />
+                                <Button layoutX="10.0" layoutY="235.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Add Students" />
+                                <FontAwesomeIcon fill="#2a166b" glyphName="PLUS" layoutX="47.0" layoutY="257.0" size="1.2em" />
+                                <Button layoutX="10.0" layoutY="278.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Avaliable Courses" />
+                                <FontAwesomeIcon fill="#2a166b" glyphName="BOOK" layoutX="35.0" layoutY="300.0" size="1.2em" />
+                                <Button layoutX="10.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Student Absences" />
+                                <Button layoutX="16.0" layoutY="446.0" mnemonicParsing="false" style="-fx-background-color: WHITE;">
+                                    <graphic>
+                                        <FontAwesomeIcon fill="#2a166b" glyphName="SIGN_OUT" size="1.3em" />
+                                    </graphic>
+                                </Button>
+                                <Label layoutX="53.0" layoutY="450.0" text="Sign Out" textFill="#2a166b">
+                                    <font>
+                                        <Font name="Tahoma Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <FontAwesomeIcon fill="#2a166b" glyphName="FILE" layoutX="29.0" layoutY="344.0" size="1.2em" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </left>
+        </BorderPane>
+    </children>
 </AnchorPane>
