@@ -1,4 +1,4 @@
-package Projekti_KNK;
+ package Projekti_KNK;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
