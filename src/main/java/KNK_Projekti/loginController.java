@@ -3,8 +3,8 @@ package KNK_Projekti;
 import javafx.event.ActionEvent;
 
 public class loginController {
-//    @FXML
-//    private TextField txtUsername;
+ //@FXML
+    //private TextField txtUsername;
 //    @FXML
 //    private PasswordField pwdPassword;
 //
