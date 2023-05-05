@@ -1,12 +1,11 @@
-module com.example.knk_projekti {
-    requires javafx.controls;
+module KNK.Projekti {
+
+    requires javafx.graphics;
     requires javafx.fxml;
+    requires javafx.controls;
     requires java.sql;
+    requires mysql.connector.java;
 
-
-    opens com.example.knk_projekti to javafx.fxml;
-    opens KNK_Projekti to javafx.fxml;
-    exports com.example.knk_projekti;
-    exports Projekti_KNK to javafx.graphics;
-    exports KNK_Projekti to javafx.graphics;
+    opens Controllers;
+    opens KNK_Projekti;
 }
