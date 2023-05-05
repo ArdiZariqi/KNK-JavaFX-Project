@@ -22,5 +22,4 @@ public class loginController {
 //        this.pwdPassword.setText("");
 //    }
 }
-//Arianit Gashi
 
