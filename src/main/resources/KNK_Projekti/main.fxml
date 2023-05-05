@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KNK_Projekti.loginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KNK_Projekti.loginController">
    <children>
       <Accordion>
         <panes>
@@ -161,32 +167,8 @@
             </TitledPane>
         </panes>
       </Accordion>
-      <DialogPane />
-      <Accordion>
-        <panes>
-          <TitledPane animated="false" text="untitled 1">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="untitled 3">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
-      <Accordion>
-        <panes>
-          <TitledPane animated="false" text="untitled 1" />
-          <TitledPane animated="false" text="untitled 2" />
-        </panes>
-      </Accordion>
-      <DialogPane layoutX="32.0" layoutY="318.0" />
-    <TitledPane animated="false" layoutX="331.0" layoutY="96.0" text="untitled 2">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </TitledPane>
+      <TextField layoutX="307.0" layoutY="117.0" />
+      <TextField layoutX="308.0" layoutY="175.0" />
+      <Button layoutX="357.0" layoutY="215.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>
