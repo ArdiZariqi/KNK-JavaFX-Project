@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KNK_Projekti.loginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KNK_Projekti.loginController">
    <children>
       <Accordion>
         <panes>
@@ -170,5 +177,6 @@
         </buttons>
       </ButtonBar>
       <BorderPane layoutX="300.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="85.0" layoutY="344.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="457.0" text="Button" />
    </children>
 </AnchorPane>
