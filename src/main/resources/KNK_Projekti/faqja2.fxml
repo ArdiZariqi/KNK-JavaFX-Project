@@ -117,7 +117,7 @@
                         <ComboBox layoutX="314.0" layoutY="102.0" prefWidth="150.0" promptText="Choose" />
                         <ComboBox layoutX="73.0" layoutY="102.0" prefWidth="150.0" promptText="Choose" />
                         <DatePicker layoutX="314.0" layoutY="135.0" prefHeight="26.0" prefWidth="151.0" />
-                        <AnchorPane layoutX="516.0" layoutY="30.0" prefHeight="117.0" prefWidth="120.0" style="-fx-border-color: GRAY; -fx-border-radius: 10PX;">
+                        <AnchorPane layoutX="516.0" layoutY="30.0" prefHeight="117.0" prefWidth="120.0" style="-fx-border-color: GRAY; -fx-border-radius: 1PX;">
                            <children>
                               <Button layoutX="2.0" layoutY="97.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" style="-fx-border-radius: 10PX;" text="Insert" />
                            </children>
