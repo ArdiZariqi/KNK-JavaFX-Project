@@ -182,7 +182,7 @@
           <TitledPane animated="false" text="untitled 2" />
         </panes>
       </Accordion>
-      <DialogPane />
+      <DialogPane layoutX="32.0" layoutY="318.0" />
     <TitledPane animated="false" layoutX="331.0" layoutY="96.0" text="untitled 2">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
