@@ -8,7 +8,6 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="KNK_Projekti.Home"
+            fx:controller="KNK_Projekti.loginController"
             prefHeight="400.0" prefWidth="600.0">
-    //Hello World!
 </AnchorPane>
