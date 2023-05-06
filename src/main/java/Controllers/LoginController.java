@@ -1,5 +1,6 @@
 package Controllers;
 
+import DBconnection.connectDb;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
+
     @FXML
     private AnchorPane main_form;
     @FXML
@@ -36,16 +38,16 @@ public class LoginController implements Initializable {
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
-    private double x = 0 ;
+    private double x = 0;
     private double y = 0;
 
-    public void loginAdmin(){
+    public void loginAdmin() {
 
-        String sql = "SELECT * FROM admin WHERE username = ? and password = ?";
+        String sql = "SELECT * FROM user_account WHERE username = ? and password = ?";
 
-//        connect = getConnection.connectDb();
+        connect = connectDb.getConnection();
 
-        try{
+        try {
             Alert alert;
 
             prepare = connect.prepareStatement(sql);
@@ -54,16 +56,14 @@ public class LoginController implements Initializable {
 
             result = prepare.executeQuery();
 
-            if(username.getText().isEmpty() || password.getText().isEmpty()){
+            if (username.getText().isEmpty() || password.getText().isEmpty()) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
-            }else{
-                if(result.next()){
-//                    getData.username = username.getText();
-
+            } else {
+                if (result.next()) {
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
@@ -77,12 +77,12 @@ public class LoginController implements Initializable {
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
 
-                    root.setOnMousePressed((MouseEvent event) ->{
+                    root.setOnMousePressed((MouseEvent event) -> {
                         x = event.getSceneX();
                         y = event.getSceneY();
                     });
 
-                    root.setOnMouseDragged((MouseEvent event) ->{
+                    root.setOnMouseDragged((MouseEvent event) -> {
                         stage.setX(event.getScreenX() - x);
                         stage.setY(event.getScreenY() - y);
                     });
@@ -92,7 +92,7 @@ public class LoginController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
 
-                }else{
+                } else {
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
@@ -100,11 +100,13 @@ public class LoginController implements Initializable {
                     alert.showAndWait();
                 }
             }
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void close(){
+    public void close() {
         System.exit(0);
     }
 
@@ -112,4 +114,5 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+
 }

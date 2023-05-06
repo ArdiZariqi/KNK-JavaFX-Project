@@ -25,20 +25,20 @@
             </AnchorPane>
             <AnchorPane layoutX="296.0" layoutY="5.0" prefHeight="410.0" prefWidth="291.0" styleClass="right-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutX="104.0" layoutY="106.0" text="Welcome!">
+                  <Label layoutX="104.0" layoutY="120.0" text="Welcome!">
                      <font>
                         <Font name="Tahoma Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="username" layoutX="39.0" layoutY="174.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
-                  <PasswordField fx:id="password" layoutX="39.0" layoutY="226.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
-                  <Button fx:id="loginBtn" layoutX="39.0" layoutY="284.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@Design/loginDesign.css" text="Login" />
+                  <TextField fx:id="username" layoutX="39.0" layoutY="174.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+                  <PasswordField fx:id="password" layoutX="39.0" layoutY="226.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+                  <Button fx:id="loginBtn" layoutX="39.0" layoutY="284.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@Design/loginDesign.css" text="Login" />
                   <Button fx:id="close" layoutX="233.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="@Design/loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                      <graphic>
                         <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
                      </graphic>
                   </Button>
-                  <FontAwesomeIcon glyphName="USER" layoutX="113.0" layoutY="86.0" size="7em" />
+                  <FontAwesomeIcon glyphName="USER" layoutX="116.0" layoutY="98.0" size="7em" />
                </children>
             </AnchorPane>
          </children>
