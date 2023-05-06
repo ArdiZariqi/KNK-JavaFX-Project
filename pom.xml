@@ -11,25 +11,25 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.9.1</junit.version>
+        <junit.version>5.9.2</junit.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>17.0.2</version>
+            <version>19.0.2.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>17.0.2</version>
+            <version>19.0.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.27</version>
+            <version>8.0.32</version>
         </dependency>
 
         <dependency>
@@ -43,6 +43,11 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kobjects.kxml3</groupId>
+            <artifactId>core-iosx64</artifactId>
+            <version>0.1.3</version>
         </dependency>
     </dependencies>
 
