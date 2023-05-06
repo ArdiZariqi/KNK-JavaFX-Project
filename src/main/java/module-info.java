@@ -9,4 +9,5 @@ module KNK.Projekti {
 
     opens Controllers;
     opens KNK_Projekti;
+    opens DBconnection;
 }
