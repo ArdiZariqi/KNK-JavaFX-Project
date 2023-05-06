@@ -7,57 +7,54 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
-   <left>
-      <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #EEE;" BorderPane.alignment="CENTER">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
+   <children>
+      <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fx:id="brandingImageView" fitHeight="362.0" fitWidth="228.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/image2.jpg" />
-               </image>
-            </ImageView>
+            <AnchorPane prefHeight="409.0" prefWidth="298.0" styleClass="left-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="90.0" layoutY="224.0" text="High School" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="163.0" fitWidth="203.0" layoutX="68.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/highSchoolLogo3.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="296.0" layoutY="5.0" prefHeight="410.0" prefWidth="291.0" styleClass="right-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="104.0" layoutY="106.0" text="Welcome!">
+                     <font>
+                        <Font name="Tahoma Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="username" layoutX="39.0" layoutY="174.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+                  <PasswordField fx:id="password" layoutX="39.0" layoutY="226.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+                  <Button fx:id="loginBtn" layoutX="39.0" layoutY="284.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@Design/loginDesign.css" text="Login" />
+                  <Button fx:id="close" layoutX="233.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="@Design/loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/closeBtn.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="62.0" fitWidth="90.0" layoutX="104.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/loginLogo.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-   </left>
-   <right>
-      <AnchorPane prefHeight="400.0" prefWidth="283.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="lockImageView" fitHeight="32.0" fitWidth="46.0" layoutX="119.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/loginlogo.jpg" />
-               </image>
-            </ImageView>
-            <Label layoutX="18.0" layoutY="137.0" text="Username">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <TextField fx:id="usernameTextField" layoutX="92.0" layoutY="134.0" prefHeight="26.0" prefWidth="173.0" promptText="Username" />
-            <Label layoutX="17.0" layoutY="190.0" text="Password">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="enterPasswordField" layoutX="91.0" layoutY="187.0" prefHeight="26.0" prefWidth="173.0" promptText="Password" />
-            <Button fx:id="loginButton" layoutX="18.0" layoutY="248.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="32.0" prefWidth="247.0" style="-fx-background-color: #E96151;" text="Login" textFill="WHITE">
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
-            </Button>
-            <Button fx:id="cancelButton" layoutX="18.0" layoutY="289.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="32.0" prefWidth="247.0" style="-fx-background-color: #E96151;" text="Cancel" textFill="WHITE">
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
-            </Button>
-            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutY="221.0" prefHeight="19.0" prefWidth="282.0" textFill="#ff1111">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+   </children>
+</StackPane>
