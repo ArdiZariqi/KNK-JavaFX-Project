@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-//import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 
 
 public class App extends Application {

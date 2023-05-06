@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="KNK_Projekti.faqja2Controller ">
+<AnchorPane prefHeight="695.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/19">
     <children>
         <AnchorPane layoutX="185.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="-19.0" prefHeight="659.0" prefWidth="919.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">

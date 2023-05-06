@@ -1,7 +1,7 @@
 package Controllers;
 
-//import DBconnection.connectDb;
-import DBconnection.Db;
+import DBconnection.connectDb;
+//import DBconnection.Db;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +25,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
-
     @FXML
     private AnchorPane main_form;
     @FXML
@@ -46,9 +45,9 @@ public class LoginController implements Initializable {
 
         String sql = "SELECT * FROM user_account WHERE username = ? and password = ?";
 
-        //connect = Db.getConnection();
+        connect = connectDb.getConnection();
 
-        try {
+        try{
             Alert alert;
 
             prepare = connect.prepareStatement(sql);
@@ -56,15 +55,15 @@ public class LoginController implements Initializable {
             prepare.setString(2, password.getText());
 
             result = prepare.executeQuery();
-
-            if (username.getText().isEmpty() || password.getText().isEmpty()) {
+//            CHECK IF FIELDS ARE EMPTTY
+            if(username.getText().isEmpty() || password.getText().isEmpty()){
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
-            } else {
-                if (result.next()) {
+            }else{
+                if(result.next()){
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
@@ -73,17 +72,17 @@ public class LoginController implements Initializable {
 
                     loginBtn.getScene().getWindow().hide();
 
-                    Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/faqja1.fxml"));
 
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
 
-                    root.setOnMousePressed((MouseEvent event) -> {
+                    root.setOnMousePressed((MouseEvent event) ->{
                         x = event.getSceneX();
                         y = event.getSceneY();
                     });
 
-                    root.setOnMouseDragged((MouseEvent event) -> {
+                    root.setOnMouseDragged((MouseEvent event) ->{
                         stage.setX(event.getScreenX() - x);
                         stage.setY(event.getScreenY() - y);
                     });
@@ -93,7 +92,8 @@ public class LoginController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
 
-                } else {
+                }else{
+
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
@@ -101,9 +101,7 @@ public class LoginController implements Initializable {
                     alert.showAndWait();
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }catch(Exception e){e.printStackTrace();}
 
     }
 
