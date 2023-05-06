@@ -21,6 +21,8 @@ public class App extends Application {
 
         Scene scene = new Scene(root);
 
+
+
         root.setOnMousePressed((MouseEvent event) ->{
             x = event.getSceneX();
             y = event.getSceneY();

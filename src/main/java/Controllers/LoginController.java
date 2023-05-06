@@ -36,8 +36,8 @@ public class LoginController implements Initializable {
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
-    private double x= 0 ;
-    private double y= 0;
+    private double x = 0 ;
+    private double y = 0;
 
     public void loginAdmin(){
 
