@@ -13,7 +13,7 @@
    <children>
       <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <AnchorPane prefHeight="409.0" prefWidth="298.0" styleClass="left-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane prefHeight="409.0" prefWidth="298.0" styleClass="left-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="292.80000000000007" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="25.0" layoutY="215.0" text="MENAXHIMI I MUNGESAVE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
@@ -39,6 +39,12 @@
                      </graphic>
                   </Button>
                   <FontAwesomeIcon glyphName="USER" layoutX="116.0" layoutY="98.0" size="7em" />
+                  <Label alignment="CENTER" layoutX="39.0" layoutY="344.0" prefHeight="30.0" prefWidth="115.0" text="Not a member?">
+                     <font>
+                        <Font name="Tahoma" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="signUpBtn1" layoutX="153.0" layoutY="346.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="26.0" prefWidth="66.0" styleClass="login1-btn" stylesheets="@Design/loginDesign.css" text="Sign Up" underline="true" />
                </children>
             </AnchorPane>
          </children>

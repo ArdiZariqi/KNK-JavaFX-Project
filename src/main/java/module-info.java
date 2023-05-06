@@ -5,7 +5,7 @@ module KNK.Projekti {
     requires javafx.controls;
     requires java.sql;
     requires mysql.connector.j;
-//    requires mysql.connector.java;
+    requires fontawesomefx;
 
     opens Controllers;
     opens KNK_Projekti;

@@ -1,8 +1,7 @@
 package Repository;
 
-
-import service.ConnectionUtil;
 import Models.User;
+import service.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,29 +11,50 @@ import java.sql.SQLException;
 public class UserRepository {
 
     public static void insert(User user) throws SQLException {
-        String sql = "INSERT INTO users (username, salted_hash, salt) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO User (firstname, lastname, age) VALUES (Aaaaa, Bbbb, 19)";
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, user.getUsername());
-        statement.setString(2, user.getSaltedPassword());
-        statement.setString(3, user.getSalt());
+        statement.setString(1, user.getFirstName());
+        statement.setString(2, user.getLastName());
+        statement.setInt(3, user.getAge());
         statement.executeUpdate();
     }
 
-    public static User getByUsername(String username) throws SQLException {
-        String sql = "SELECT * FROM users WHERE username=?";
+    public static User getById(int id) throws SQLException {
+        String sql = "SELECT * FROM User WHERE id=1";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, username);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String saltedHash = resultSet.getString("salted_hash");
-                String salt = resultSet.getString("salt");
-                return new User(id, username, saltedHash, salt);
+                String firstName = resultSet.getString("firstname");
+                String lastName = resultSet.getString("lastname");
+                int age = resultSet.getInt("age");
+                return new User(id, firstName, lastName, age);
             } else {
                 return null;
             }
+        }
+    }
+
+    public static void update(User user) throws SQLException {
+        String sql = "UPDATE User SET firstname=?, lastname=?, age=? WHERE id=?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setInt(3, user.getAge());
+            statement.setInt(4, user.getId());
+            statement.executeUpdate();
+        }
+    }
+
+    public static void delete(int id) throws SQLException {
+        String sql = "DELETE FROM User WHERE id=?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
         }
     }
 }

@@ -1,18 +1,29 @@
 package Models;
+import Repository.UserRepository;
+
+import java.sql.SQLException;
 
 public class User {
     private int id;
-    private String username;
-    private String saltedPassword;
-    private String salt;
+    private String firstName;
+    private String lastName;
+    private int age;
 
-    public User(int id, String username, String saltedPassword, String salt) {
+    // Constructors
+    public User() {}
+
+    public User(int id, String firstName, String lastName, int age) {
         this.id = id;
-        this.username = username;
-        this.saltedPassword = saltedPassword;
-        this.salt = salt;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
     }
 
+    public User(String aaaaa, String bbbb, int i) {
+
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -21,27 +32,31 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSaltedPassword() {
-        return saltedPassword;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSaltedPassword(String saltedPassword) {
-        this.saltedPassword = saltedPassword;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getSalt() {
-        return salt;
+    public int getAge() {
+        return age;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void save() throws SQLException {
+        UserRepository.update(this);
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
