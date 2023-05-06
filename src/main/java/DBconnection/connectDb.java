@@ -22,4 +22,4 @@ public class connectDb {
     }
 }
 
-//connect to db
+//connect to dbConn
