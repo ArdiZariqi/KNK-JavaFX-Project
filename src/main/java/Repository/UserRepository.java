@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class UserRepository {
 
     public static void insert(User user) throws SQLException {
-        String sql = "INSERT INTO users (firstname, lastname, age) VALUES (Aaaaa, Bbbb, 19)";
+        String sql = "INSERT INTO User (firstname, lastname, age) VALUES (Aaaaa, Bbbb, 19)";
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, user.getFirstName());
@@ -21,7 +21,7 @@ public class UserRepository {
     }
 
     public static User getById(int id) throws SQLException {
-        String sql = "SELECT * FROM users WHERE id=1";
+        String sql = "SELECT * FROM User WHERE id=1";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
@@ -38,7 +38,7 @@ public class UserRepository {
     }
 
     public static void update(User user) throws SQLException {
-        String sql = "UPDATE users SET firstname=?, lastname=?, age=? WHERE id=?";
+        String sql = "UPDATE User SET firstname=?, lastname=?, age=? WHERE id=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getFirstName());
@@ -50,7 +50,7 @@ public class UserRepository {
     }
 
     public static void delete(int id) throws SQLException {
-        String sql = "DELETE FROM users WHERE id=?";
+        String sql = "DELETE FROM User WHERE id=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);

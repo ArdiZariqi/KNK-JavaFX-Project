@@ -19,6 +19,10 @@ public class User {
         this.age = age;
     }
 
+    public User(String aaaaa, String bbbb, int i) {
+
+    }
+
     // Getters and Setters
     public int getId() {
         return id;

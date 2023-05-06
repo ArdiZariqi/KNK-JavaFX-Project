@@ -1,6 +1,7 @@
 package Controllers;
 
-import DBconnection.connectDb;
+//import DBconnection.connectDb;
+import DBconnection.Db;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +46,7 @@ public class LoginController implements Initializable {
 
         String sql = "SELECT * FROM user_account WHERE username = ? and password = ?";
 
-        connect = connectDb.getConnection();
+        //connect = Db.getConnection();
 
         try {
             Alert alert;
