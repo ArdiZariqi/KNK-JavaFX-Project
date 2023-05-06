@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
             prepare.setString(2, password.getText());
 
             result = prepare.executeQuery();
-//            CHECK IF FIELDS ARE EMPTTY
+
             if(username.getText().isEmpty() || password.getText().isEmpty()){
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
