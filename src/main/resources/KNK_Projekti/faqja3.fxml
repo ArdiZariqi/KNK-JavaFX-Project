@@ -123,6 +123,7 @@
                               <TableColumn prefWidth="137.5999755859375" style="-fx-background-color: #99CCFF;" text="SECOND SEMESTER" />
                               <TableColumn prefWidth="90.4000244140625" style="-fx-background-color: #99CCFF;" text="FINAL" />
                           </columns>
+                            //push
                         </TableView>
                         <TextField alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="231.0" promptText=" Search..." AnchorPane.leftAnchor="18.0" />
                         <FontAwesomeIcon glyphName="SEARCH" layoutX="21.0" layoutY="31.0" />
