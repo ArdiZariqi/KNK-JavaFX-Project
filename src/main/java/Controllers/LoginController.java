@@ -43,7 +43,7 @@ public class LoginController implements Initializable {
 
         String sql = "SELECT * FROM admin WHERE username = ? and password = ?";
 
-//        connect = database.connectDb();
+//        connect = getConnection.connectDb();
 
         try{
             Alert alert;
