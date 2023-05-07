@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class dashboardController {
 
@@ -226,126 +227,62 @@ public class dashboardController {
     @FXML
     private Label username;
 
+    public void switchForm(ActionEvent event) {
+        if (event.getSource() == home_btn) {
+            home_form.setVisible(true);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
+
+            home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            availableCourse_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+
+        } else if (event.getSource() == addStudents_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(true);
+            availableCourse_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
+
+            addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            home_btn.setStyle("-fx-background-color:transparent");
+            availableCourse_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+
+        } else if (event.getSource() == availableCourse_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(true);
+            studentAbstence_form.setVisible(false);
+
+            availableCourse_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            home_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
 
-    @FXML
-    void addStudentsAdd(ActionEvent event) {
+        } else if (event.getSource() == studentAbstence_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(false);
+            studentAbstence_form.setVisible(true);
 
+            studentAbstence_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            availableCourse_btn.setStyle("-fx-background-color:transparent");
+            home_btn.setStyle("-fx-background-color:transparent");
+
+        }
+    }
+    public void close() {
+        System.exit(0);
     }
 
-    @FXML
-    void addStudentsClear(ActionEvent event) {
-
+    public void minimize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
+        stage.setIconified(true);
     }
 
-    @FXML
-    void addStudentsCourseList(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsDelete(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsGenderList(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsInsertImage(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsSearch(KeyEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsSelect(MouseEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsStatusList(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsUpdate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsYearList(ActionEvent event) {
-
-    }
-
-    @FXML
-    void availableCourseAdd(ActionEvent event) {
-
-    }
-
-    @FXML
-    void availableCourseClear(ActionEvent event) {
-
-    }
-
-    @FXML
-    void availableCourseDelete(ActionEvent event) {
-
-    }
-
-    @FXML
-    void availableCourseSelect(MouseEvent event) {
-
-    }
-
-    @FXML
-    void availableCourseUpdate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void close(ActionEvent event) {
-
-    }
-
-    @FXML
-    void logout(ActionEvent event) {
-
-    }
-
-    @FXML
-    void minimize(ActionEvent event) {
-
-    }
-
-    @FXML
-    void studentGradesClear(ActionEvent event) {
-
-    }
-
-    @FXML
-    void studentGradesSearch(KeyEvent event) {
-
-    }
-
-    @FXML
-    void studentGradesSelect(MouseEvent event) {
-
-    }
-
-    @FXML
-    void studentGradesUpdate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void switchForm(ActionEvent event) {
-
-    }
 
 }
