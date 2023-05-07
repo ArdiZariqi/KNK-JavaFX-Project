@@ -21,13 +21,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="studentmanagementsystem.dashboardController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.dashboardController">
     <children>
         <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
             <children>
                 <BorderPane layoutX="119.0" layoutY="55.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <top>
-                        <AnchorPane prefHeight="45.0" prefWidth="1100.0" styleClass="semi-top-form" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" BorderPane.alignment="CENTER">
+                        <AnchorPane prefHeight="45.0" prefWidth="1100.0" styleClass="semi-top-form" stylesheets="@Design/dashboardDesign.css" BorderPane.alignment="CENTER">
                             <children>
                                 <AnchorPane layoutX="41.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="top-form" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
@@ -37,7 +37,7 @@
                                                 <Font name="Tahoma" size="15.0" />
                                             </font>
                                         </Label>
-                                        <Button fx:id="close" layoutX="1021.0" layoutY="5.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                        <Button fx:id="close" layoutX="1021.0" layoutY="5.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="@Design/dashboardDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                                             <graphic>
                                                 <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
                                             </graphic>
@@ -55,7 +55,7 @@
                     <left>
                         <AnchorPane prefHeight="555.0" prefWidth="203.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane layoutX="2.0" layoutY="108.0" prefHeight="555.0" prefWidth="203.0" styleClass="nav-form" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane layoutX="2.0" layoutY="108.0" prefHeight="555.0" prefWidth="203.0" styleClass="nav-form" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="69.0" layoutY="100.0" size="7em" />
                                         <Label layoutX="65.0" layoutY="112.0" text="Welcome," textFill="WHITE">
@@ -69,7 +69,7 @@
                                             </font>
                                         </Label>
                                         <Line endX="85.0" layoutX="109.0" layoutY="173.0" startX="-100.0" stroke="WHITE" />
-                                        <Button fx:id="home_btn" layoutX="12.0" layoutY="211.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Home">
+                                        <Button fx:id="home_btn" layoutX="12.0" layoutY="211.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Home">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="1.5em" />
                                             </graphic>
@@ -111,21 +111,21 @@
                     <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                        <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
                                                 <String fx:value="white-bg" />
                                                 <String fx:value="shadow" />
                                             </styleClass>
                                             <children>
-                                                <AnchorPane prefHeight="134.0" prefWidth="872.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                <AnchorPane prefHeight="134.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                        <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="14.0" layoutY="77.0" size="4em" />
                                                                 <Label layoutX="74.0" layoutY="84.0" text="Total Enrolled Students" textFill="WHITE">
@@ -178,7 +178,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <BarChart fx:id="home_totalEnrolledChart" layoutX="-59.0" layoutY="-55.0" prefHeight="345.0" prefWidth="441.0" title="Total Enrolled Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <BarChart fx:id="home_totalEnrolledChart" layoutX="-59.0" layoutY="-55.0" prefHeight="345.0" prefWidth="441.0" stylesheets="@Design/dashboardDesign.css" title="Total Enrolled Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                             </xAxis>
@@ -194,7 +194,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <AreaChart fx:id="home_totalFemaleChart" layoutX="-65.0" layoutY="-120.0" prefHeight="280.0" prefWidth="449.0" title="Enrolled Female Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <AreaChart fx:id="home_totalFemaleChart" layoutX="-65.0" layoutY="-120.0" prefHeight="280.0" prefWidth="449.0" stylesheets="@Design/dashboardDesign.css" title="Enrolled Female Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                             </xAxis>
@@ -210,7 +210,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <LineChart fx:id="home_totalMaleChart" layoutX="-101.0" layoutY="-154.0" prefHeight="246.0" prefWidth="449.0" title="Enrolled Male Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <LineChart fx:id="home_totalMaleChart" layoutX="-101.0" layoutY="-154.0" prefHeight="246.0" prefWidth="449.0" stylesheets="@Design/dashboardDesign.css" title="Enrolled Male Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                             </xAxis>
@@ -224,7 +224,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
                                             <styleClass>
@@ -238,9 +238,9 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Search" styleClass="search" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                        <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                         <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
-                                                        <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="192.0" prefWidth="845.0">
+                                                        <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="192.0" prefWidth="845.0" stylesheets="@Design/dashboardDesign.css">
                                                             <columns>
                                                                 <TableColumn fx:id="addStudents_col_studentNum" prefWidth="75.0" text="Student #" />
                                                                 <TableColumn fx:id="addStudents_col_year" prefWidth="87.0" text="Year" />
@@ -259,49 +259,49 @@
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_studentNum" layoutX="109.0" layoutY="276.0" prefHeight="25.0" prefWidth="116.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="addStudents_studentNum" layoutX="109.0" layoutY="276.0" prefHeight="25.0" prefWidth="116.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="66.0" layoutY="316.0" text="Year:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="313.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="313.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="51.0" layoutY="355.0" text="Course:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addStudents_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="313.0" layoutY="279.0" text="First Name:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_firstName" layoutX="390.0" layoutY="276.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="addStudents_firstName" layoutX="390.0" layoutY="276.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="313.0" layoutY="316.0" text="Last Name:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_lastName" layoutX="390.0" layoutY="313.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="addStudents_lastName" layoutX="390.0" layoutY="313.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="334.0" layoutY="355.0" text="Gender:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_gender" layoutX="390.0" layoutY="351.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addStudents_gender" layoutX="390.0" layoutY="351.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="315.0" layoutY="391.0" text="Birth Date:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <DatePicker fx:id="addStudents_birth" layoutX="390.0" layoutY="388.0" prefWidth="166.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <DatePicker fx:id="addStudents_birth" layoutX="390.0" layoutY="388.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="337.0" layoutY="425.0" text="Status:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_status" layoutX="390.0" layoutY="421.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addStudents_status" layoutX="390.0" layoutY="421.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <AnchorPane layoutX="705.0" layoutY="281.0" prefHeight="149.0" prefWidth="120.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
@@ -309,13 +309,13 @@
                                                     </styleClass>
                                                     <children>
                                                         <ImageView fx:id="addStudents_imageView" fitHeight="149.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                                                        <Button fx:id="addStudents_insertBtn" layoutY="109.0" mnemonicParsing="false" onAction="#addStudentsInsertImage" prefHeight="40.0" prefWidth="120.0" styleClass="insert-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Insert" />
+                                                        <Button fx:id="addStudents_insertBtn" layoutY="109.0" mnemonicParsing="false" onAction="#addStudentsInsertImage" prefHeight="40.0" prefWidth="120.0" styleClass="insert-btn" stylesheets="@Design/dashboardDesign.css" text="Insert" />
                                                     </children>
                                                 </AnchorPane>
-                                                <Button fx:id="addStudents_addBtn" layoutX="765.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="35.0" prefWidth="85.0" styleClass="add-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Add" />
-                                                <Button fx:id="addStudents_updateBtn" layoutX="669.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsUpdate" prefHeight="35.0" prefWidth="85.0" styleClass="update-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Update" />
-                                                <Button fx:id="addStudents_deleteBtn" layoutX="546.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsDelete" prefHeight="35.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Delete" />
-                                                <Button fx:id="addStudents_clearBtn" layoutX="450.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsClear" prefHeight="35.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Clear" />
+                                                <Button fx:id="addStudents_addBtn" layoutX="765.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="35.0" prefWidth="85.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
+                                                <Button fx:id="addStudents_updateBtn" layoutX="669.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsUpdate" prefHeight="35.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
+                                                <Button fx:id="addStudents_deleteBtn" layoutX="546.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsDelete" prefHeight="35.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
+                                                <Button fx:id="addStudents_clearBtn" layoutX="450.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsClear" prefHeight="35.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
                                             </children>
                                         </AnchorPane>
                                     </children>
