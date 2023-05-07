@@ -79,7 +79,7 @@
          <center>
             <AnchorPane fx:id="main_form" prefHeight="662.0" prefWidth="762.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane layoutX="8.0" layoutY="7.0" prefHeight="622.0" prefWidth="740.0" style="-fx-border-color: black; -fx-border-radius: 8px;">
+                  <AnchorPane layoutX="8.0" layoutY="7.0" prefHeight="622.0" prefWidth="740.0" style="-fx-border-color: black; -fx-border-radius: 8px;" visible="false">
                      <children>
                         <AnchorPane fx:id="addStudents_form" layoutX="4.0" layoutY="2.0" prefHeight="184.0" prefWidth="672.0" AnchorPane.bottomAnchor="415.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="1.0">
                            <children>
