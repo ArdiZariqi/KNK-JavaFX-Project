@@ -3,86 +3,43 @@ package Models;
 import java.sql.Date;
 
 public class studentData {
-    private Integer studentNum;
-    private String year;
-    private String course;
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private Date birth;
-    private String status;
-    private String image;
-    private Double firstSem;
-    private Double secondSem;
-    private Double finals;
+    private int Id;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private String Subject;
+    private Date BirthDate;
+    private String Gender;
 
-
-    public studentData(Integer studentNum, String year, String course, String firstName, String lastName, String gender, Date birth, String status, String image) {
-        this.studentNum = studentNum;
-        this.year = year;
-        this.course = course;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.birth = birth;
-        this.status = status;
-        this.image = image;
+    public studentData(int Id, String FirstName, String LastName, String Email, String Subject, Date BirthDate, String Gender){
+        this.Id=Id;
+        this.FirstName=FirstName;
+        this.LastName=LastName;
+        this.Email=Email;
+        this.Subject=Subject;
+        this.BirthDate=BirthDate;
+        this.Gender=Gender;
     }
-
-    public studentData(Integer studentNum, String year, String course, Double firstSem, Double secondSem, Double finals) {
-        this.studentNum = studentNum;
-        this.year = year;
-        this.course = course;
-        this.firstSem = firstSem;
-        this.secondSem = secondSem;
-        this.finals = finals;
+    public int getId(){
+        return Id;
     }
-
-    public Integer getStudentNum() {
-        return studentNum;
+    public String getFirstName(){
+        return FirstName;
     }
-
-    public String getYear() {
-        return year;
+    public String getLastName()
+    {
+        return LastName;
     }
-
-    public String getCourse() {
-        return course;
+    public String getEmail(){
+        return Email;
     }
-
-    public String getFirstName() {
-        return firstName;
+    public String getSubject(){
+        return Subject;
     }
-
-    public String getLastName() {
-        return lastName;
+    public Date getBirthDate(){
+        return BirthDate;
     }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public Double getFirstSem() {
-        return firstSem;
-    }
-
-    public Double getSecondSem() {
-        return secondSem;
-    }
-
-    public Double getFinals() {
-        return finals;
+    public String getGender(){
+        return Gender;
     }
 }
