@@ -256,18 +256,6 @@ public class faqja1controller implements Initializable {
 
     private Image image;
 
-    public void close() {
-        System.exit(0);
-    }
-
-    public void minimize() {
-        Stage stage = (Stage) main_form.getScene().getWindow();
-        stage.setIconified(true);
-    }
-    public void initialize(URL location,ResourceBundle resources){
-
-    }
-
 
     public void switchForm(ActionEvent event) {
         if (event.getSource() == home_btn) {
@@ -317,4 +305,17 @@ public class faqja1controller implements Initializable {
 
         }
     }
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    public void initialize(URL location,ResourceBundle resources){
+
+    }
+
+
 }

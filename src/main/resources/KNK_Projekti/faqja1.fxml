@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="695.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/19">
+<AnchorPane prefHeight="695.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.faqja1controller">
     <children>
         <AnchorPane layoutX="185.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="-19.0" prefHeight="659.0" prefWidth="919.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
@@ -26,7 +26,7 @@
                                         <Font name="System Bold" size="15.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="879.0" layoutY="11.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="53.0">
+                                <Button layoutX="879.0" layoutY="11.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="53.0">
                                     <graphic>
                                         <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
                                     </graphic>
@@ -53,13 +53,13 @@
                                     </font>
                                 </Label>
                                 <Line endX="52.83332824707031" endY="1.52587890625E-5" layoutX="124.0" layoutY="163.0" startX="-100.0" stroke="#2a166b" />
-                                <Button layoutX="10.0" layoutY="189.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Home" />
+                                <Button layoutX="10.0" layoutY="189.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Home" />
                                 <FontAwesomeIcon fill="#2a166b" glyphName="HOME" layoutX="59.0" layoutY="213.0" size="1.5em" />
-                                <Button layoutX="10.0" layoutY="235.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Add Students" />
+                                <Button layoutX="10.0" layoutY="235.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Add Students" />
                                 <FontAwesomeIcon fill="#2a166b" glyphName="PLUS" layoutX="47.0" layoutY="257.0" size="1.2em" />
-                                <Button layoutX="10.0" layoutY="278.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Avaliable Courses" />
+                                <Button layoutX="10.0" layoutY="278.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Avaliable Courses" />
                                 <FontAwesomeIcon fill="#2a166b" glyphName="BOOK" layoutX="35.0" layoutY="300.0" size="1.2em" />
-                                <Button layoutX="10.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Student Absences" />
+                                <Button layoutX="10.0" layoutY="322.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: WHITE;" text="Student Absences" />
                                 <Button layoutX="16.0" layoutY="446.0" mnemonicParsing="false" style="-fx-background-color: WHITE;">
                                     <graphic>
                                         <FontAwesomeIcon fill="#2a166b" glyphName="SIGN_OUT" size="1.3em" />
@@ -77,11 +77,11 @@
                 </AnchorPane>
             </left>
          <center>
-            <AnchorPane prefHeight="662.0" prefWidth="762.0" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="main_form" prefHeight="662.0" prefWidth="762.0" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="7.0" prefHeight="622.0" prefWidth="740.0" style="-fx-border-color: black; -fx-border-radius: 8px;">
                      <children>
-                        <AnchorPane layoutX="4.0" layoutY="2.0" prefHeight="184.0" prefWidth="672.0" AnchorPane.bottomAnchor="415.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="1.0">
+                        <AnchorPane fx:id="addStudents_form" layoutX="4.0" layoutY="2.0" prefHeight="184.0" prefWidth="672.0" AnchorPane.bottomAnchor="415.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="1.0">
                            <children>
                               <AnchorPane layoutX="7.0" layoutY="14.0" prefHeight="152.0" prefWidth="228.0" style="-fx-background-color: #99CCFF; -fx-background-radius: 4px;">
                                  <children>
