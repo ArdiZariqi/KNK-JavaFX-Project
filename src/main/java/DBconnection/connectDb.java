@@ -17,8 +17,8 @@ public class connectDb {
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
-            return null;
         }
+        return null;
     }
 }
 
