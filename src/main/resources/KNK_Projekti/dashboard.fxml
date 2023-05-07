@@ -224,7 +224,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
                                             <styleClass>
@@ -320,9 +320,9 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="availableCourse_form" layoutX="30.0" layoutY="61.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="availableCourse_form" layoutX="30.0" layoutY="61.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <AnchorPane layoutX="14.0" layoutY="19.0" prefHeight="517.0" prefWidth="269.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                        <AnchorPane layoutX="14.0" layoutY="19.0" prefHeight="517.0" prefWidth="269.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
                                                 <String fx:value="shadow" />
                                                 <String fx:value="white-bg" />
@@ -358,11 +358,11 @@
                                                 <String fx:value="white-bg" />
                                             </styleClass>
                                             <children>
-                                                <TableView fx:id="availableCourse_tableView" layoutX="11.0" layoutY="13.0" onMouseClicked="#availableCourseSelect" prefHeight="490.0" prefWidth="557.0">
+                                                <TableView fx:id="availableCourse_tableView" layoutX="11.0" layoutY="13.0" onMouseClicked="#availableCourseSelect" prefHeight="490.0" prefWidth="557.0" stylesheets="@Design/dashboardDesign.css">
                                                     <columns>
-                                                        <TableColumn fx:id="availableCourse_col_course" prefWidth="79.0" text="Course" />
-                                                        <TableColumn fx:id="availableCourse_col_description" prefWidth="214.0" text="Description" />
-                                                        <TableColumn fx:id="availableCourse_col_degree" prefWidth="262.0" text="Degree" />
+                                                        <TableColumn fx:id="availableCourse_col_course" prefWidth="176.6666259765625" text="Course" />
+                                                        <TableColumn fx:id="availableCourse_col_description" prefWidth="203.33334350585938" text="Description" />
+                                                        <TableColumn fx:id="availableCourse_col_degree" prefWidth="176.00006103515625" text="Degree" />
                                                     </columns>
                                                 </TableView>
                                             </children>
