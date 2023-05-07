@@ -174,52 +174,52 @@ public class dashboardController {
     private Button minimize;
 
     @FXML
-    private Button studentGrade_btn;
+    private Button studentAbstence_btn;
 
     @FXML
-    private Button studentGrade_clearBtn;
+    private Button studentAbstence_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_course;
+    private TableColumn<?, ?> studentAbstence_col_course;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_final;
+    private TableColumn<?, ?> studentAbstence_col_final;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_firstSem;
+    private TableColumn<?, ?> studentAbstence_col_firstSem;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_secondSem;
+    private TableColumn<?, ?> studentAbstence_col_secondSem;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_studentNum;
+    private TableColumn<?, ?> studentAbstence_col_studentNum;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_year;
+    private TableColumn<?, ?> studentAbstence_col_year;
 
     @FXML
-    private Label studentGrade_course;
+    private Label studentAbstence_course;
 
     @FXML
-    private TextField studentGrade_firstSem;
+    private TextField studentAbstence_firstSem;
 
     @FXML
-    private AnchorPane studentGrade_form;
+    private AnchorPane studentAbstence_form;
 
     @FXML
-    private TextField studentGrade_search;
+    private TextField studentAbstence_search;
 
     @FXML
-    private TextField studentGrade_secondSem;
+    private TextField studentAbstence_secondSem;
 
     @FXML
-    private TextField studentGrade_studentNum;
+    private TextField studentAbstence_studentNum;
 
     @FXML
-    private TableView<?> studentGrade_tableView;
+    private TableView<?> studentAbstence_tableView;
 
     @FXML
-    private Button studentGrade_updateBtn;
+    private Button getStudentAbstence_updateBtn;
 
     @FXML
     private Label studentGrade_year;
