@@ -2,62 +2,52 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SignUpController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="adminSignUp_form" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css">
          <children>
-            <AnchorPane layoutY="3.0" prefHeight="409.0" prefWidth="298.0" styleClass="left-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="292.80000000000007" AnchorPane.topAnchor="0.0">
-               <children>
-                  <FontAwesomeIcon fill="WHITE" glyphName="GRADUATION_CAP" layoutX="72.0" layoutY="196.0" size="10em" />
-                  <Label layoutX="24.0" layoutY="227.0" text="ABSENCE MANAGEMENT SYSTEM" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="Tahoma Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="292.0" prefHeight="409.0" prefWidth="298.0" styleClass="right-form" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="292.80000000000007" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <TextField fx:id="signUpUsername" layoutX="39.0" layoutY="196.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
-                  <PasswordField fx:id="signUpPassword" layoutX="39.0" layoutY="238.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
-                  <TextField fx:id="firstName" layoutX="39.0" layoutY="112.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="First Name" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="267.20000000000005" />
-                  <TextField fx:id="lastName" layoutX="39.0" layoutY="154.0" onAction="#loginAdmin" prefHeight="30.0" prefWidth="220.0" promptText="Last Name" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
-                  <Button fx:id="signUpBtn" layoutX="39.0" layoutY="317.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" stylesheets="@Design/loginDesign.css" text="Sign Up" />
-                  <Label alignment="CENTER" layoutX="39.0" layoutY="365.0" prefHeight="30.0" prefWidth="115.0" text="Already a member?">
-                     <font>
-                        <Font name="Tahoma" size="12.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="loginBtn1" layoutX="163.0" layoutY="367.0" mnemonicParsing="false" onAction="#loginAdmin" prefHeight="26.0" prefWidth="58.0" styleClass="login1-btn" stylesheets="@Design/loginDesign.css" text="Login" underline="true" />
-                  <FontAwesomeIcon glyphName="USER" layoutX="130.0" layoutY="65.0" size="5em" />
-                  <Label layoutX="106.0" layoutY="81.0" text="Register here">
-                     <font>
-                        <Font name="Tahoma Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <RadioButton fx:id="signUpAsTeacher" layoutX="131.0" layoutY="284.0" mnemonicParsing="false" stylesheets="@Design/loginDesign.css" text="Teacher" />
-                  <RadioButton fx:id="signUpAsParent" layoutX="203.0" layoutY="283.0" mnemonicParsing="false" stylesheets="@Design/loginDesign.css" text="Parent" />
-                  <Label alignment="CENTER" layoutX="39.0" layoutY="279.0" prefHeight="26.0" prefWidth="78.0" text="Sign up as: ">
-                     <font>
-                        <Font name="Tahoma Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="close" layoutX="227.0" layoutY="15.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="@Design/loginDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
-                     </graphic>
-                  </Button>
-               </children>
-            </AnchorPane>
+            <FontAwesomeIcon fill="#5073bb" glyphName="USER_PLUS" layoutX="124.0" layoutY="65.0" size="5em" />
+            <Label layoutX="88.0" layoutY="74.0" text="Sign Up Account">
+               <font>
+                  <Font name="Tahoma" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="124.0" layoutY="100.0" text="Admin Portal">
+               <font>
+                  <Font name="Tahoma" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="adminSignUp_email" layoutX="36.0" layoutY="125.0" onAction="#register" prefHeight="30.0" prefWidth="250.0" promptText="Email Address" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.rightAnchor="33.599999999999994" />
+            <TextField fx:id="adminSignUp_username" layoutX="36.0" layoutY="166.0" onAction="#register" prefHeight="30.0" prefWidth="250.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+            <PasswordField fx:id="adminSignUp_password" layoutX="35.0" layoutY="210.0" onAction="#register" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+            <PasswordField fx:id="adminSignUp_confirmPassword" layoutX="35.0" layoutY="252.0" onAction="#register" prefHeight="30.0" prefWidth="250.0" promptText="Confirm Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.rightAnchor="34.60000000000002" />
+            <Button fx:id="admin_SignUpBtn" layoutX="33.0" layoutY="368.0" mnemonicParsing="false" onAction="#register" prefHeight="33.0" prefWidth="250.0" styleClass="btn" stylesheets="@Design/loginDesign.css" text="Sign Up" AnchorPane.rightAnchor="33.599999999999994">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Label layoutX="54.0" layoutY="414.0" text="Have an account? ">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Button fx:id="adminSignUp_loginBtn" layoutX="175.0" layoutY="411.0" mnemonicParsing="false" onAction="#switchFormSignUp" prefHeight="16.0" prefWidth="66.0" styleClass="btn" stylesheets="@Design/loginDesign.css" text="Log in" />
+            <Label layoutX="112.0" layoutY="455.0" text="Other Account">
+               <font>
+                  <Font name="Tahoma" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="adminSignUp_user" layoutX="65.0" layoutY="477.0" onAction="#switchFormSignUp" prefHeight="30.0" prefWidth="186.0" promptText="Select" styleClass="textfield" stylesheets="@Design/loginDesign.css" />
+            <ComboBox fx:id="adminSignUp_selectQuestion" layoutX="35.0" layoutY="290.0" prefHeight="30.0" prefWidth="250.0" promptText="Select Question" AnchorPane.rightAnchor="33.599999999999994" />
+            <TextField fx:id="adminSignUp_answer" layoutX="36.0" layoutY="328.0" prefHeight="30.0" prefWidth="250.0" promptText="Answer" AnchorPane.rightAnchor="33.599999999999994" />
          </children>
       </AnchorPane>
    </children>
