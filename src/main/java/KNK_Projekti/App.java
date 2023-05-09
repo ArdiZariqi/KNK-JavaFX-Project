@@ -22,11 +22,11 @@ public class App extends Application {
 
 
 
-//        root.setOnMousePressed((MouseEvent event) ->{
-//            x = event.getSceneX();
-//            y = event.getSceneY();
-//        });
-//
+        root.setOnMousePressed((MouseEvent event) ->{
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+
 //        root.setOnMouseDragged((MouseEvent event) ->{
 //            stage.setX(event.getScreenX() - x);
 //            stage.setY(event.getScreenY() - y);
