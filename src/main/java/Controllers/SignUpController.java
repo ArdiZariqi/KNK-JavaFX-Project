@@ -1,18 +1,19 @@
 package Controllers;
 
 import DBconnection.connectDb;
-import Models.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -22,6 +23,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import static Models.Users.users;
+import static Models.Users.questionList;
 
 public class SignUpController implements Initializable {
     @FXML
@@ -48,9 +51,6 @@ public class SignUpController implements Initializable {
     private ResultSet result;
     private Statement statement;
 
-    private final String[] questionList = {"What is your favorite food?", "What is your favorite color?", "What is the name of your pet?"
-            , "What is your most favorite sport"};
-
     public void questions(){
         List<String> listQ = new ArrayList<>();
 
@@ -68,12 +68,12 @@ public class SignUpController implements Initializable {
                 || adminSignUp_selectQuestion.getSelectionModel().getSelectedItem() == null
                 || adminSignUp_answer.getText().isEmpty()){
             alert.errorMessage("All fields are necessary to be filled");
-        }else if (adminSignUp_password.getText() == adminSignUp_confirmPassword.getText()){
+        }else if (!adminSignUp_password.getText().equals(adminSignUp_confirmPassword.getText())){
             alert.errorMessage("Password does not match");
         } else if (adminSignUp_password.getText().length() < 8) {
             alert.errorMessage("Invalid Password, at least 8 characters needed");
         }else {
-            String checkUsername = "SELECT * FROM admin WHERE username = '"
+            String checkUsername = "SELECT * FROM users WHERE username = '"
                     + adminSignUp_username.getText() + "'";
 
             connect = connectDb.getConnection();
@@ -86,23 +86,25 @@ public class SignUpController implements Initializable {
                     alert.errorMessage(adminSignUp_username.getText() + " is already taken");
                 }else {
 
-                    String insertData = "INSERT INTO admin "
-                            + "(email, username, password, question, answer, date_) "
-                            + "VALUES(?, ?, ?, ?, ?, ?)";
+                    String insertData = "INSERT INTO users "
+                            + "(email, account_type, username, password, question, answer, date_) "
+                            + "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
                     prepare = connect.prepareStatement(insertData);
                     prepare.setString(1, adminSignUp_email.getText());
-                    prepare.setString(2, adminSignUp_username.getText());
-                    prepare.setString(3, adminSignUp_password.getText());
-                    prepare.setString(4,
+                    prepare.setString(2,
+                            (String)adminSignUp_user.getSelectionModel().getSelectedItem());
+                    prepare.setString(3, adminSignUp_username.getText());
+                    prepare.setString(4, adminSignUp_password.getText());
+                    prepare.setString(5,
                             (String)adminSignUp_selectQuestion.getSelectionModel().getSelectedItem());
-                    prepare.setString(5, adminSignUp_answer.getText());
+                    prepare.setString(6, adminSignUp_answer.getText());
 
                     java.util.Date utilDate = new java.util.Date();
                     java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
 
-                    prepare.setString(6, String.valueOf(sqlDate));
+                    prepare.setString(7, String.valueOf(sqlDate));
 
                     prepare.executeUpdate();
 
@@ -136,38 +138,13 @@ public class SignUpController implements Initializable {
 
     public void switchFormSignUp(ActionEvent event){
         try {
-            if (event.getSource() == adminSignUp_loginBtn){
+            if (event.getSource() == adminSignUp_loginBtn || event.getSource() == admin_SignUpBtn){
                 Parent root = null;
                 root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/AdminPortal.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
-                stage.show();
-
-                adminSignUp_user.getScene().getWindow().hide();
-            }else if (adminSignUp_user.getSelectionModel().getSelectedItem().equals("Teacher Portal")){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/TeacherPortal.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-
-                stage.show();
-
-                adminSignUp_user.getScene().getWindow().hide();
-            } else if (adminSignUp_user.getSelectionModel().getSelectedItem().equals("Parent Portal")) {
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/ParentPortal.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-
-                stage.show();
-
-                adminSignUp_user.getScene().getWindow().hide();
-            }else if(adminSignUp_user.getSelectionModel().getSelectedItem().equals("Admin Portal")){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/AdminPortal.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
+                stage.initStyle(StageStyle.TRANSPARENT);
 
                 stage.show();
 
@@ -181,11 +158,11 @@ public class SignUpController implements Initializable {
 
     public void signUpSelectUser(){
 
-        Users users = new Users();
+
         List<String> listU = new ArrayList<>();
 
 
-        for (String data : users.users){
+        for (String data : users){
             listU.add(data);
         }
 
@@ -193,8 +170,16 @@ public class SignUpController implements Initializable {
         adminSignUp_user.setItems(listData);
     }
 
-    public void close() {
-        System.exit(0);
+    @FXML
+    private void close(MouseEvent event){
+        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        s.close();
+    }
+
+    @FXML
+    private void min(MouseEvent event){
+        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        s.setIconified(true);
     }
 
     @Override

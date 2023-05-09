@@ -27,16 +27,16 @@ public class App extends Application {
             y = event.getSceneY();
         });
 
-//        root.setOnMouseDragged((MouseEvent event) ->{
-//            stage.setX(event.getScreenX() - x);
-//            stage.setY(event.getScreenY() - y);
-//
-//            stage.setOpacity(.8);
-//        });
-//
-//        root.setOnMouseReleased((MouseEvent event) ->{
-//            stage.setOpacity(1);
-//        });
+        root.setOnMouseDragged((MouseEvent event) ->{
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+
+            stage.setOpacity(.8);
+        });
+
+        root.setOnMouseReleased((MouseEvent event) ->{
+            stage.setOpacity(1);
+        });
 
         stage.initStyle(StageStyle.TRANSPARENT);
 

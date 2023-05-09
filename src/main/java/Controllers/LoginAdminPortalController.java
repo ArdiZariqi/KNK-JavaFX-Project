@@ -7,21 +7,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
-
-import Models.Users;
+import static Models.Users.questionList;
+import static Models.Users.users;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class LoginAdminPortalController implements Initializable {
@@ -40,7 +41,7 @@ public class LoginAdminPortalController implements Initializable {
     @FXML
     private AnchorPane adminPortal_form;
     @FXML
-    private Button admin_signUpBtn;
+    private Hyperlink admin_signUpBtn;
     @FXML
     private ComboBox<String> admin_user;
     @FXML
@@ -69,22 +70,29 @@ public class LoginAdminPortalController implements Initializable {
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
+    private double x= 0 ;
+    private double y= 0;
 
     public void loginAccount(){
 
         alertMessage alert = new alertMessage();
 
-        if (admin_username.getText().isEmpty() || admin_password.getText().isEmpty()){
+        if (admin_username.getText().isEmpty()
+                || admin_password.getText().isEmpty()
+                || admin_user.getSelectionModel().getSelectedItem() == null){
             alert.errorMessage("Please fill all blank fields");
         }else {
-            String selectData = "SELECT username, password FROM admin WHERE username = ? and password = ?";
+            String selectData = "SELECT username, password " +
+                    "FROM users " +
+                    "WHERE account_type = ? AND username = ? AND password = ?";
 
             connect = connectDb.getConnection();
 
             try {
                 prepare = connect.prepareStatement(selectData);
-                prepare.setString(1, admin_username.getText());
-                prepare.setString(2, admin_password.getText());
+                prepare.setString(1, admin_user.getSelectionModel().getSelectedItem());
+                prepare.setString(2, admin_username.getText());
+                prepare.setString(3, admin_password.getText());
 
                 result = prepare.executeQuery();
 
@@ -95,6 +103,16 @@ public class LoginAdminPortalController implements Initializable {
                     Stage stage = new Stage();
                     stage.setTitle("Absence Management System(Admin)");
                     stage.setScene(new Scene(root));
+
+                    root.setOnMousePressed((MouseEvent event) ->{
+                        x = event.getSceneX();
+                        y = event.getSceneY();
+                    });
+
+                    root.setOnMouseDragged((MouseEvent event) ->{
+                        stage.setX(event.getScreenX() - x);
+                        stage.setY(event.getScreenY() - y);
+                    });
 
                     stage.show();
 
@@ -120,15 +138,114 @@ public class LoginAdminPortalController implements Initializable {
         }
     }
 
+    public void forgotPassword(){
+        alertMessage alert = new alertMessage();
+
+        if (forgetPw_username.getText().isEmpty()
+                || forgetPw_selectQuestion.getSelectionModel().getSelectedItem() == null
+                || forgetPw_ansewer.getText().isEmpty()){
+            alert.errorMessage("Please fill all blank fields");
+        }else {
+            String checkData = "SELECT username, question, answer " +
+                    "FROM users " +
+                    "WHERE username = ? AND question = ? AND answer = ?";
+
+            connect = connectDb.getConnection();
+
+            try {
+                prepare = connect.prepareStatement(checkData);
+                prepare.setString(1, forgetPw_username.getText());
+                prepare.setString(2, (String)forgetPw_selectQuestion.getSelectionModel().getSelectedItem());
+                prepare.setString(3, forgetPw_ansewer.getText());
+
+                result = prepare.executeQuery();
+
+                if (result.next()){
+                    adminPortal_form.setVisible(false);
+                    forgotPw_form.setVisible(false);
+                    changePw_form.setVisible(true);
+                }else {
+                    alert.errorMessage("Incorrect information");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void changePassword(){
+        alertMessage alert = new alertMessage();
+
+        if (changePw_newPassword.getText().isEmpty() || changePW_confirmPassword.getText().isEmpty()){
+            alert.errorMessage("Please fill all blank fields");
+        } else if (!changePw_newPassword.getText().equals(changePW_confirmPassword.getText())){
+            alert.errorMessage("Password does not match");
+        }else if (changePw_newPassword.getText().length() < 8){
+            alert.errorMessage("Password must contain at least 8 characters");
+        }else {
+            String updateData = "UPDATE users " +
+                    "SET password = ?," +
+                    "update_date = ?" +
+                    "WHERE username = '" + forgetPw_username.getText() + "'";
+
+            connect = connectDb.getConnection();
+
+            try {
+                prepare = connect.prepareStatement(updateData);
+                prepare.setString(1, changePw_newPassword.getText());
+
+                java.util.Date utilDate = new java.util.Date();
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+                prepare.setString(2, String.valueOf(sqlDate));
+
+                prepare.executeUpdate();
+                alert.successMessage("Succesfully changed Password");
+
+                adminPortal_form.setVisible(true);
+                forgotPw_form.setVisible(false);
+                changePw_form.setVisible(false);
+
+                admin_username.setText("");
+                admin_password.setVisible(true);
+                admin_password.setText("");
+                admin_showPassword.setVisible(false);
+                admin_selectShowPassword.setSelected(false);
+
+                changePw_newPassword.setText("");
+                changePW_confirmPassword.setText("");
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void forgotListQuestion(){
+        List<String> listQ = new ArrayList<>();
+        for (String data : questionList){
+            listQ.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(listQ);
+        forgetPw_selectQuestion.setItems(listData);
+    }
+
     public void switchForm(ActionEvent event){
         try {
             if(event.getSource() == admin_forgotPassword){
                 adminPortal_form.setVisible(false);
                 forgotPw_form.setVisible(true);
                 changePw_form.setVisible(false);
+
+                forgotListQuestion();
             } else if (event.getSource() == forgetPw_backBtn) {
                 adminPortal_form.setVisible(true);
                 forgotPw_form.setVisible(false);
+                changePw_form.setVisible(false);
+            }else if (event.getSource() == changePw_backBtn) {
+                adminPortal_form.setVisible(false);
+                forgotPw_form.setVisible(true);
                 changePw_form.setVisible(false);
             }else if (event.getSource() == admin_signUpBtn) {
                 Parent root = null;
@@ -136,38 +253,11 @@ public class LoginAdminPortalController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
-                stage.show();
-
-                admin_user.getScene().getWindow().hide();
-            } else if (admin_user.getSelectionModel().getSelectedItem().equals("Teacher Portal")){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/TeacherPortal.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
+                stage.initStyle(StageStyle.TRANSPARENT);
 
                 stage.show();
-
-                admin_user.getScene().getWindow().hide();
-            } else if (admin_user.getSelectionModel().getSelectedItem().equals("Parent Portal")) {
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/ParentPortal.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-
-                stage.show();
-
-                admin_user.getScene().getWindow().hide();
-            }else if(admin_user.getSelectionModel().getSelectedItem().equals("Admin Portal")){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/AdminPortal.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-
-                stage.show();
-
                 admin_user.getScene().getWindow().hide();
             }
-
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,19 +265,32 @@ public class LoginAdminPortalController implements Initializable {
 
     public void selectUser(){
 
-        Users users = new Users();
         List<String> listU = new ArrayList<>();
 
 
-        for (String data : users.users){
+        for (String data : users){
             listU.add(data);
         }
 
         ObservableList listData = FXCollections.observableArrayList(listU);
         admin_user.setItems(listData);
     }
+
+    @FXML
+    private void close(MouseEvent event){
+        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        s.close();
+    }
+
+    @FXML
+    private void min(MouseEvent event){
+        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        s.setIconified(true);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         selectUser();
+        forgotListQuestion();
     }
 }

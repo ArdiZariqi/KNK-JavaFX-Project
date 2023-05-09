@@ -29,7 +29,7 @@
                     <top>
                         <AnchorPane prefHeight="45.0" prefWidth="1100.0" styleClass="semi-top-form" stylesheets="@Design/dashboardDesign.css" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane layoutX="41.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="top-form" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane layoutX="41.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" styleClass="top-form" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <FontAwesomeIcon glyphName="GRADUATION_CAP" layoutX="14.0" layoutY="24.0" size="1.5em" />
                                         <Label layoutX="45.0" layoutY="9.0" text="Student Management System">
@@ -42,7 +42,7 @@
                                                 <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="minimize" layoutX="1000.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                        <Button fx:id="minimize" layoutX="1000.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="@Design/dashboardDesign.css">
                                             <graphic>
                                                 <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                             </graphic>
@@ -74,22 +74,22 @@
                                                 <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="1.5em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="addStudents_btn" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Add Students">
+                                        <Button fx:id="addStudents_btn" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Add Students">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="PLUS_CIRCLE" size="1.5em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="availableCourse_btn" layoutX="12.0" layoutY="281.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Available Courses">
+                                        <Button fx:id="availableCourse_btn" layoutX="12.0" layoutY="281.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Available Courses">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="BOOK" size="1.5em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="studentAbstence_btn" layoutX="12.0" layoutY="316.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Student Abstences">
+                                        <Button fx:id="studentAbstence_btn" layoutX="12.0" layoutY="316.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Student Abstences">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="CLIPBOARD" size="1.5em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="logout" layoutX="12.0" layoutY="509.0" mnemonicParsing="false" onAction="#logout" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                        <Button fx:id="logout" layoutX="12.0" layoutY="509.0" mnemonicParsing="false" onAction="#logout" stylesheets="@Design/dashboardDesign.css">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2em" />
                                             </graphic>
@@ -140,7 +140,7 @@
                                                                 </Label>
                                                             </children>
                                                         </AnchorPane>
-                                                        <AnchorPane layoutX="310.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                        <AnchorPane layoutX="310.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="FEMALE" layoutX="14.0" layoutY="79.0" size="4em" />
                                                                 <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Female Students" textFill="WHITE">
@@ -155,7 +155,7 @@
                                                                 </Label>
                                                             </children>
                                                         </AnchorPane>
-                                                        <AnchorPane layoutX="605.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                        <AnchorPane layoutX="605.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="MALE" layoutX="14.0" layoutY="79.0" size="4em" />
                                                                 <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Male Students" textFill="WHITE">
@@ -172,7 +172,7 @@
                                                         </AnchorPane>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane layoutX="14.0" layoutY="166.0" prefHeight="345.0" prefWidth="382.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                <AnchorPane layoutX="14.0" layoutY="166.0" prefHeight="345.0" prefWidth="382.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
@@ -226,13 +226,13 @@
                                 </AnchorPane>
                                 <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
                                                 <String fx:value="white-bg" />
                                                 <String fx:value="shadow" />
                                             </styleClass>
                                             <children>
-                                                <AnchorPane prefHeight="262.0" prefWidth="870.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                <AnchorPane prefHeight="262.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
@@ -302,7 +302,7 @@
                                                     </font>
                                                 </Label>
                                                 <ComboBox fx:id="addStudents_status" layoutX="390.0" layoutY="421.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <AnchorPane layoutX="705.0" layoutY="281.0" prefHeight="149.0" prefWidth="120.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                                <AnchorPane layoutX="705.0" layoutY="281.0" prefHeight="149.0" prefWidth="120.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
@@ -333,26 +333,26 @@
                                                         <Font name="Tahoma" size="15.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="availableCourse_course" layoutX="101.0" layoutY="36.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="availableCourse_course" layoutX="101.0" layoutY="36.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="14.0" layoutY="82.0" text="Description:">
                                                     <font>
                                                         <Font name="Tahoma" size="15.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="availableCourse_description" layoutX="101.0" layoutY="79.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="availableCourse_description" layoutX="101.0" layoutY="79.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="40.0" layoutY="124.0" text="Degree:">
                                                     <font>
                                                         <Font name="Tahoma" size="15.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="availableCourse_degree" layoutX="102.0" layoutY="121.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
-                                                <Button fx:id="availableCourse_addBtn" layoutX="22.0" layoutY="200.0" mnemonicParsing="false" onAction="#availableCourseAdd" prefHeight="41.0" prefWidth="85.0" styleClass="add-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Add" />
-                                                <Button fx:id="availableCourse_updateBtn" layoutX="162.0" layoutY="200.0" mnemonicParsing="false" onAction="#availableCourseUpdate" prefHeight="41.0" prefWidth="85.0" styleClass="update-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Update" />
-                                                <Button fx:id="availableCourse_clearBtn" layoutX="22.0" layoutY="259.0" mnemonicParsing="false" onAction="#availableCourseClear" prefHeight="41.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Clear" />
-                                                <Button fx:id="availableCourse_deleteBtn" layoutX="162.0" layoutY="259.0" mnemonicParsing="false" onAction="#availableCourseDelete" prefHeight="41.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" text="Delete" />
+                                                <TextField fx:id="availableCourse_degree" layoutX="102.0" layoutY="121.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Button fx:id="availableCourse_addBtn" layoutX="22.0" layoutY="200.0" mnemonicParsing="false" onAction="#availableCourseAdd" prefHeight="41.0" prefWidth="85.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
+                                                <Button fx:id="availableCourse_updateBtn" layoutX="162.0" layoutY="200.0" mnemonicParsing="false" onAction="#availableCourseUpdate" prefHeight="41.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
+                                                <Button fx:id="availableCourse_clearBtn" layoutX="22.0" layoutY="259.0" mnemonicParsing="false" onAction="#availableCourseClear" prefHeight="41.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
+                                                <Button fx:id="availableCourse_deleteBtn" layoutX="162.0" layoutY="259.0" mnemonicParsing="false" onAction="#availableCourseDelete" prefHeight="41.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="304.0" layoutY="19.0" prefHeight="517.0" prefWidth="579.0" stylesheets="/KNK_Projekti/Design/dashboardDesign.css">
+                                        <AnchorPane layoutX="304.0" layoutY="19.0" prefHeight="517.0" prefWidth="579.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
                                                 <String fx:value="shadow" />
                                                 <String fx:value="white-bg" />
@@ -377,7 +377,7 @@
                                                 <String fx:value="shadow" />
                                             </styleClass>
                                             <children>
-                                                <TextField fx:id="studentAbstence_studentNum" layoutX="108.0" layoutY="30.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="studentAbstence_studentNum" layoutX="108.0" layoutY="30.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="34.0" layoutY="33.0" text="Student #:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
@@ -401,7 +401,7 @@
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="studentAbstence_secondSem" layoutX="108.0" layoutY="193.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="/KNK_Projekti/Design/dashboardDesign.css" />
+                                                <TextField fx:id="studentAbstence_secondSem" layoutX="108.0" layoutY="193.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="14.0" layoutY="197.0" text="Second Sem:" AnchorPane.leftAnchor="18.0">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />

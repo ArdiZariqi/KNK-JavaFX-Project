@@ -38,25 +38,13 @@ public class TeacherPortalController implements Initializable {
     private ResultSet result;
 
     private Alert alert;
-    private void erorMessage(String message){
-        alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error Message");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void successMessage(String message){
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information Message");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
     public void loginAccount(){
+
+        alertMessage alert = new alertMessage();
+
         if (teacher_teacherID.getText().isEmpty() || teacher_password.getText().isEmpty()){
-            erorMessage("Please fill all blank fields");
+            alert.errorMessage("Please fill all blank fields");
         }else {
             String selectData = "SELECT * FROM teacher WHERE teacher_id = ? AND password = ?";
 
@@ -69,7 +57,7 @@ public class TeacherPortalController implements Initializable {
 
                 result = prepare.executeQuery();
                 if(result.next()){
-                    successMessage("Login Successfully!");
+                    alert.successMessage("Login Successfully!");
                     Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/faqja1.fxml"));
 
                     Stage stage = new Stage();
@@ -80,7 +68,7 @@ public class TeacherPortalController implements Initializable {
 
                     teacher_loginBtn.getScene().getWindow().hide();
                 }else {
-                    erorMessage("Incorrect Teacher ID/Password");
+                    alert.errorMessage("Incorrect Teacher ID/Password");
                 }
             }catch (Exception e){
                 e.printStackTrace();
