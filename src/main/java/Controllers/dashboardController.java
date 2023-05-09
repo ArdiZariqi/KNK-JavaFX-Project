@@ -75,7 +75,7 @@ public class dashboardController implements Initializable {
     private Button availableCourse_btn;
 
     @FXML
-    private Button studentGrade_btn;
+    private Button studentAbstence_btn;
 
     @FXML
     private Button logout;
@@ -213,52 +213,52 @@ public class dashboardController implements Initializable {
     private TableColumn<courseData, String> availableCourse_col_degree;
 
     @FXML
-    private AnchorPane studentGrade_form;
+    private AnchorPane studentAbstence_form;
 
     @FXML
-    private TextField studentGrade_studentNum;
+    private TextField studentAbstence_studentNum;
 
     @FXML
-    private Label studentGrade_year;
+    private Label studentAbstence_year;
 
     @FXML
-    private Label studentGrade_course;
+    private Label studentAbstence_course;
 
     @FXML
-    private TextField studentGrade_firstSem;
+    private TextField studentAbstence_firstSem;
 
     @FXML
-    private TextField studentGrade_secondSem;
+    private TextField studentAbstence_secondSem;
 
     @FXML
-    private Button studentGrade_updateBtn;
+    private Button studentAbstence_updateBtn;
 
     @FXML
-    private Button studentGrade_clearBtn;
+    private Button studentAbstence_clearBtn;
 
     @FXML
-    private TableView<studentData> studentGrade_tableView;
+    private TableView<studentData> studentAbstence_tableView;
 
     @FXML
-    private TableColumn<studentData, String> studentGrade_col_studentNum;
+    private TableColumn<studentData, String> studentAbstence_col_studentNum;
 
     @FXML
-    private TableColumn<studentData, String> studentGrade_col_year;
+    private TableColumn<studentData, String> studentAbstence_col_year;
 
     @FXML
-    private TableColumn<studentData, String> studentGrade_col_course;
+    private TableColumn<studentData, String> studentAbstence_col_course;
 
     @FXML
-    private TableColumn<studentData, String> studentGrade_col_firstSem;
+    private TableColumn<studentData, String> studentAbstence_col_firstSem;
 
     @FXML
-    private TableColumn<studentData, String> studentGrade_col_secondSem;
+    private TableColumn<studentData, String> studentAbstence_col_secondSem;
 
     @FXML
-    private TableColumn<studentData, String> studentGrade_col_final;
+    private TableColumn<studentData, String> studentAbstence_col_final;
 
     @FXML
-    private TextField studentGrade_search;
+    private TextField studentAbstence_search;
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -475,11 +475,11 @@ public class dashboardController implements Initializable {
 
                     prepare.executeUpdate();
 
-                    String insertStudentGrade = "INSERT INTO student_grade "
+                    String insertStudentAbstence = "INSERT INTO student_Abstence "
                             + "(studentNum,year,course,first_sem,second_sem,final) "
                             + "VALUES(?,?,?,?,?,?)";
 
-                    prepare = connect.prepareStatement(insertStudentGrade);
+                    prepare = connect.prepareStatement(insertStudentAbstence);
                     prepare.setString(1, addStudents_studentNum.getText());
                     prepare.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
                     prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
@@ -609,7 +609,7 @@ public class dashboardController implements Initializable {
                     statement = connect.createStatement();
                     statement.executeUpdate(deleteData);
 
-                    String checkData = "SELECT studentNum FROM student_grade "
+                    String checkData = "SELECT studentNum FROM student_Abstence "
                             + "WHERE studentNum = '" + addStudents_studentNum.getText() + "'";
 
                     prepare = connect.prepareStatement(checkData);
@@ -617,11 +617,11 @@ public class dashboardController implements Initializable {
 
                     // IF THE STUDENT NUMBER IS EXIST THEN PROCEED TO DELETE
                     if (result.next()) {
-                        String deleteGrade = "DELETE FROM student_grade WHERE "
+                        String deleteAbstence = "DELETE FROM student_Abstence WHERE "
                                 + "studentNum = '" + addStudents_studentNum.getText() + "'";
 
                         statement = connect.createStatement();
-                        statement.executeUpdate(deleteGrade);
+                        statement.executeUpdate(deleteAbstence);
 
                     }// IF NOT THEN NVM
 
@@ -677,7 +677,7 @@ public class dashboardController implements Initializable {
             getData.path = file.getAbsolutePath();
 
         }
-    } //WHILE WE INSERT THE DATA ON STUDENT, WE SHOULD INSERT ALSO THE DATA TO STUDENT_GRADE
+    } //WHILE WE INSERT THE DATA ON STUDENT, WE SHOULD INSERT ALSO THE DATA TO STUDENT_Abstence
 
     public void addStudentsSearch() {
 
@@ -1087,12 +1087,12 @@ public class dashboardController implements Initializable {
 
     }
 
-    public void studentGradesUpdate() {
+    public void studentAbstencesUpdate() {
         double finalCheck1 = 0;
         double finalCheck2 = 0;
 
-        String checkData = "SELECT * FROM student_grade WHERE studentNum = '"
-                + studentGrade_studentNum.getText() + "'";
+        String checkData = "SELECT * FROM student_Abstence WHERE studentNum = '"
+                + studentAbstence_studentNum.getText() + "'";
 
         connect = connectDb.getConnection();
 
@@ -1111,23 +1111,23 @@ public class dashboardController implements Initializable {
             if (finalCheck1 == 0 || finalCheck2 == 0) {
                 finalResult = 0;
             } else { //LIKE (X+Y)/2 AVE WE NEED TO FIND FOR FINALS
-                finalResult = (Double.parseDouble(studentGrade_firstSem.getText())
-                        + Double.parseDouble(studentGrade_secondSem.getText()) / 2);
+                finalResult = (Double.parseDouble(studentAbstence_firstSem.getText())
+                        + Double.parseDouble(studentAbstence_secondSem.getText()) / 2);
             }
 
-            String updateData = "UPDATE student_grade SET "
-                    + " year = '" + studentGrade_year.getText()
-                    + "', course = '" + studentGrade_course.getText()
-                    + "', first_sem = '" + studentGrade_firstSem.getText()
-                    + "', second_sem = '" + studentGrade_secondSem.getText()
+            String updateData = "UPDATE student_Abstence SET "
+                    + " year = '" + studentAbstence_year.getText()
+                    + "', course = '" + studentAbstence_course.getText()
+                    + "', first_sem = '" + studentAbstence_firstSem.getText()
+                    + "', second_sem = '" + studentAbstence_secondSem.getText()
                     + "', final = '" + finalResult + "' WHERE studentNum = '"
-                    + studentGrade_studentNum.getText() + "'";
+                    + studentAbstence_studentNum.getText() + "'";
 
             Alert alert;
 
-            if (studentGrade_studentNum.getText().isEmpty()
-                    || studentGrade_year.getText().isEmpty()
-                    || studentGrade_course.getText().isEmpty()) {
+            if (studentAbstence_studentNum.getText().isEmpty()
+                    || studentAbstence_year.getText().isEmpty()
+                    || studentAbstence_course.getText().isEmpty()) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -1139,7 +1139,7 @@ public class dashboardController implements Initializable {
                 alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to UPDATE Student #" + studentGrade_studentNum.getText() + "?");
+                alert.setContentText("Are you sure you want to UPDATE Student #" + studentAbstence_studentNum.getText() + "?");
                 Optional<ButtonType> option = alert.showAndWait();
 
                 if (option.get().equals(ButtonType.OK)) {
@@ -1153,7 +1153,7 @@ public class dashboardController implements Initializable {
                     alert.showAndWait();
 
                     // TO UPDATE THE TABLEVIEW
-                    studentGradesShowListData();
+                    studentAbstencesShowListData();
                 } else {
                     return;
                 }
@@ -1164,19 +1164,19 @@ public class dashboardController implements Initializable {
         }
     }
 
-    public void studentGradesClear() {
-        studentGrade_studentNum.setText("");
-        studentGrade_year.setText("");
-        studentGrade_course.setText("");
-        studentGrade_firstSem.setText("");
-        studentGrade_secondSem.setText("");
+    public void studentAbstencesClear() {
+        studentAbstence_studentNum.setText("");
+        studentAbstence_year.setText("");
+        studentAbstence_course.setText("");
+        studentAbstence_firstSem.setText("");
+        studentAbstence_secondSem.setText("");
     }
 
-    public ObservableList<studentData> studentGradesListData() {
+    public ObservableList<studentData> studentAbstencesListData() {
 
         ObservableList<studentData> listData = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM student_grade";
+        String sql = "SELECT * FROM student_Abstence";
 
         connect = connectDb.getConnection();
         try {
@@ -1201,43 +1201,43 @@ public class dashboardController implements Initializable {
         return listData;
     }
 
-    private ObservableList<studentData> studentGradesList;
+    private ObservableList<studentData> studentAbstencesList;
 
-    public void studentGradesShowListData() {
-        studentGradesList = studentGradesListData();
+    public void studentAbstencesShowListData() {
+        studentAbstencesList = studentAbstencesListData();
 
-        studentGrade_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
-        studentGrade_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
-        studentGrade_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
-        studentGrade_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
-        studentGrade_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
-        studentGrade_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
+        studentAbstence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        studentAbstence_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        studentAbstence_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        studentAbstence_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
+        studentAbstence_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
+        studentAbstence_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
 //        WE NEED TO FIX THE DELETE ON ADD STUDENT FORM
-        studentGrade_tableView.setItems(studentGradesList);
+        studentAbstence_tableView.setItems(studentAbstencesList);
 
     }
 
-    public void studentGradesSelect() {
+    public void studentAbstencesSelect() {
 
-        studentData studentD = studentGrade_tableView.getSelectionModel().getSelectedItem();
-        int num = studentGrade_tableView.getSelectionModel().getSelectedIndex();
+        studentData studentD = studentAbstence_tableView.getSelectionModel().getSelectedItem();
+        int num = studentAbstence_tableView.getSelectionModel().getSelectedIndex();
 
         if ((num - 1) < -1) {
             return;
         }
 
-        studentGrade_studentNum.setText(String.valueOf(studentD.getStudentNum()));
-        studentGrade_year.setText(studentD.getYear());
-        studentGrade_course.setText(studentD.getCourse());
-        studentGrade_firstSem.setText(String.valueOf(studentD.getFirstSem()));
-        studentGrade_secondSem.setText(String.valueOf(studentD.getSecondSem()));
+        studentAbstence_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        studentAbstence_year.setText(studentD.getYear());
+        studentAbstence_course.setText(studentD.getCourse());
+        studentAbstence_firstSem.setText(String.valueOf(studentD.getFirstSem()));
+        studentAbstence_secondSem.setText(String.valueOf(studentD.getSecondSem()));
     }
 
-    public void studentGradesSearch() {
+    public void studentAbstencesSearch() {
 
-        FilteredList<studentData> filter = new FilteredList<>(studentGradesList, e -> true);
+        FilteredList<studentData> filter = new FilteredList<>(studentAbstencesList, e -> true);
 
-        studentGrade_search.textProperty().addListener((Observable, oldValue, newValue) -> {
+        studentAbstence_search.textProperty().addListener((Observable, oldValue, newValue) -> {
 
             filter.setPredicate(predicateStudentData -> {
 
@@ -1266,8 +1266,8 @@ public class dashboardController implements Initializable {
 
         SortedList<studentData> sortList = new SortedList<>(filter);
 
-        sortList.comparatorProperty().bind(studentGrade_tableView.comparatorProperty());
-        studentGrade_tableView.setItems(sortList);
+        sortList.comparatorProperty().bind(studentAbstence_tableView.comparatorProperty());
+        studentAbstence_tableView.setItems(sortList);
 
     }
 
@@ -1340,12 +1340,12 @@ public class dashboardController implements Initializable {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
             availableCourse_form.setVisible(false);
-            studentGrade_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
             home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             availableCourse_btn.setStyle("-fx-background-color:transparent");
-            studentGrade_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
             homeDisplayTotalEnrolledStudents();
             homeDisplayMaleEnrolled();
@@ -1358,12 +1358,12 @@ public class dashboardController implements Initializable {
             home_form.setVisible(false);
             addStudents_form.setVisible(true);
             availableCourse_form.setVisible(false);
-            studentGrade_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
             addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             home_btn.setStyle("-fx-background-color:transparent");
             availableCourse_btn.setStyle("-fx-background-color:transparent");
-            studentGrade_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addStudentsShowListData();
@@ -1377,28 +1377,28 @@ public class dashboardController implements Initializable {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             availableCourse_form.setVisible(true);
-            studentGrade_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
             availableCourse_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
-            studentGrade_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
             availableCourseShowListData();
 
-        } else if (event.getSource() == studentGrade_btn) {
+        } else if (event.getSource() == studentAbstence_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             availableCourse_form.setVisible(false);
-            studentGrade_form.setVisible(true);
+            studentAbstence_form.setVisible(true);
 
-            studentGrade_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            studentAbstence_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             availableCourse_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
 
-            studentGradesShowListData();
-            studentGradesSearch();
+            studentAbstencesShowListData();
+            studentAbstencesSearch();
 
         }
     }
@@ -1435,7 +1435,7 @@ public class dashboardController implements Initializable {
 
         availableCourseShowListData();
 
-        studentGradesShowListData();
+        studentAbstencesShowListData();
 
     }
 
