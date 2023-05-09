@@ -2,44 +2,91 @@ package Models;
 
 import java.sql.Date;
 
-public class studentData {
-    private int Id;
-    private String FirstName;
-    private String LastName;
-    private String Email;
-    private String Subject;
-    private Date BirthDate;
-    private String Gender;
 
-    public studentData(int Id, String FirstName, String LastName, String Email, String Subject, Date BirthDate, String Gender){
-        this.Id=Id;
-        this.FirstName=FirstName;
-        this.LastName=LastName;
-        this.Email=Email;
-        this.Subject=Subject;
-        this.BirthDate=BirthDate;
-        this.Gender=Gender;
+public class studentData {
+
+    private Integer studentNum;
+    private String year;
+    private String course;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private Date birth;
+    private String status;
+    private String image;
+    private Double firstSem;
+    private Double secondSem;
+    private Double finals;
+
+    // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE
+    public studentData(Integer studentNum, String year, String course, String firstName, String lastName, String gender, Date birth, String status, String image) {
+        this.studentNum = studentNum;
+        this.year = year;
+        this.course = course;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birth = birth;
+        this.status = status;
+        this.image = image;
     }
-    public int getId(){
-        return Id;
+
+    public studentData(Integer studentNum, String year, String course, Double firstSem, Double secondSem, Double finals) {
+        this.studentNum = studentNum;
+        this.year = year;
+        this.course = course;
+        this.firstSem = firstSem;
+        this.secondSem = secondSem;
+        this.finals = finals;
     }
-    public String getFirstName(){
-        return FirstName;
+
+    public Integer getStudentNum() {
+        return studentNum;
     }
-    public String getLastName()
-    {
-        return LastName;
+
+    public String getYear() {
+        return year;
     }
-    public String getEmail(){
-        return Email;
+
+    public String getCourse() {
+        return course;
     }
-    public String getSubject(){
-        return Subject;
+
+    public String getFirstName() {
+        return firstName;
     }
-    public Date getBirthDate(){
-        return BirthDate;
+
+    public String getLastName() {
+        return lastName;
     }
-    public String getGender(){
-        return Gender;
+
+    public String getGender() {
+        return gender;
     }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Double getFirstSem() {
+        return firstSem;
+    }
+
+    public Double getSecondSem() {
+        return secondSem;
+    }
+
+    public Double getFinals() {
+        return finals;
+    }
+
+    // PLEASE FOLLOW ME IF THE VARS ARE THE SAME TO ME
 }
