@@ -14,14 +14,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.dashboardController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.TeacherDashboardController">
     <children>
         <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -69,22 +68,17 @@
                                             </font>
                                         </Label>
                                         <Line endX="85.0" layoutX="109.0" layoutY="173.0" startX="-100.0" stroke="WHITE" />
-                                        <Button fx:id="home_btn" layoutX="12.0" layoutY="211.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Home">
+                                        <Button fx:id="home_btn" layoutX="12.0" layoutY="223.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Home">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="1.5em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="addStudents_btn" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Add Students">
+                                        <Button fx:id="addStudents_btn" layoutX="12.0" layoutY="265.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Add Absences">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="PLUS_CIRCLE" size="1.5em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="availableCourse_btn" layoutX="12.0" layoutY="281.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Available Courses">
-                                            <graphic>
-                                                <FontAwesomeIcon fill="WHITE" glyphName="BOOK" size="1.5em" />
-                                            </graphic>
-                                        </Button>
-                                        <Button fx:id="studentAbstence_btn" layoutX="12.0" layoutY="316.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Student Abstences">
+                                        <Button fx:id="studentAbstence_btn" layoutX="12.0" layoutY="309.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Student Absences">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="CLIPBOARD" size="1.5em" />
                                             </graphic>
@@ -111,7 +105,7 @@
                     <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -128,7 +122,7 @@
                                                         <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="14.0" layoutY="77.0" size="4em" />
-                                                                <Label layoutX="74.0" layoutY="84.0" text="Total Enrolled Students" textFill="WHITE">
+                                                                <Label layoutX="74.0" layoutY="84.0" text="Total Students Absences" textFill="WHITE">
                                                                     <font>
                                                                         <Font name="Tahoma" size="15.0" />
                                                                     </font>
@@ -143,7 +137,7 @@
                                                         <AnchorPane layoutX="310.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="FEMALE" layoutX="14.0" layoutY="79.0" size="4em" />
-                                                                <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Female Students" textFill="WHITE">
+                                                                <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Female Students Absences" textFill="WHITE">
                                                                     <font>
                                                                         <Font name="Tahoma" size="15.0" />
                                                                     </font>
@@ -158,7 +152,7 @@
                                                         <AnchorPane layoutX="605.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="MALE" layoutX="14.0" layoutY="79.0" size="4em" />
-                                                                <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Male Students" textFill="WHITE">
+                                                                <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Male Students Absences" textFill="WHITE">
                                                                     <font>
                                                                         <Font name="Tahoma" size="15.0" />
                                                                     </font>
@@ -178,7 +172,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <BarChart fx:id="home_totalEnrolledChart" layoutX="-59.0" layoutY="-55.0" prefHeight="345.0" prefWidth="441.0" stylesheets="@Design/dashboardDesign.css" title="Total Enrolled Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <BarChart fx:id="home_totalEnrolledChart" layoutX="-59.0" layoutY="-55.0" prefHeight="345.0" prefWidth="441.0" stylesheets="@Design/dashboardDesign.css" title="Total Student Absences" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                             </xAxis>
@@ -194,7 +188,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <AreaChart fx:id="home_totalFemaleChart" layoutX="-65.0" layoutY="-120.0" prefHeight="280.0" prefWidth="449.0" stylesheets="@Design/dashboardDesign.css" title="Enrolled Female Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <AreaChart fx:id="home_totalFemaleChart" layoutX="-65.0" layoutY="-120.0" prefHeight="280.0" prefWidth="449.0" stylesheets="@Design/dashboardDesign.css" title="Total Female Absences" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                             </xAxis>
@@ -210,7 +204,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <LineChart fx:id="home_totalMaleChart" layoutX="-101.0" layoutY="-154.0" prefHeight="246.0" prefWidth="449.0" stylesheets="@Design/dashboardDesign.css" title="Enrolled Male Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <LineChart fx:id="home_totalMaleChart" layoutX="-101.0" layoutY="-154.0" prefHeight="246.0" prefWidth="449.0" stylesheets="@Design/dashboardDesign.css" title="Total Male Absences" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <xAxis>
                                                                 <CategoryAxis side="BOTTOM" />
                                                             </xAxis>
@@ -226,52 +220,54 @@
                                 </AnchorPane>
                                 <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
+                                        <AnchorPane layoutX="5.0" layoutY="14.0" prefHeight="527.0" prefWidth="879.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
                                                 <String fx:value="white-bg" />
                                                 <String fx:value="shadow" />
                                             </styleClass>
                                             <children>
-                                                <AnchorPane prefHeight="262.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
+                                                <AnchorPane prefHeight="262.0" prefWidth="878.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                         <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
-                                                        <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="192.0" prefWidth="845.0" stylesheets="@Design/dashboardDesign.css">
+                                                        <TableView fx:id="addStudents_tableView" layoutX="7.0" layoutY="57.0" onMouseClicked="#addStudentsSelect" prefHeight="190.0" prefWidth="865.0" stylesheets="@Design/dashboardDesign.css">
                                                             <columns>
-                                                                <TableColumn fx:id="addStudents_col_studentNum" prefWidth="75.0" text="Student #" />
-                                                                <TableColumn fx:id="addStudents_col_year" prefWidth="87.0" text="Year" />
-                                                                <TableColumn fx:id="addStudents_col_course" text="Course" />
-                                                                <TableColumn fx:id="addStudents_col_firstName" prefWidth="153.0" text="First Name" />
-                                                                <TableColumn fx:id="addStudents_col_lastName" prefWidth="128.0" text="Last Name" />
-                                                                <TableColumn fx:id="addStudents_col_gender" prefWidth="102.0" text="Gender" />
-                                                                <TableColumn fx:id="addStudents_col_birth" prefWidth="114.0" text="Birth Date" />
-                                                                <TableColumn fx:id="addStudents_col_status" prefWidth="102.0" text="status" />
+                                                                <TableColumn fx:id="addAbsence_col_absenceNum" prefWidth="63.20000076293945" text="Absence#" />
+                                                                <TableColumn fx:id="addAbsence_col_studentNum" prefWidth="65.60000610351562" text="Student Id" />
+                                                                <TableColumn fx:id="addAbsence_col_class" prefWidth="49.5999755859375" text="Class" />
+                                                                <TableColumn fx:id="addAbsence_col_Course" prefWidth="68.79991149902344" text="Course" />
+                                                                <TableColumn fx:id="addAbsence_col_time" prefWidth="53.60003662109375" text="Time" />
+                                                                <TableColumn fx:id="addAbsence_col_firstName" prefWidth="99.20001220703125" text="First Name" />
+                                                                <TableColumn fx:id="addAbsence_col_lastName" prefWidth="107.2000732421875" text="Last Name" />
+                                                                <TableColumn fx:id="addAbsence_col_gender" prefWidth="74.4000244140625" text="Gender" />
+                                                <TableColumn fx:id="addAbsence_col_date" prefWidth="92.80010986328125" text="Date" />
+                                                <TableColumn fx:id="addAbsence_col_status" prefWidth="76.7999267578125" text="Status" />
+                                                <TableColumn fx:id="addAbsence_col_reasonability" prefWidth="101.60003662109375" text="Reasonability" />
                                                             </columns>
                                                         </TableView>
                                                     </children>
                                                 </AnchorPane>
-                                                <Label layoutX="32.0" layoutY="279.0" text="Student #:">
+                                                <Label layoutX="32.0" layoutY="279.0" text="Student Id">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_studentNum" layoutX="109.0" layoutY="276.0" prefHeight="25.0" prefWidth="116.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="66.0" layoutY="316.0" text="Year:">
+                                                <TextField fx:id="addAbsence_studentNum" layoutX="109.0" layoutY="276.0" prefHeight="26.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label layoutX="32.0" layoutY="316.0" prefHeight="18.0" prefWidth="67.0" text="Class:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="313.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="51.0" layoutY="355.0" text="Course:">
+                                                <Label layoutX="32.0" layoutY="355.0" text="Course:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addAbsence_class" layoutX="109.0" layoutY="313.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="313.0" layoutY="279.0" text="First Name:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
@@ -284,155 +280,68 @@
                                                     </font>
                                                 </Label>
                                                 <TextField fx:id="addStudents_lastName" layoutX="390.0" layoutY="313.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="334.0" layoutY="355.0" text="Gender:">
+                                                <Label layoutX="313.0" layoutY="355.0" prefHeight="18.0" prefWidth="71.0" text="Gender:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
                                                 <ComboBox fx:id="addStudents_gender" layoutX="390.0" layoutY="351.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="315.0" layoutY="391.0" text="Birth Date:">
+                                                <Label layoutX="315.0" layoutY="391.0" prefHeight="18.0" prefWidth="66.0" text="Date:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <DatePicker fx:id="addStudents_birth" layoutX="390.0" layoutY="388.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="337.0" layoutY="425.0" text="Status:">
+                                                <DatePicker fx:id="Absence_date" layoutX="390.0" layoutY="388.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label layoutX="580.0" layoutY="279.0" prefHeight="18.0" prefWidth="86.0" text="Status:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_status" layoutX="390.0" layoutY="421.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <AnchorPane layoutX="705.0" layoutY="281.0" prefHeight="149.0" prefWidth="120.0" stylesheets="@Design/dashboardDesign.css">
-                                                    <styleClass>
-                                                        <String fx:value="white-bg" />
-                                                        <String fx:value="shadow" />
-                                                    </styleClass>
-                                                    <children>
-                                                        <ImageView fx:id="addStudents_imageView" fitHeight="149.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                                                        <Button fx:id="addStudents_insertBtn" layoutY="109.0" mnemonicParsing="false" onAction="#addStudentsInsertImage" prefHeight="40.0" prefWidth="120.0" styleClass="insert-btn" stylesheets="@Design/dashboardDesign.css" text="Insert" />
-                                                    </children>
-                                                </AnchorPane>
-                                                <Button fx:id="addStudents_addBtn" layoutX="765.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsAdd" prefHeight="35.0" prefWidth="85.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
-                                                <Button fx:id="addStudents_updateBtn" layoutX="669.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsUpdate" prefHeight="35.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
-                                                <Button fx:id="addStudents_deleteBtn" layoutX="546.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsDelete" prefHeight="35.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
-                                                <Button fx:id="addStudents_clearBtn" layoutX="450.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsClear" prefHeight="35.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
+                                                <ComboBox fx:id="addStudents_status" layoutX="679.0" layoutY="276.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Button fx:id="addAbsence_updateBtn" layoutX="608.0" layoutY="368.0" mnemonicParsing="false" onAction="#addAbsencesUpdate" prefHeight="55.0" prefWidth="94.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
+                                    <ComboBox fx:id="addAbsence_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <TextField fx:id="addAbsence_time" layoutX="109.0" layoutY="387.0" prefHeight="26.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <Label layoutX="34.0" layoutY="391.0" prefHeight="18.0" prefWidth="64.0" text="Time:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="addAbsence_addBtn" layoutX="721.0" layoutY="368.0" mnemonicParsing="false" onAction="#addAbsencesAddBtn" prefHeight="55.0" prefWidth="94.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
+                                    <Button fx:id="addAbsence_deleteBtn" layoutX="721.0" layoutY="441.0" mnemonicParsing="false" onAction="#addAbsencesDelete" prefHeight="55.0" prefWidth="94.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
+                                    <Button fx:id="addAbsence_clearBtn" layoutX="608.0" layoutY="441.0" mnemonicParsing="false" onAction="#addAbsencesClear" prefHeight="55.0" prefWidth="94.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
+                                    <Label layoutX="579.0" layoutY="316.0" prefHeight="18.0" prefWidth="88.0" text="Reasonability:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="addStudents_Absences" layoutX="679.0" layoutY="313.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                             </children>
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="availableCourse_form" layoutX="30.0" layoutY="61.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <AnchorPane layoutX="14.0" layoutY="19.0" prefHeight="517.0" prefWidth="269.0" stylesheets="@Design/dashboardDesign.css">
-                                            <styleClass>
-                                                <String fx:value="shadow" />
-                                                <String fx:value="white-bg" />
-                                            </styleClass>
-                                            <children>
-                                                <Label layoutX="40.0" layoutY="39.0" text="Course:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="15.0" />
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="availableCourse_course" layoutX="101.0" layoutY="36.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="14.0" layoutY="82.0" text="Description:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="15.0" />
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="availableCourse_description" layoutX="101.0" layoutY="79.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="40.0" layoutY="124.0" text="Degree:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="15.0" />
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="availableCourse_degree" layoutX="102.0" layoutY="121.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Button fx:id="availableCourse_addBtn" layoutX="22.0" layoutY="200.0" mnemonicParsing="false" onAction="#availableCourseAdd" prefHeight="41.0" prefWidth="85.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
-                                                <Button fx:id="availableCourse_updateBtn" layoutX="162.0" layoutY="200.0" mnemonicParsing="false" onAction="#availableCourseUpdate" prefHeight="41.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
-                                                <Button fx:id="availableCourse_clearBtn" layoutX="22.0" layoutY="259.0" mnemonicParsing="false" onAction="#availableCourseClear" prefHeight="41.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
-                                                <Button fx:id="availableCourse_deleteBtn" layoutX="162.0" layoutY="259.0" mnemonicParsing="false" onAction="#availableCourseDelete" prefHeight="41.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane layoutX="304.0" layoutY="19.0" prefHeight="517.0" prefWidth="579.0" stylesheets="@Design/dashboardDesign.css">
-                                            <styleClass>
-                                                <String fx:value="shadow" />
-                                                <String fx:value="white-bg" />
-                                            </styleClass>
-                                            <children>
-                                                <TableView fx:id="availableCourse_tableView" layoutX="11.0" layoutY="13.0" onMouseClicked="#availableCourseSelect" prefHeight="490.0" prefWidth="557.0" stylesheets="@Design/dashboardDesign.css">
-                                                    <columns>
-                                                        <TableColumn fx:id="availableCourse_col_course" prefWidth="176.6666259765625" text="Course" />
-                                                        <TableColumn fx:id="availableCourse_col_description" prefWidth="203.33334350585938" text="Description" />
-                                                        <TableColumn fx:id="availableCourse_col_degree" prefWidth="176.00006103515625" text="Degree" />
-                                                    </columns>
-                                                </TableView>
-                                            </children>
-                                        </AnchorPane>
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane fx:id="studentAbstence_form" layoutX="59.0" layoutY="47.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <AnchorPane layoutX="14.0" layoutY="17.0" prefHeight="522.0" prefWidth="261.0" stylesheets="@Design/dashboardDesign.css">
-                                            <styleClass>
-                                                <String fx:value="white-bg" />
-                                                <String fx:value="shadow" />
-                                            </styleClass>
-                                            <children>
-                                                <TextField fx:id="studentAbstence_studentNum" layoutX="108.0" layoutY="30.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="34.0" layoutY="33.0" text="Student #:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <Label layoutX="68.0" layoutY="75.0" text="Year:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <Label fx:id="studentAbstence_year" layoutX="108.0" layoutY="71.0" prefHeight="25.0" prefWidth="139.0" styleClass="label-info" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="53.0" layoutY="116.0" text="Course:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <Label fx:id="studentAbstence_course" layoutX="108.0" layoutY="112.0" prefHeight="25.0" prefWidth="139.0" styleClass="label-info" stylesheets="@Design/dashboardDesign.css" />
-                                                <TextField fx:id="studentAbstence_firstSem" layoutX="108.0" layoutY="153.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="37.0" layoutY="157.0" text="First Sem:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <TextField fx:id="studentAbstence_secondSem" layoutX="108.0" layoutY="193.0" prefHeight="25.0" prefWidth="139.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label layoutX="14.0" layoutY="197.0" text="Second Sem:" AnchorPane.leftAnchor="18.0">
-                                                    <font>
-                                                        <Font name="Tahoma" size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <Button fx:id="studentAbstence_updateBtn" layoutX="146.0" layoutY="261.0" mnemonicParsing="false" onAction="#studentAbstencesUpdate" prefHeight="40.0" prefWidth="93.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
-                                                <Button fx:id="studentAbstence_clearBtn" layoutX="23.0" layoutY="261.0" mnemonicParsing="false" onAction="#studentAbstencesClear" prefHeight="40.0" prefWidth="93.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
-                                            </children>
-                                        </AnchorPane>
-                                        <AnchorPane layoutX="296.0" layoutY="17.0" prefHeight="522.0" prefWidth="587.0" stylesheets="@Design/dashboardDesign.css">
-                                            <styleClass>
-                                                <String fx:value="white-bg" />
-                                                <String fx:value="shadow" />
-                                            </styleClass>
-                                            <children>
-                                                <TableView fx:id="studentAbstence_tableView" layoutX="13.0" layoutY="52.0" onMouseClicked="#studentAbstencesSelect" prefHeight="456.0" prefWidth="562.0" stylesheets="@Design/dashboardDesign.css">
-                                                    <columns>
-                                                        <TableColumn fx:id="studentAbstence_col_studentNum" prefWidth="75.0" text="Student #" />
-                                                        <TableColumn fx:id="studentAbstence_col_year" prefWidth="85.0" text="Year" />
-                                                        <TableColumn fx:id="studentAbstence_col_course" prefWidth="92.0" text="Course" />
-                                                        <TableColumn fx:id="studentAbstence_col_firstSem" prefWidth="109.0" text="First Sem" />
-                                                        <TableColumn fx:id="studentAbstence_col_secondSem" prefWidth="99.0" text="Second Sem" />
-                                                        <TableColumn fx:id="studentAbstence_col_final" prefWidth="100.0" text="Final" />
-                                                    </columns>
-                                                </TableView>
-                                                <TextField fx:id="studentAbstence_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#studentAbstencesSearch" prefHeight="30.0" prefWidth="269.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
-                                                <FontAwesomeIcon glyphName="SEARCH" layoutX="22.0" layoutY="35.0" size="1.5em" />
-                                            </children>
-                                        </AnchorPane>
-                                    </children>
-                                </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css" visible="false">
+                           <styleClass>
+                              <String fx:value="white-bg" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <TextField fx:id="Absence_search1" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                              <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
+                              <TableView fx:id="addStudents_tableView1" layoutX="3.0" layoutY="55.0" onMouseClicked="#addStudentsSelect" prefHeight="483.0" prefWidth="874.0" stylesheets="@Design/dashboardDesign.css">
+                                 <columns>
+                                    <TableColumn fx:id="addAbsence_col_stid" prefWidth="65.60000610351562" text="Student#" />
+                                    <TableColumn fx:id="addAbsence_col_class1" prefWidth="56.800018310546875" text="Class" />
+                                    <TableColumn fx:id="addAbsence_col_Course1" prefWidth="71.199951171875" text="Course" />
+                                    <TableColumn fx:id="addAbsence_col_firstName1" prefWidth="120.80006408691406" text="First Name" />
+                                    <TableColumn fx:id="addAbsence_col_lastName1" prefWidth="116.79998779296875" text="Last Name" />
+                                    <TableColumn fx:id="addAbsence_col_gender1" prefWidth="72.0" text="Gender" />
+                                    <TableColumn fx:id="addAbsence_col_reasonable" prefWidth="123.20001220703125" text="Total Reasonable Absences" />
+                                    <TableColumn fx:id="addAbsence_col_unreasonable" prefWidth="132.800048828125" text="Total Unreasonable Absences" />
+                                    <TableColumn fx:id="addAbsence_col_total" prefWidth="108.79996337890623" text="Total  Absences" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
                             </children>
                         </AnchorPane>
                     </center>
