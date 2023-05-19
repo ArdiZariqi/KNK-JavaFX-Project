@@ -721,3 +721,722 @@ public class TeacherDashboardController implements Initializable {
         addStudents_tableView.setItems(sortList);
 
     }
+
+    private String[] yearList = {"First Year", "Second Year", "Third Year", "Fourth Year"};
+
+    public void addStudentsYearList() {
+
+        List<String> yearL = new ArrayList<>();
+
+        for (String data : yearList) {
+            yearL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(yearL);
+        addStudents_year.setItems(ObList);
+
+    }
+
+    public void addStudentsCourseList() {
+
+        String listCourse = "SELECT * FROM course";
+
+        connect = connectDb.getConnection();
+
+        try {
+
+            ObservableList listC = FXCollections.observableArrayList();
+
+            prepare = connect.prepareStatement(listCourse);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                listC.add(result.getString("course"));
+            }
+            addStudents_course.setItems(listC);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String[] genderList = {"Male", "Female", "Others"};
+
+    public void addStudentsGenderList() {
+        List<String> genderL = new ArrayList<>();
+
+        for (String data : genderList) {
+            genderL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(genderL);
+        addStudents_gender.setItems(ObList);
+    }
+
+    private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
+
+    public void addStudentsStatusList() {
+        List<String> statusL = new ArrayList<>();
+
+        for (String data : statusList) {
+            statusL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(statusL);
+        addStudents_status.setItems(ObList);
+    }
+
+    //    NOW WE NEED THE COURSE, SO LETS WORK NOW THE AVAILABLE COURSE FORM : )
+//    LETS WORK FIRST THE ADD STUDENTS FORM : )
+    public ObservableList<studentData> addStudentsListData() {
+
+        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM student";
+
+        connect = connectDb.getConnection();
+
+        try {
+            studentData studentD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD = new studentData(result.getInt("studentNum"),
+                        result.getString("year"),
+                        result.getString("course"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getDate("birth"),
+                        result.getString("status"),
+                        result.getString("image"));
+
+                listStudents.add(studentD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+
+    private ObservableList<studentData> addStudentsListD;
+
+    public void addStudentsShowListData() {
+        addStudentsListD = addStudentsListData();
+
+        addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        addStudents_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        addStudents_col_gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        addStudents_col_birth.setCellValueFactory(new PropertyValueFactory<>("birth"));
+        addStudents_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        addStudents_tableView.setItems(addStudentsListD);
+
+    }
+
+    public void addStudentsSelect() {
+
+        studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
+        int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        addStudents_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        addStudents_firstName.setText(studentD.getFirstName());
+        addStudents_lastName.setText(studentD.getLastName());
+        addStudents_birth.setValue(LocalDate.parse(String.valueOf(studentD.getBirth())));
+
+        String uri = "file:" + studentD.getImage();
+
+        image = new Image(uri, 120, 149, false, true);
+        addStudents_imageView.setImage(image);
+
+        getData.path = studentD.getImage();
+
+    }
+
+    public void availableCourseAdd() {
+
+        String insertData = "INSERT INTO course (course,description,degree) VALUES(?,?,?)";
+
+        connect = connectDb.getConnection();
+
+        try {
+            Alert alert;
+
+            if (availableCourse_course.getText().isEmpty()
+                    || availableCourse_description.getText().isEmpty()
+                    || availableCourse_degree.getText().isEmpty()) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+//            CHECK IF THE COURSE YOU WANT TO INSERT IS ALREADY EXIST!
+                String checkData = "SELECT course FROM course WHERE course = '"
+                        + availableCourse_course.getText() + "'";
+
+                statement = connect.createStatement();
+                result = statement.executeQuery(checkData);
+
+                if (result.next()) {
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Course: " + availableCourse_course.getText() + " was already exist!");
+                    alert.showAndWait();
+                } else {
+                    prepare = connect.prepareStatement(insertData);
+                    prepare.setString(1, availableCourse_course.getText());
+                    prepare.setString(2, availableCourse_description.getText());
+                    prepare.setString(3, availableCourse_degree.getText());
+
+                    prepare.executeUpdate();
+
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Added!");
+                    alert.showAndWait();
+
+                    // TO BECOME UPDATED OUR TABLEVIEW ONCE THE DATA WE GAVE SUCCESSFUL
+                    availableCourseShowListData();
+                    // TO CLEAR THE TEXT FIELDS
+                    availableCourseClear();
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void availableCourseUpdate() {
+
+        String updateData = "UPDATE course SET description = '"
+                + availableCourse_description.getText() + "', degree = '"
+                + availableCourse_degree.getText() + "' WHERE course = '"
+                + availableCourse_course.getText() + "'";
+
+        connect = connectDb.getConnection();
+
+        try {
+            Alert alert;
+
+            if (availableCourse_course.getText().isEmpty()
+                    || availableCourse_description.getText().isEmpty()
+                    || availableCourse_degree.getText().isEmpty()) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+
+                alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE Course: " + availableCourse_course.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(updateData);
+
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+
+                    // TO BECOME UPDATED OUR TABLEVIEW ONCE THE DATA WE GAVE SUCCESSFUL
+                    availableCourseShowListData();
+                    // TO CLEAR THE TEXT FIELDS
+                    availableCourseClear();
+
+                } else {
+                    return;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void availableCourseDelete() {
+
+        String deleteData = "DELETE FROM course WHERE course = '"
+                + availableCourse_course.getText() + "'";
+
+        connect = connectDb.getConnection();
+
+        try {
+            Alert alert;
+
+            if (availableCourse_course.getText().isEmpty()
+                    || availableCourse_description.getText().isEmpty()
+                    || availableCourse_degree.getText().isEmpty()) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+//                ALL GOOD GUYS! NOW LETS PROCEED TO ADD STUDENTS FORM
+                alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to DELETE Course: " + availableCourse_course.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(deleteData);
+
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+
+                    // TO BECOME UPDATED OUR TABLEVIEW ONCE THE DATA WE GAVE SUCCESSFUL
+                    availableCourseShowListData();
+                    // TO CLEAR THE TEXT FIELDS
+                    availableCourseClear();
+
+                } else {
+                    return;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void availableCourseClear() {
+        availableCourse_course.setText("");
+        availableCourse_description.setText("");
+        availableCourse_degree.setText("");
+    }
+
+    public ObservableList<courseData> availableCourseListData() {
+
+        ObservableList<courseData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM course";
+
+        connect = connectDb.getConnection();
+
+        try {
+            courseData courseD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                courseD = new courseData(result.getString("course"),
+                        result.getString("description"),
+                        result.getString("degree"));
+
+                listData.add(courseD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private ObservableList<courseData> availableCourseList;
+
+    public void availableCourseShowListData() {
+        availableCourseList = availableCourseListData();
+
+        availableCourse_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        availableCourse_col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        availableCourse_col_degree.setCellValueFactory(new PropertyValueFactory<>("degree"));
+
+        availableCourse_tableView.setItems(availableCourseList);
+
+    }
+
+    public void availableCourseSelect() {
+        courseData courseD = availableCourse_tableView.getSelectionModel().getSelectedItem();
+        int num = availableCourse_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        availableCourse_course.setText(courseD.getCourse());
+        availableCourse_description.setText(courseD.getDescription());
+        availableCourse_degree.setText(courseD.getDegree());
+
+    }
+
+    public void studentAbstencesUpdate() {
+        double finalCheck1 = 0;
+        double finalCheck2 = 0;
+
+        String checkData = "SELECT * FROM student_Abstence WHERE studentNum = '"
+                + studentAbstence_studentNum.getText() + "'";
+
+        connect = connectDb.getConnection();
+
+        double finalResult = 0;
+
+        try {
+
+            prepare = connect.prepareStatement(checkData);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                finalCheck1 = result.getDouble("first_sem");
+                finalCheck2 = result.getDouble("second_sem");
+            }
+
+            if (finalCheck1 == 0 || finalCheck2 == 0) {
+                finalResult = 0;
+            } else { //LIKE (X+Y)/2 AVE WE NEED TO FIND FOR FINALS
+                finalResult = (Double.parseDouble(studentAbstence_firstSem.getText())
+                        + Double.parseDouble(studentAbstence_secondSem.getText()) / 2);
+            }
+
+            String updateData = "UPDATE student_Abstence SET "
+                    + " year = '" + studentAbstence_year.getText()
+                    + "', course = '" + studentAbstence_course.getText()
+                    + "', first_sem = '" + studentAbstence_firstSem.getText()
+                    + "', second_sem = '" + studentAbstence_secondSem.getText()
+                    + "', final = '" + finalResult + "' WHERE studentNum = '"
+                    + studentAbstence_studentNum.getText() + "'";
+
+            Alert alert;
+
+            if (studentAbstence_studentNum.getText().isEmpty()
+                    || studentAbstence_year.getText().isEmpty()
+                    || studentAbstence_course.getText().isEmpty()) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+
+            } else {
+
+                alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE Student #" + studentAbstence_studentNum.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(updateData);
+
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+
+                    // TO UPDATE THE TABLEVIEW
+                    studentAbstencesShowListData();
+                } else {
+                    return;
+                }
+
+            }// NOT WE ARE CLOSER TO THE ENDING PART  :) LETS PROCEED TO DASHBOARD FORM
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void studentAbstencesClear() {
+        studentAbstence_studentNum.setText("");
+        studentAbstence_year.setText("");
+        studentAbstence_course.setText("");
+        studentAbstence_firstSem.setText("");
+        studentAbstence_secondSem.setText("");
+    }
+
+    public ObservableList<studentData> studentAbstencesListData() {
+
+        ObservableList<studentData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM student_Abstence";
+
+        connect = connectDb.getConnection();
+        try {
+            studentData studentD;
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD = new studentData(result.getInt("studentNum"),
+                        result.getString("year"),
+                        result.getString("course"),
+                        result.getDouble("first_sem"),
+                        result.getDouble("second_sem"),
+                        result.getDouble("final"));
+
+                listData.add(studentD);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private ObservableList<studentData> studentAbstencesList;
+
+    public void studentAbstencesShowListData() {
+        studentAbstencesList = studentAbstencesListData();
+
+        studentAbstence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        studentAbstence_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        studentAbstence_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        studentAbstence_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
+        studentAbstence_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
+        studentAbstence_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
+//        WE NEED TO FIX THE DELETE ON ADD STUDENT FORM
+        studentAbstence_tableView.setItems(studentAbstencesList);
+
+    }
+
+    public void studentAbstencesSelect() {
+
+        studentData studentD = studentAbstence_tableView.getSelectionModel().getSelectedItem();
+        int num = studentAbstence_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        studentAbstence_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        studentAbstence_year.setText(studentD.getYear());
+        studentAbstence_course.setText(studentD.getCourse());
+        studentAbstence_firstSem.setText(String.valueOf(studentD.getFirstSem()));
+        studentAbstence_secondSem.setText(String.valueOf(studentD.getSecondSem()));
+    }
+
+    public void studentAbstencesSearch() {
+
+        FilteredList<studentData> filter = new FilteredList<>(studentAbstencesList, e -> true);
+
+        studentAbstence_search.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateStudentData -> {
+
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }
+                String searchKey = newValue.toLowerCase();
+
+                if (predicateStudentData.getStudentNum().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getYear().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getCourse().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFirstSem().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getSecondSem().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFinals().toString().contains(searchKey)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<studentData> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(studentAbstence_tableView.comparatorProperty());
+        studentAbstence_tableView.setItems(sortList);
+
+    }
+
+    private double x = 0;
+    private double y = 0;
+
+    public void logout() {
+
+        try {
+
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to logout?");
+
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get().equals(ButtonType.OK)) {
+
+                //HIDE YOUR DASHBOARD FORM
+                logout.getScene().getWindow().hide();
+
+                //LINK YOUR LOGIN FORM
+                Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+                root.setOnMousePressed((MouseEvent event) -> {
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                });
+
+                root.setOnMouseDragged((MouseEvent event) -> {
+                    stage.setX(event.getScreenX() - x);
+                    stage.setY(event.getScreenY() - y);
+
+                    stage.setOpacity(.8);
+                });
+
+                root.setOnMouseReleased((MouseEvent event) -> {
+                    stage.setOpacity(1);
+                });
+
+                stage.initStyle(StageStyle.TRANSPARENT);
+
+                stage.setScene(scene);
+                stage.show();
+
+            } else {
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void displayUsername(){
+        username.setText(getData.username);
+    }
+    // THATS IT FOR THESE VIDEOS, THANKS FOR WATCHING!! SUBSCRIBE AND TURN ON NOTIFICATION
+//    TO NOTIF YOU FOR MORE UPCOMING VIDEOS THANKS FOR THE SUPPORT! : )
+    public void defaultNav(){
+        home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+    }
+
+    public void switchForm(ActionEvent event) {
+        if (event.getSource() == home_btn) {
+            home_form.setVisible(true);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
+
+            home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            availableCourse_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+
+            homeDisplayTotalEnrolledStudents();
+            homeDisplayMaleEnrolled();
+            homeDisplayFemaleEnrolled();
+            homeDisplayEnrolledMaleChart();
+            homeDisplayFemaleEnrolledChart();
+            homeDisplayTotalEnrolledChart();
+
+        } else if (event.getSource() == addStudents_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(true);
+            availableCourse_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
+
+            addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            home_btn.setStyle("-fx-background-color:transparent");
+            availableCourse_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+
+//            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
+            addStudentsShowListData();
+            addStudentsYearList();
+            addStudentsGenderList();
+            addStudentsStatusList();
+            addStudentsCourseList();
+            addStudentsSearch();
+
+        } else if (event.getSource() == availableCourse_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(true);
+            studentAbstence_form.setVisible(false);
+
+            availableCourse_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            home_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+
+            availableCourseShowListData();
+
+        } else if (event.getSource() == studentAbstence_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(false);
+            studentAbstence_form.setVisible(true);
+
+            studentAbstence_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            availableCourse_btn.setStyle("-fx-background-color:transparent");
+            home_btn.setStyle("-fx-background-color:transparent");
+
+            studentAbstencesShowListData();
+            studentAbstencesSearch();
+
+        }
+    }
+
+    public void close() {
+        System.exit(0);
+    }
+
+    public void minimize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    // SORRY ABOUT THAT, I JUST NAMED THE DIFFERENT COMPONENTS WITH THE SAME NAME
+    // MAKE SURE THAT THE NAME YOU GAVE TO THEM ARE DIFFERENT TO THE OTHER OKAY?
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        displayUsername();
+        defaultNav();
+
+        homeDisplayTotalEnrolledStudents();
+        homeDisplayMaleEnrolled();
+        homeDisplayFemaleEnrolled();
+        homeDisplayEnrolledMaleChart();
+        homeDisplayFemaleEnrolledChart();
+        homeDisplayTotalEnrolledChart();
+
+        // TO SHOW IMMIDIATELY WHEN WE PROCEED TO DASHBOARD APPLICATION FORM
+        addStudentsShowListData();
+        addStudentsYearList();
+        addStudentsGenderList();
+        addStudentsStatusList();
+        addStudentsCourseList();
+
+        availableCourseShowListData();
+
+        studentAbstencesShowListData();
+
+    }
+
+}
