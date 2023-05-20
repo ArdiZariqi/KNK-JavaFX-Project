@@ -421,9 +421,7 @@ public class AdminController implements Initializable {
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
 
-                    // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
                     addStudentsClear();
                 }
             }
