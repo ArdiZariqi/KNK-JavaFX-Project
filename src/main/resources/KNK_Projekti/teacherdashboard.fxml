@@ -105,7 +105,7 @@
                     <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -218,7 +218,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="5.0" layoutY="14.0" prefHeight="527.0" prefWidth="879.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -319,7 +319,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css" visible="false">
+                        <AnchorPane fx:id="studentAbstence_form" layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
