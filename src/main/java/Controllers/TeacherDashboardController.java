@@ -1,5 +1,5 @@
 package Controllers;
-
+import Models.AbsenceData;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
@@ -14,7 +14,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import DBconnection.connectDb;
 import Models.courseData;
-import Models.studentData;
 import Models.getData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,34 +50,135 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
+
+
 public class TeacherDashboardController implements Initializable {
 
     @FXML
-    private AnchorPane main_form;
+    private DatePicker Absence_date;
 
     @FXML
-    private Button close;
+    private TextField Absence_search1;
 
     @FXML
-    private Button minimize;
+    private Button addAbsence_addBtn;
 
     @FXML
-    private Label username;
+    private ComboBox<?> addAbsence_class;
 
     @FXML
-    private Button home_btn;
+    private Button addAbsence_clearBtn;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_Course;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_Course1;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_absenceNum;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_class;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_class1;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_date;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_firstName;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_firstName1;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_gender;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_gender1;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_lastName;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_lastName1;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_reasonability;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_reasonable;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_status;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_stid;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_studentNum;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_time;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_total;
+
+    @FXML
+    private TableColumn<?, ?> addAbsence_col_unreasonable;
+
+    @FXML
+    private ComboBox<?> addAbsence_course;
+
+    @FXML
+    private Button addAbsence_deleteBtn;
+
+    @FXML
+    private TextField addAbsence_search;
+
+    @FXML
+    private TextField addAbsence_studentNum;
+
+    @FXML
+    private TextField addAbsence_time;
+
+    @FXML
+    private Button addAbsence_updateBtn;
+
+    @FXML
+    private ComboBox<?> addStudents_Absences;
 
     @FXML
     private Button addStudents_btn;
 
     @FXML
-    private Button availableCourse_btn;
+    private TextField addStudents_firstName;
 
     @FXML
-    private Button studentAbstence_btn;
+    private AnchorPane addStudents_form;
 
     @FXML
-    private Button logout;
+    private ComboBox<?> addStudents_gender;
+
+    @FXML
+    private TextField addStudents_lastName;
+
+    @FXML
+    private ComboBox<?> addStudents_status;
+
+    @FXML
+    private TableView<?> addStudents_tableView;
+
+    @FXML
+    private TableView<?> addStudents_tableView1;
+
+    @FXML
+    private Button close;
+
+    @FXML
+    private Button home_btn;
 
     @FXML
     private AnchorPane home_form;
@@ -87,189 +187,46 @@ public class TeacherDashboardController implements Initializable {
     private Label home_totalEnrolled;
 
     @FXML
-    private Label home_totalFemale;
-
-    @FXML
-    private Label home_totalMale;
-
-    @FXML
     private BarChart<?, ?> home_totalEnrolledChart;
+
+    @FXML
+    private Label home_totalFemale;
 
     @FXML
     private AreaChart<?, ?> home_totalFemaleChart;
 
     @FXML
+    private Label home_totalMale;
+
+    @FXML
     private LineChart<?, ?> home_totalMaleChart;
 
     @FXML
-    private AnchorPane addStudents_form;
+    private Button logout;
 
     @FXML
-    private TextField addStudents_search;
+    private AnchorPane main_form;
 
     @FXML
-    private TableView<studentData> addStudents_tableView;
+    private Button minimize;
 
     @FXML
-    private TableColumn<studentData, String> addStudents_col_studentNum;
+    private Button studentAbstence_btn;
 
     @FXML
-    private TableColumn<studentData, String> addStudents_col_year;
+    private Label username;
 
-    @FXML
-    private TableColumn<studentData, String> addStudents_col_course;
-
-    @FXML
-    private TableColumn<studentData, String> addStudents_col_firstName;
-
-    @FXML
-    private TableColumn<studentData, String> addStudents_col_lastName;
-
-    @FXML
-    private TableColumn<studentData, String> addStudents_col_gender;
-
-    @FXML
-    private TableColumn<studentData, String> addStudents_col_birth;
-
-    @FXML
-    private TableColumn<studentData, String> addStudents_col_status;
-
-    @FXML
-    private TextField addStudents_studentNum;
-
-    @FXML
-    private ComboBox<?> addStudents_year;
-
-    @FXML
-    private ComboBox<?> addStudents_course;
-
-    @FXML
-    private TextField addStudents_firstName;
-
-    @FXML
-    private TextField addStudents_lastName;
-
-    @FXML
-    private DatePicker addStudents_birth;
-
-    @FXML
-    private ComboBox<?> addStudents_status;
-
-    @FXML
-    private ComboBox<?> addStudents_gender;
-
-    @FXML
-    private ImageView addStudents_imageView;
-
-    @FXML
-    private Button addStudents_insertBtn;
-
-    @FXML
-    private Button addStudents_addBtn;
-
-    @FXML
-    private Button addStudents_updateBtn;
-
-    @FXML
-    private Button addStudents_deleteBtn;
-
-    @FXML
-    private Button addStudents_clearBtn;
-
-    @FXML
-    private AnchorPane availableCourse_form;
-
-    @FXML
-    private TextField availableCourse_course;
-
-    @FXML
-    private TextField availableCourse_description;
-
-    @FXML
-    private TextField availableCourse_degree;
-
-    @FXML
-    private Button availableCourse_addBtn;
-
-    @FXML
-    private Button availableCourse_updateBtn;
-
-    @FXML
-    private Button availableCourse_clearBtn;
-
-    @FXML
-    private Button availableCourse_deleteBtn;
-
-    @FXML
-    private TableView<courseData> availableCourse_tableView;
-
-    @FXML
-    private TableColumn<courseData, String> availableCourse_col_course;
-
-    @FXML
-    private TableColumn<courseData, String> availableCourse_col_description;
-
-    @FXML
-    private TableColumn<courseData, String> availableCourse_col_degree;
-
-    @FXML
-    private AnchorPane studentAbstence_form;
-
-    @FXML
-    private TextField studentAbstence_studentNum;
-
-    @FXML
-    private Label studentAbstence_year;
-
-    @FXML
-    private Label studentAbstence_course;
-
-    @FXML
-    private TextField studentAbstence_firstSem;
-
-    @FXML
-    private TextField studentAbstence_secondSem;
-
-    @FXML
-    private Button studentAbstence_updateBtn;
-
-    @FXML
-    private Button studentAbstence_clearBtn;
-
-    @FXML
-    private TableView<studentData> studentAbstence_tableView;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_studentNum;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_year;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_course;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_firstSem;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_secondSem;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_final;
-
-    @FXML
-    private TextField studentAbstence_search;
 
     private Connection connect;
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
 
-    private Image image;
 
-    public void homeDisplayTotalEnrolledStudents() {
 
-        String sql = "SELECT COUNT(id) FROM student";
+    public void homeDisplayTotalStudentsAbsence() {
+
+        String sql = "SELECT COUNT(a_id) FROM Absences";
 
         connect = connectDb.getConnection();
 
@@ -280,7 +237,7 @@ public class TeacherDashboardController implements Initializable {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                countEnrolled = result.getInt("COUNT(id)");
+                countEnrolled = result.getInt("COUNT(a_id)");
             }
 
             home_totalEnrolled.setText(String.valueOf(countEnrolled));
@@ -291,9 +248,9 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void homeDisplayFemaleEnrolled() {
+    public void homeDisplayTotalFemaleAbsences() {
 
-        String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
+        String sql = "SELECT COUNT(a_id) FROM Absences WHERE gender = 'Female' and status = 'Enrolled'";
 
         connect = connectDb.getConnection();
 
@@ -304,7 +261,7 @@ public class TeacherDashboardController implements Initializable {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                countFemale = result.getInt("COUNT(id)");
+                countFemale = result.getInt("COUNT(a_id)");
             }
 
             home_totalFemale.setText(String.valueOf(countFemale));
@@ -315,9 +272,9 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void homeDisplayMaleEnrolled() {
+    public void homeDisplayTotalMaleAbsences() {
 
-        String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
+        String sql = "SELECT COUNT(a_id) FROM Absences WHERE gender = 'Male' and status = 'Enrolled'";
 
         connect = connectDb.getConnection();
         try {
@@ -327,7 +284,7 @@ public class TeacherDashboardController implements Initializable {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                countMale = result.getInt("COUNT(id)");
+                countMale = result.getInt("COUNT(a_id)");
             }
             home_totalMale.setText(String.valueOf(countMale));
 
@@ -337,11 +294,11 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void homeDisplayTotalEnrolledChart() {
+    public void homeDisplayTotalAbsenceChart() {
 
         home_totalEnrolledChart.getData().clear();
 
-        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+        String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
         connect = connectDb.getConnection();
 
@@ -363,11 +320,11 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void homeDisplayFemaleEnrolledChart() {
+    public void homeDisplayFemaleAbsenceChart() {
 
         home_totalFemaleChart.getData().clear();
 
-        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+        String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
         connect = connectDb.getConnection();
 
@@ -389,11 +346,11 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void homeDisplayEnrolledMaleChart() {
+    public void homeDisplayAbsenceMaleChart() {
 
         home_totalMaleChart.getData().clear();
 
-        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+        String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
         connect = connectDb.getConnection();
 
@@ -415,10 +372,10 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void addStudentsAdd() {
+    public void AbsencesAdd() {
 
-        String insertData = "INSERT INTO student "
-                + "(studentNum,year,course,firstName,lastName,gender,birth,status,image,date) "
+        String insertData = "INSERT INTO Absences "
+                + "(student_id,class_,course_id,time,firstName,lastName,gender,date_,status,reasonability) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         connect = connectDb.getConnection();
@@ -426,14 +383,16 @@ public class TeacherDashboardController implements Initializable {
         try {
             Alert alert;
 
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
-                    || addStudents_course.getSelectionModel().getSelectedItem() == null
+            if (addAbsence_studentNum.getText().isEmpty()
+                    || addAbsence_class.getSelectionModel().getSelectedItem() == null
+                    || addAbsence_course.getSelectionModel().getSelectedItem() == null
+                    || addAbsence_time.getText().isEmpty()
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
                     || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || addStudents_birth.getValue() == null
+                    || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
+                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null
                     || getData.path == null || getData.path == "") {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
@@ -442,8 +401,8 @@ public class TeacherDashboardController implements Initializable {
                 alert.showAndWait();
             } else {
                 // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-                String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
-                        + addStudents_studentNum.getText() + "'";
+                String checkData = "SELECT a_id FROM Absences WHERE a_id = '"
+                        + addAbsence_studentNum.getText() + "'";
 
                 statement = connect.createStatement();
                 result = statement.executeQuery(checkData);
@@ -452,17 +411,19 @@ public class TeacherDashboardController implements Initializable {
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Student #" + addStudents_studentNum.getText() + " was already exist!");
+                    alert.setContentText("Student #" + addAbsence_studentNum.getText() + " was already exist!");
                     alert.showAndWait();
                 } else {
                     prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, addStudents_studentNum.getText());
-                    prepare.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
+                    prepare.setString(1, addAbsence_studentNum.getText());
+                    prepare.setString(2, (String) addAbsence_class.getSelectionModel().getSelectedItem());
+                    prepare.setString(3, (String) addAbsence_course.getSelectionModel().getSelectedItem());
+                    prepare.setString(3, addAbsence_time.getText());
                     prepare.setString(4, addStudents_firstName.getText());
                     prepare.setString(5, addStudents_lastName.getText());
                     prepare.setString(6, (String) addStudents_gender.getSelectionModel().getSelectedItem());
-                    prepare.setString(7, String.valueOf(addStudents_birth.getValue()));
+                    prepare.setString(7, String.valueOf(Absence_date.getValue()));
+                    prepare.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
                     prepare.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
 
                     String uri = getData.path;
@@ -475,19 +436,6 @@ public class TeacherDashboardController implements Initializable {
 
                     prepare.executeUpdate();
 
-                    String insertStudentAbstence = "INSERT INTO student_Abstence "
-                            + "(studentNum,year,course,first_sem,second_sem,final) "
-                            + "VALUES(?,?,?,?,?,?)";
-
-                    prepare = connect.prepareStatement(insertStudentAbstence);
-                    prepare.setString(1, addStudents_studentNum.getText());
-                    prepare.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(4, "0");
-                    prepare.setString(5, "0");
-                    prepare.setString(6, "0");
-
-                    prepare.executeUpdate();
 
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
@@ -498,7 +446,7 @@ public class TeacherDashboardController implements Initializable {
                     // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
                     // TO CLEAR THE FIELDS
-                    addStudentsClear();
+                    addAbsencesClear();
                 }
             }
 
@@ -507,34 +455,38 @@ public class TeacherDashboardController implements Initializable {
         }
     }
 
-    public void addStudentsUpdate() {
+    public void addAbsencesUpdate() {
 
         String uri = getData.path;
         uri = uri.replace("\\", "\\\\");
 
-        String updateData = "UPDATE student SET "
-                + "year = '" + addStudents_year.getSelectionModel().getSelectedItem()
-                + "', course = '" + addStudents_course.getSelectionModel().getSelectedItem()
+        String updateData = "UPDATE Absences SET "
+                + "' student_id = '" + addAbsence_studentNum.getText()
+                + "', class_ = '" + addAbsence_class.getSelectionModel().getSelectedItem()
+                + "', course_id = '" + addAbsence_course.getSelectionModel().getSelectedItem()
+                + "', time = '" + addAbsence_time.getText()
                 + "', firstName = '" + addStudents_firstName.getText()
-                + "', lastName = '" + addStudents_lastName.getText()
+                + "', lastName = '" + addStudents_firstName.getText()
                 + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
-                + "', birth = '" + addStudents_birth.getValue()
+                + "', date_ = '" + Absence_date.getValue()
                 + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
-                + "', image = '" + uri + "' WHERE studentNum = '"
-                + addStudents_studentNum.getText() + "'";
+                + "', reasonability = '" + addStudents_Absences.getSelectionModel().getSelectedItem()+"' where student_id '"
+                + addAbsence_studentNum.getText() + "'";
 
         connect = connectDb.getConnection();
 
         try {
             Alert alert;
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
-                    || addStudents_course.getSelectionModel().getSelectedItem() == null
+            if (addAbsence_studentNum.getText().isEmpty()
+                    || addAbsence_class.getSelectionModel().getSelectedItem() == null
+                    || addAbsence_course.getSelectionModel().getSelectedItem() == null
+                    || addAbsence_time.getText().isEmpty()
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
                     || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || addStudents_birth.getValue() == null
+                    || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
+                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null
                     || getData.path == null || getData.path == "") {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
@@ -546,7 +498,7 @@ public class TeacherDashboardController implements Initializable {
                 alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to UPDATE Student #" + addStudents_studentNum.getText() + "?");
+                alert.setContentText("Are you sure you want to UPDATE Student Absences #" + addAbsence_studentNum.getText() + "?");
                 Optional<ButtonType> option = alert.showAndWait();
 
                 if (option.get().equals(ButtonType.OK)) {
@@ -562,7 +514,7 @@ public class TeacherDashboardController implements Initializable {
                     // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
                     // TO CLEAR THE FIELDS
-                    addStudentsClear();
+                    addAbsencesClear();
 
                 } else {
                     return;
@@ -573,23 +525,25 @@ public class TeacherDashboardController implements Initializable {
         }
     }
 
-    public void addStudentsDelete() {
+    public void addAbsencesDelete() {
 
-        String deleteData = "DELETE FROM student WHERE studentNum = '"
-                + addStudents_studentNum.getText() + "'";
+        String deleteData = "DELETE FROM Absences WHERE student_id = '"
+                + addAbsence_studentNum.getText() + "'";
 
         connect = connectDb.getConnection();
 
         try {
             Alert alert;
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
-                    || addStudents_course.getSelectionModel().getSelectedItem() == null
+            if (addAbsence_studentNum.getText().isEmpty()
+                    || addAbsence_class.getSelectionModel().getSelectedItem() == null
+                    || addAbsence_course.getSelectionModel().getSelectedItem() == null
+                    || addAbsence_time.getText().isEmpty()
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
                     || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || addStudents_birth.getValue() == null
+                    || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
+                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null
                     || getData.path == null || getData.path == "") {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
@@ -600,7 +554,7 @@ public class TeacherDashboardController implements Initializable {
                 alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
                 alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to DELETE Student #" + addStudents_studentNum.getText() + "?");
+                alert.setContentText("Are you sure you want to DELETE Student #" + addAbsence_studentNum.getText() + "?");
 
                 Optional<ButtonType> option = alert.showAndWait();
 
@@ -609,21 +563,8 @@ public class TeacherDashboardController implements Initializable {
                     statement = connect.createStatement();
                     statement.executeUpdate(deleteData);
 
-                    String checkData = "SELECT studentNum FROM student_Abstence "
-                            + "WHERE studentNum = '" + addStudents_studentNum.getText() + "'";
 
-                    prepare = connect.prepareStatement(checkData);
-                    result = prepare.executeQuery();
 
-                    // IF THE STUDENT NUMBER IS EXIST THEN PROCEED TO DELETE
-                    if (result.next()) {
-                        String deleteAbstence = "DELETE FROM student_Abstence WHERE "
-                                + "studentNum = '" + addStudents_studentNum.getText() + "'";
-
-                        statement = connect.createStatement();
-                        statement.executeUpdate(deleteAbstence);
-
-                    }// IF NOT THEN NVM
 
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
@@ -634,7 +575,7 @@ public class TeacherDashboardController implements Initializable {
                     // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
                     // TO CLEAR THE FIELDS
-                    addStudentsClear();
+                    addAbsencesClear();
 
                 } else {
                     return;
@@ -647,43 +588,26 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    public void addStudentsClear() {
-        addStudents_studentNum.setText("");
-        addStudents_year.getSelectionModel().clearSelection();
-        addStudents_course.getSelectionModel().clearSelection();
+    public void addAbsencesClear() {
+        addAbsence_studentNum.setText("");
+        addAbsence_class.getSelectionModel().clearSelection();
+        addAbsence_course.getSelectionModel().clearSelection();
+        addAbsence_time.setText("");
         addStudents_firstName.setText("");
         addStudents_lastName.setText("");
         addStudents_gender.getSelectionModel().clearSelection();
-        addStudents_birth.setValue(null);
+        Absence_date.setValue(null);
         addStudents_status.getSelectionModel().clearSelection();
-        addStudents_imageView.setImage(null);
+        addStudents_Absences.getSelectionModel().clearSelection();
 
         getData.path = "";
     }
 
-    public void addStudentsInsertImage() {
+    public void addAbsenceSearch() {
 
-        FileChooser open = new FileChooser();
-        open.setTitle("Open Image File");
-        open.getExtensionFilters().add(new ExtensionFilter("Image File", "*jpg", "*png"));
+        FilteredList<AbsenceData> filter = new FilteredList<>(addStudentsListD, e -> true);
 
-        File file = open.showOpenDialog(main_form.getScene().getWindow());
-
-        if (file != null) {
-
-            image = new Image(file.toURI().toString(), 120, 149, false, true);
-            addStudents_imageView.setImage(image);
-
-            getData.path = file.getAbsolutePath();
-
-        }
-    } //WHILE WE INSERT THE DATA ON STUDENT, WE SHOULD INSERT ALSO THE DATA TO STUDENT_Abstence
-
-    public void addStudentsSearch() {
-
-        FilteredList<studentData> filter = new FilteredList<>(addStudentsListD, e -> true);
-
-        addStudents_search.textProperty().addListener((Observable, oldValue, newValue) -> {
+        addAbsence_search.textProperty().addListener((Observable, oldValue, newValue) -> {
 
             filter.setPredicate(predicateStudentData -> {
 
@@ -693,11 +617,13 @@ public class TeacherDashboardController implements Initializable {
 
                 String searchKey = newValue.toLowerCase();
 
-                if (predicateStudentData.getStudentNum().toString().contains(searchKey)) {
+                if (predicateStudentData.getStudent_id().toString().contains(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getYear().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getClass_().toLowerCase().contains(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getCourse().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getCourse_id().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getTime().toString().contains(searchKey)) {
                     return true;
                 } else if (predicateStudentData.getFirstName().toLowerCase().contains(searchKey)) {
                     return true;
@@ -705,9 +631,11 @@ public class TeacherDashboardController implements Initializable {
                     return true;
                 } else if (predicateStudentData.getGender().toLowerCase().contains(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getBirth().toString().contains(searchKey)) {
+                } else if (predicateStudentData.getDate_().toString().contains(searchKey)) {
                     return true;
                 } else if (predicateStudentData.getStatus().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getReasonability().toLowerCase().contains(searchKey)) {
                     return true;
                 } else {
                     return false;
@@ -715,29 +643,14 @@ public class TeacherDashboardController implements Initializable {
             });
         });
 
-        SortedList<studentData> sortList = new SortedList<>(filter);
+        SortedList<AbsenceData> sortList = new SortedList<>(filter);
 
         sortList.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
         addStudents_tableView.setItems(sortList);
 
     }
 
-    private String[] yearList = {"First Year", "Second Year", "Third Year", "Fourth Year"};
-
-    public void addStudentsYearList() {
-
-        List<String> yearL = new ArrayList<>();
-
-        for (String data : yearList) {
-            yearL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(yearL);
-        addStudents_year.setItems(ObList);
-
-    }
-
-    public void addStudentsCourseList() {
+    public void addAbsencesCourseList() {
 
         String listCourse = "SELECT * FROM course";
 
@@ -753,7 +666,7 @@ public class TeacherDashboardController implements Initializable {
             while (result.next()) {
                 listC.add(result.getString("course"));
             }
-            addStudents_course.setItems(listC);
+            addAbsence_course.setItems(listC);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -761,7 +674,21 @@ public class TeacherDashboardController implements Initializable {
 
     }
 
-    private String[] genderList = {"Male", "Female", "Others"};
+   private String[]  classList ={ "Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
+    public void addStudentsClassList() {
+        List<String> classL = new ArrayList<>();
+
+        for (String data : classList) {
+            classL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(classL);
+        addStudents_gender.setItems(ObList);
+    }
+
+
+
+    private String[] genderList = {"Male", "Female"};
 
     public void addStudentsGenderList() {
         List<String> genderL = new ArrayList<>();
@@ -786,10 +713,21 @@ public class TeacherDashboardController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(statusL);
         addStudents_status.setItems(ObList);
     }
+    private String[] reasonabilityList = {"Reasonable", "Unreasonable"};
 
-    //    NOW WE NEED THE COURSE, SO LETS WORK NOW THE AVAILABLE COURSE FORM : )
-//    LETS WORK FIRST THE ADD STUDENTS FORM : )
-    public ObservableList<studentData> addStudentsListData() {
+    public void AbsenceList() {
+        List<String> reasonabilityL = new ArrayList<>();
+
+        for (String data : reasonabilityList) {
+            reasonabilityL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(reasonabilityL);
+        addStudents_Absences.setItems(ObList);
+    }
+
+
+    public ObservableList<AbsenceData> addStudentsListData() {
 
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
 
@@ -822,7 +760,7 @@ public class TeacherDashboardController implements Initializable {
         return listStudents;
     }
 
-    private ObservableList<studentData> addStudentsListD;
+    private ObservableList<AbsenceData> addStudentsListD;
 
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
