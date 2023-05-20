@@ -67,13 +67,13 @@ public class TeacherDashboardController implements Initializable {
     private Button addAbsence_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_Course;
+    private TableColumn<AbsenceData,String > addAbsence_col_Course;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_Course1;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_absenceNum;
+    private TableColumn<AbsenceData, Integer> addAbsence_col_absenceNum;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_absence;
