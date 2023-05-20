@@ -218,7 +218,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="5.0" layoutY="14.0" prefHeight="527.0" prefWidth="879.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -232,21 +232,21 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addAbsenceSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                         <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
                                                         <TableView fx:id="addStudents_tableView" layoutX="7.0" layoutY="57.0" onMouseClicked="#addStudentsSelect" prefHeight="190.0" prefWidth="865.0" stylesheets="@Design/dashboardDesign.css">
                                                             <columns>
-                                                                <TableColumn fx:id="addAbsence_col_absenceNum" prefWidth="63.20000076293945" text="Absence#" />
+                                                <TableColumn fx:id="addAbsence_col_absence" prefWidth="71.20001220703125" text="Absence#" />
                                                                 <TableColumn fx:id="addAbsence_col_studentNum" prefWidth="65.60000610351562" text="Student Id" />
-                                                                <TableColumn fx:id="addAbsence_col_class" prefWidth="49.5999755859375" text="Class" />
-                                                                <TableColumn fx:id="addAbsence_col_Course" prefWidth="68.79991149902344" text="Course" />
-                                                                <TableColumn fx:id="addAbsence_col_time" prefWidth="53.60003662109375" text="Time" />
-                                                                <TableColumn fx:id="addAbsence_col_firstName" prefWidth="99.20001220703125" text="First Name" />
-                                                                <TableColumn fx:id="addAbsence_col_lastName" prefWidth="107.2000732421875" text="Last Name" />
-                                                                <TableColumn fx:id="addAbsence_col_gender" prefWidth="74.4000244140625" text="Gender" />
-                                                <TableColumn fx:id="addAbsence_col_date" prefWidth="92.80010986328125" text="Date" />
-                                                <TableColumn fx:id="addAbsence_col_status" prefWidth="76.7999267578125" text="Status" />
-                                                <TableColumn fx:id="addAbsence_col_reasonability" prefWidth="101.60003662109375" text="Reasonability" />
+                                                                <TableColumn fx:id="addAbsence_col_class" prefWidth="59.20001220703125" text="Class" />
+                                                                <TableColumn fx:id="addAbsence_col_Course" prefWidth="73.60002136230469" text="Course" />
+                                                                <TableColumn fx:id="addAbsence_col_time" prefWidth="56.79998779296875" text="Time" />
+                                                                <TableColumn fx:id="addAbsence_col_firstName" prefWidth="115.99993896484375" text="First Name" />
+                                                                <TableColumn fx:id="addAbsence_col_lastName" prefWidth="104.00006103515625" text="Last Name" />
+                                                                <TableColumn fx:id="addAbsence_col_gender" prefWidth="60.0" text="Gender" />
+                                                <TableColumn fx:id="addAbsence_col_date" prefWidth="76.79986572265625" text="Date" />
+                                                <TableColumn fx:id="addAbsence_col_status" prefWidth="87.199951171875" text="Status" />
+                                                <TableColumn fx:id="addAbsence_col_reasonability" prefWidth="88.80010986328125" text="Reasonability" />
                                                             </columns>
                                                         </TableView>
                                                     </children>
@@ -267,7 +267,7 @@
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addAbsence_class" layoutX="109.0" layoutY="313.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addAbsence_class" layoutX="109.0" layoutY="313.0" onAction="#addAbsencesCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Label layoutX="313.0" layoutY="279.0" text="First Name:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
@@ -299,14 +299,14 @@
                                                 </Label>
                                                 <ComboBox fx:id="addStudents_status" layoutX="679.0" layoutY="276.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <Button fx:id="addAbsence_updateBtn" layoutX="608.0" layoutY="368.0" mnemonicParsing="false" onAction="#addAbsencesUpdate" prefHeight="55.0" prefWidth="94.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
-                                    <ComboBox fx:id="addAbsence_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <ComboBox fx:id="addAbsence_course" layoutX="109.0" layoutY="351.0" onAction="#addAbsencesCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                     <TextField fx:id="addAbsence_time" layoutX="109.0" layoutY="387.0" prefHeight="26.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                     <Label layoutX="34.0" layoutY="391.0" prefHeight="18.0" prefWidth="64.0" text="Time:">
                                        <font>
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="addAbsence_addBtn" layoutX="721.0" layoutY="368.0" mnemonicParsing="false" onAction="#addAbsencesAddBtn" prefHeight="55.0" prefWidth="94.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
+                                    <Button fx:id="addAbsence_addBtn" layoutX="721.0" layoutY="368.0" mnemonicParsing="false" onAction="#AbsencesAdd" prefHeight="55.0" prefWidth="94.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
                                     <Button fx:id="addAbsence_deleteBtn" layoutX="721.0" layoutY="441.0" mnemonicParsing="false" onAction="#addAbsencesDelete" prefHeight="55.0" prefWidth="94.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
                                     <Button fx:id="addAbsence_clearBtn" layoutX="608.0" layoutY="441.0" mnemonicParsing="false" onAction="#addAbsencesClear" prefHeight="55.0" prefWidth="94.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
                                     <Label layoutX="579.0" layoutY="316.0" prefHeight="18.0" prefWidth="88.0" text="Reasonability:">
@@ -314,18 +314,24 @@
                                           <Font name="Tahoma" size="14.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="addStudents_Absences" layoutX="679.0" layoutY="313.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <ComboBox fx:id="addStudents_Absences" layoutX="679.0" layoutY="313.0" onAction="#AbsenceList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <TextField fx:id="addAbsence_Id" layoutX="348.0" layoutY="455.0" prefHeight="26.0" prefWidth="209.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <Label layoutX="23.0" layoutY="459.0" prefHeight="18.0" prefWidth="312.0" text="Write the Absence Id for update,clear or delete:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
                                             </children>
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                        <AnchorPane fx:id="studentAbstence_form" layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css">
+                        <AnchorPane fx:id="studentAbstence_form" layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css" visible="false">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />
                            </styleClass>
                            <children>
-                              <TextField fx:id="Absence_search1" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                              <TextField fx:id="Absence_search1" layoutX="14.0" layoutY="14.0" onKeyTyped="#addAbsenceSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                               <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
                               <TableView fx:id="addStudents_tableView1" layoutX="3.0" layoutY="55.0" onMouseClicked="#addStudentsSelect" prefHeight="483.0" prefWidth="874.0" stylesheets="@Design/dashboardDesign.css">
                                  <columns>

@@ -2,10 +2,7 @@ package Controllers;
 import Models.AbsenceData;
 import java.io.File;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,6 +76,8 @@ public class TeacherDashboardController implements Initializable {
     private TableColumn<?, ?> addAbsence_col_absenceNum;
 
     @FXML
+    private TableColumn<?, ?> addAbsence_col_absence;
+    @FXML
     private TableColumn<?, ?> addAbsence_col_class;
 
     @FXML
@@ -99,6 +98,8 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private TableColumn<?, ?> addAbsence_col_gender1;
 
+    @FXML
+    private TextField addAbsence_Id;
     @FXML
     private TableColumn<?, ?> addAbsence_col_lastName;
 
@@ -183,6 +184,7 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private AnchorPane home_form;
 
+    @FXML
     private AnchorPane studentAbstence_form;
 
     @FXML
@@ -376,9 +378,9 @@ public class TeacherDashboardController implements Initializable {
 
     public void AbsencesAdd() {
 
-        String insertData = "INSERT INTO Absences "
-                + "(student_id,class_,course_id,time,firstName,lastName,gender,date_,status,reasonability) "
-                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        String insertData = "INSERT INTO Absences " +
+                "(student_id, class_, course_name, time, firstName, lastName, gender, date_, status, reasonability,date) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         connect = connectDb.getConnection();
 
@@ -394,8 +396,7 @@ public class TeacherDashboardController implements Initializable {
                     || addStudents_gender.getSelectionModel().getSelectedItem() == null
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null
-                    || getData.path == null || getData.path == "") {
+                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null ){
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -403,38 +404,34 @@ public class TeacherDashboardController implements Initializable {
                 alert.showAndWait();
             } else {
                 // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-                String checkData = "SELECT a_id FROM Absences WHERE a_id = '"
-                        + addAbsence_studentNum.getText() + "'";
+
 
                 statement = connect.createStatement();
-                result = statement.executeQuery(checkData);
+
 
                 if (result.next()) {
                     alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Student #" + addAbsence_studentNum.getText() + " was already exist!");
                     alert.showAndWait();
                 } else {
                     prepare = connect.prepareStatement(insertData);
                     prepare.setString(1, addAbsence_studentNum.getText());
                     prepare.setString(2, (String) addAbsence_class.getSelectionModel().getSelectedItem());
                     prepare.setString(3, (String) addAbsence_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, addAbsence_time.getText());
-                    prepare.setString(4, addStudents_firstName.getText());
-                    prepare.setString(5, addStudents_lastName.getText());
-                    prepare.setString(6, (String) addStudents_gender.getSelectionModel().getSelectedItem());
-                    prepare.setString(7, String.valueOf(Absence_date.getValue()));
-                    prepare.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
-                    prepare.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
+                    prepare.setString(4, addAbsence_time.getText());
+                    prepare.setString(5, addStudents_firstName.getText());
+                    prepare.setString(6, addStudents_lastName.getText());
+                    prepare.setString(7, (String) addStudents_gender.getSelectionModel().getSelectedItem());
+                    prepare.setString(8, String.valueOf(Absence_date.getValue()));
+                    prepare.setString(9, (String) addStudents_status.getSelectionModel().getSelectedItem());
 
-                    String uri = getData.path;
-                    uri = uri.replace("\\", "\\\\");
-                    prepare.setString(9, uri);
+                    // Set the missing reasonability value
+                    prepare.setString(10, (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
                     Date date = new Date();
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                    prepare.setString(10, String.valueOf(sqlDate));
+                    prepare.setString(11, String.valueOf(sqlDate));
 
                     prepare.executeUpdate();
 
@@ -459,21 +456,21 @@ public class TeacherDashboardController implements Initializable {
 
     public void addAbsencesUpdate() {
 
-        String uri = getData.path;
-        uri = uri.replace("\\", "\\\\");
 
         String updateData = "UPDATE Absences SET "
-                + "' student_id = '" + addAbsence_studentNum.getText()
+                + "student_id = '" + addAbsence_studentNum.getText()
                 + "', class_ = '" + addAbsence_class.getSelectionModel().getSelectedItem()
-                + "', course_id = '" + addAbsence_course.getSelectionModel().getSelectedItem()
+                + "', course_name = '" + addAbsence_course.getSelectionModel().getSelectedItem()
                 + "', time = '" + addAbsence_time.getText()
                 + "', firstName = '" + addStudents_firstName.getText()
                 + "', lastName = '" + addStudents_firstName.getText()
                 + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
                 + "', date_ = '" + Absence_date.getValue()
                 + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
-                + "', reasonability = '" + addStudents_Absences.getSelectionModel().getSelectedItem()+"' where student_id '"
-                + addAbsence_studentNum.getText() + "'";
+                + "', reasonability = '" + addStudents_Absences.getSelectionModel().getSelectedItem()
+                + "' where a_id = '"
+                + addAbsence_Id.getText() + "'";
+
 
         connect = connectDb.getConnection();
 
@@ -489,7 +486,7 @@ public class TeacherDashboardController implements Initializable {
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
                     || addStudents_Absences.getSelectionModel().getSelectedItem() == null
-                    || getData.path == null || getData.path == "") {
+                    ) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -529,8 +526,8 @@ public class TeacherDashboardController implements Initializable {
 
     public void addAbsencesDelete() {
 
-        String deleteData = "DELETE FROM Absences WHERE student_id = '"
-                + addAbsence_studentNum.getText() + "'";
+        String deleteData = "DELETE FROM Absences WHERE a_id = '"
+                + addAbsence_Id.getText() + "'";
 
         connect = connectDb.getConnection();
 
@@ -545,8 +542,7 @@ public class TeacherDashboardController implements Initializable {
                     || addStudents_gender.getSelectionModel().getSelectedItem() == null
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null
-                    || getData.path == null || getData.path == "") {
+                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -591,6 +587,7 @@ public class TeacherDashboardController implements Initializable {
     }
 
     public void addAbsencesClear() {
+        addAbsence_Id.setText("");
         addAbsence_studentNum.setText("");
         addAbsence_class.getSelectionModel().clearSelection();
         addAbsence_course.getSelectionModel().clearSelection();
@@ -602,7 +599,7 @@ public class TeacherDashboardController implements Initializable {
         addStudents_status.getSelectionModel().clearSelection();
         addStudents_Absences.getSelectionModel().clearSelection();
 
-        getData.path = "";
+
     }
 
     public void addAbsenceSearch() {
@@ -623,7 +620,7 @@ public class TeacherDashboardController implements Initializable {
                     return true;
                 } else if (predicateStudentData.getClass_().toLowerCase().contains(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getCourse_id().toString().contains(searchKey)) {
+                } else if (predicateStudentData.getCourse_name().toString().contains(searchKey)) {
                     return true;
                 } else if (predicateStudentData.getTime().toString().contains(searchKey)) {
                     return true;
@@ -685,7 +682,7 @@ public class TeacherDashboardController implements Initializable {
         }
 
         ObservableList ObList = FXCollections.observableArrayList(classL);
-        addStudents_gender.setItems(ObList);
+        addAbsence_class.setItems(ObList);
     }
 
 
@@ -745,8 +742,8 @@ public class TeacherDashboardController implements Initializable {
             while (result.next()) {
                 studentD = new AbsenceData(result.getInt("student_id"),
                         result.getString("class_"),
-                        result.getInt("course_id"),
-                        result.getTimestamp("time"),
+                        result.getString("course_name"),
+                        result.getInt("time"),
                         result.getString("firstName"),
                         result.getString("lastName"),
                         result.getString("gender"),
@@ -768,9 +765,10 @@ public class TeacherDashboardController implements Initializable {
     public void addAbsencesShowListData() {
         addStudentsListD = addAbsencesListData();
 
+        addAbsence_col_absence.setCellValueFactory(new PropertyValueFactory<>("a_id"));
         addAbsence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("student_id"));
         addAbsence_col_class.setCellValueFactory(new PropertyValueFactory<>("class_"));
-        addAbsence_col_Course.setCellValueFactory(new PropertyValueFactory<>("course_id"));
+        addAbsence_col_Course.setCellValueFactory(new PropertyValueFactory<>("course_name"));
         addAbsence_col_time.setCellValueFactory(new PropertyValueFactory<>("time"));
         addAbsence_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         addAbsence_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -908,10 +906,10 @@ public class TeacherDashboardController implements Initializable {
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
             addAbsencesShowListData();
             addAbsenceSearch();
+            addStudentsClassList();
+            addAbsencesCourseList();
             addStudentsGenderList();
             addStudentsStatusList();
-            addAbsencesCourseList();
-            addStudentsClassList();
             AbsenceList();
 
         } else if (event.getSource() == studentAbstence_btn) {

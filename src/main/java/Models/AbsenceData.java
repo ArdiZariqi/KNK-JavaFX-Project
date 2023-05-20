@@ -8,8 +8,8 @@ public class AbsenceData {
 
         private Integer student_id;
         private String class_;
-        private Integer course_id;
-        private Timestamp time;
+        private String course_name;
+        private Integer time;
         private String firstName;
         private String lastName;
         private String gender;
@@ -19,10 +19,10 @@ public class AbsenceData {
 
 
         // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE
-        public AbsenceData(Integer student_id, String class_, Integer course_id,Timestamp time, String firstName, String lastName, String gender, Date date, String status, String reasonability) {
+        public AbsenceData(Integer student_id, String class_, String course_name,Integer time, String firstName, String lastName, String gender, Date date, String status, String reasonability) {
             this.student_id= student_id;
             this.class_ = class_;
-            this.course_id = course_id;
+            this.course_name = course_name;
             this.time=time;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -41,11 +41,11 @@ public class AbsenceData {
             return class_;
         }
 
-        public Integer getCourse_id() {
-            return course_id;
+        public String getCourse_name() {
+            return course_name;
         }
 
-        public Timestamp getTime() {
+        public Integer getTime() {
         return time;
     }
         public String getFirstName() {
