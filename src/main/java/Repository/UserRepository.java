@@ -1,59 +1,74 @@
 package Repository;
 
+import Models.dto.CreateUserDto;
 import Models.User;
+import Repository.Interfaces.UserRepositoryInterface;
 import service.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
-public class UserRepository {
+public class UserRepository implements UserRepositoryInterface {
 
-    public static void insert(User user) throws SQLException {
-        String sql = "INSERT INTO User (firstname, lastname, age) VALUES (Aaaaa, Bbbb, 19)";
-        Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, user.getFirstName());
-        statement.setString(2, user.getLastName());
-        statement.setInt(3, user.getAge());
-        statement.executeUpdate();
+    public User insert(CreateUserDto user) throws SQLException {
+        String sql = "INSERT INTO users (email, account_type, username, saltedPassword, salt, question, answer, date_) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            Connection connection = ConnectionUtil.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+        try {
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getAccountType());
+            statement.setString(3, user.getUsername());
+            statement.setString(4, user.getSaltedPassword());
+            statement.setString(5, user.getSalt());
+            statement.setString(6, user.getQuestion());
+            statement.setString(7, user.getAnswer());
+            statement.setDate(8, new java.sql.Date(user.getDate().getTime()));
+            statement.executeUpdate();
+            return getByUsername(user.getUsername());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
-    public static User getById(int id) throws SQLException {
-        String sql = "SELECT * FROM User WHERE id=1";
+    public User getByUsername(String username) throws SQLException {
+        String sql = "SELECT * FROM users WHERE username=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+            statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String firstName = resultSet.getString("firstname");
-                String lastName = resultSet.getString("lastname");
-                int age = resultSet.getInt("age");
-                return new User(id, firstName, lastName, age);
+                int userId = resultSet.getInt("user_id");
+                String email = resultSet.getString("email");
+                String accountType = resultSet.getString("account_type");
+                String saltedPassword = resultSet.getString("saltedPassword");
+                String salt = resultSet.getString("salt");
+                String question = resultSet.getString("question");
+                String answer = resultSet.getString("answer");
+                Date date = resultSet.getDate("date_");
+                Date updateDate = resultSet.getDate("update_date");
+
+                statement.executeQuery();
+
+                return new User(userId, email, accountType, username, saltedPassword, salt, question, answer, date, updateDate);
+
             } else {
                 return null;
             }
         }
     }
 
-    public static void update(User user) throws SQLException {
-        String sql = "UPDATE User SET firstname=?, lastname=?, age=? WHERE id=?";
+    public void update(User user) throws SQLException {
+        String sql = "UPDATE users SET saltedPassword=?, salt=? WHERE user_id=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setInt(3, user.getAge());
-            statement.setInt(4, user.getId());
-            statement.executeUpdate();
-        }
-    }
-
-    public static void delete(int id) throws SQLException {
-        String sql = "DELETE FROM User WHERE id=?";
-        try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+            statement.setString(1, user.getSaltedPassword());
+            statement.setString(2, user.getSalt());
+            statement.setInt(3, user.getUserId());
             statement.executeUpdate();
         }
     }
