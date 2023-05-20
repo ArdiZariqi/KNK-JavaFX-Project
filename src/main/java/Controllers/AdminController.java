@@ -2,6 +2,7 @@ package Controllers;
 import DBconnection.connectDb;
 import Models.getData;
 import Models.studentData;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -108,7 +109,7 @@ public class AdminController implements Initializable {
         private TextField addStudents_studentNum;
 
         @FXML
-        private TableView<?> addStudents_tableView;
+        private TableView<studentData> addStudents_tableView;
 
         @FXML
         private Button addStudents_updateBtn;
@@ -180,7 +181,7 @@ public class AdminController implements Initializable {
         private TextField studentAbstence_search;
 
         @FXML
-        private TableView<?> studentAbstence_tableView;
+        private TableView<studentData> studentAbstence_tableView;
 
         @FXML
         private Label username;
@@ -366,7 +367,7 @@ public class AdminController implements Initializable {
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
             } else {
-                // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
+
                 String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
                         + addStudents_studentNum.getText() + "'";
 
@@ -602,7 +603,7 @@ public class AdminController implements Initializable {
             getData.path = file.getAbsolutePath();
 
         }
-    } //WHILE WE INSERT THE DATA ON STUDENT, WE SHOULD INSERT ALSO THE DATA TO STUDENT_Abstence
+    }
 
     public void addStudentsSearch() {
 
@@ -641,11 +642,10 @@ public class AdminController implements Initializable {
         });
         SortedList<studentData> sortList = new SortedList<>(filter);
 
-        sortList.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
+        sortList.comparatorProperty().bind((ObservableValue<? extends Comparator<? super studentData>>) addStudents_tableView.comparatorProperty());
         addStudents_tableView.setItems(sortList);
 
     }
-
     private String[] yearList = {"First Year", "Second Year", "Third Year", "Fourth Year"};
 
     public void addStudentsYearList() {
@@ -711,8 +711,7 @@ public class AdminController implements Initializable {
         addStudents_status.setItems(ObList);
     }
 
-    //    NOW WE NEED THE COURSE, SO LETS WORK NOW THE AVAILABLE COURSE FORM : )
-//    LETS WORK FIRST THE ADD STUDENTS FORM : )
+
     public ObservableList<studentData> addStudentsListData() {
 
         ObservableList<studentData> listStudents = FXCollections.observableArrayList();
@@ -766,7 +765,7 @@ public class AdminController implements Initializable {
 
     public void addStudentsSelect() {
 
-        studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
+        studentData studentD = (studentData) addStudents_tableView.getSelectionModel().getSelectedItem();
         int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
 
         if ((num - 1) < -1) {
@@ -827,7 +826,7 @@ public class AdminController implements Initializable {
         studentAbstence_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
         studentAbstence_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
         studentAbstence_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
-//        WE NEED TO FIX THE DELETE ON ADD STUDENT FORM
+
         studentAbstence_tableView.setItems(studentAbstencesList);
 
     }
@@ -865,7 +864,7 @@ public class AdminController implements Initializable {
 
         SortedList<studentData> sortList = new SortedList<>(filter);
 
-        sortList.comparatorProperty().bind(studentAbstence_tableView.comparatorProperty());
+        sortList.comparatorProperty().bind((ObservableValue<? extends Comparator<? super studentData>>) studentAbstence_tableView.comparatorProperty());
         studentAbstence_tableView.setItems(sortList);
 
     }
@@ -1026,8 +1025,6 @@ public class AdminController implements Initializable {
         homeDisplayEnrolledMaleChart();
         homeDisplayFemaleEnrolledChart();
         homeDisplayTotalEnrolledChart();
-
-        // TO SHOW IMMIDIATELY WHEN WE PROCEED TO DASHBOARD APPLICATION FORM
         addStudentsShowListData();
         addStudentsYearList();
         addStudentsGenderList();
