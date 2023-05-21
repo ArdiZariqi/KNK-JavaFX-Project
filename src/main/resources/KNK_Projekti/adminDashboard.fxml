@@ -219,7 +219,7 @@
                                     </AnchorPane>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
                                     <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
                                         <styleClass>
@@ -233,7 +233,7 @@
                                                     <String fx:value="shadow" />
                                                 </styleClass>
                                                 <children>
-                                                    <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                                                    <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyPressed="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                     <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
                                                     <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="192.0" prefWidth="845.0" stylesheets="@Design/dashboardDesign.css">
                                                         <columns>
@@ -315,7 +315,7 @@
                                     </AnchorPane>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane fx:id="studentAbstence_form" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="studentAbstence_form" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
                                     <AnchorPane layoutX="11.0" layoutY="16.0" prefHeight="522.0" prefWidth="874.0" stylesheets="@Design/dashboardDesign.css">
                                         <styleClass>
