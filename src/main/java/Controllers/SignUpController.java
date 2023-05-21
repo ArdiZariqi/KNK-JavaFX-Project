@@ -1,6 +1,5 @@
 package Controllers;
 
-import DBconnection.connectDb;
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +16,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import service.UserService;
 import service.interfaces.UserServiceInterface;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -68,72 +66,6 @@ public class SignUpController implements Initializable {
         ObservableList listData = FXCollections.observableArrayList(listQ);
         adminSignUp_selectQuestion.setItems(listData);
     }
-//    public void register() {
-//        alertMessage alert = new alertMessage();
-//        if(adminSignUp_email.getText().isEmpty() || adminSignUp_username.getText().isEmpty()
-//                || adminSignUp_password.getText().isEmpty() || adminSignUp_confirmPassword.getText().isEmpty()
-//                || adminSignUp_selectQuestion.getSelectionModel().getSelectedItem() == null
-//                || adminSignUp_answer.getText().isEmpty()){
-//            alert.errorMessage("All fields are necessary to be filled");
-//        }else if (!adminSignUp_password.getText().equals(adminSignUp_confirmPassword.getText())){
-//            alert.errorMessage("Password does not match");
-//        } else if (adminSignUp_password.getText().length() < 8) {
-//            alert.errorMessage("Invalid Password, at least 8 characters needed");
-//        }else {
-//            String checkUsername = "SELECT * FROM users WHERE username = '"
-//                    + adminSignUp_username.getText() + "'";
-//
-//            connect = connectDb.getConnection();
-//
-//            try {
-//                statement = connect.createStatement();
-//                result = statement.executeQuery(checkUsername);
-//
-//                if (result.next()){
-//                    alert.errorMessage(adminSignUp_username.getText() + " is already taken");
-//                }else {
-//
-//                    String insertData = "INSERT INTO users "
-//                            + "(email, account_type, username, password, question, answer, date_) "
-//                            + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-//
-//                    prepare = connect.prepareStatement(insertData);
-//                    prepare.setString(1, adminSignUp_email.getText());
-//                    prepare.setString(2,
-//                            (String)adminSignUp_user.getSelectionModel().getSelectedItem());
-//                    prepare.setString(3, adminSignUp_username.getText());
-//                    prepare.setString(4, adminSignUp_password.getText());
-//                    prepare.setString(5,
-//                            (String)adminSignUp_selectQuestion.getSelectionModel().getSelectedItem());
-//                    prepare.setString(6, adminSignUp_answer.getText());
-//
-//                    java.util.Date utilDate = new java.util.Date();
-//                    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-//
-//
-//                    prepare.setString(7, String.valueOf(sqlDate));
-//
-//                    prepare.executeUpdate();
-//
-//                    alert.successMessage("Registered Successfully");
-//
-//                    registerClearFields();
-//
-//                    Parent root = null;
-//                    root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/AdminPortal.fxml"));
-//                    Stage stage = new Stage();
-//                    stage.setScene(new Scene(root));
-//
-//                    stage.show();
-//
-//                    adminSignUp_user.getScene().getWindow().hide();
-//
-//                }
-//            }catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     public void register() {
         alertMessage alert = new alertMessage();

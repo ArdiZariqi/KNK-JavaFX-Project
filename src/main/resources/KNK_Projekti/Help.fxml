@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <MenuBar fx:id="menuBarra" prefHeight="32.0" prefWidth="800.0">
+            <menus>
+                <Menu fx:id="menuArchivo" mnemonicParsing="true" text="_Archivo">
+                    <items>
+                        <MenuItem fx:id="menuSalir" text="_Salir">
+                            <accelerator>
+                                <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                    <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                    </accelerator>
+                </Menu>
+                <Menu fx:id="menuEdit" mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem fx:id="menuLimpiar" mnemonicParsing="true" text="_Limpiar campos" >
+                            <accelerator>
+                                <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu fx:id="menuHelp" mnemonicParsing="false" text="Ayuda">
+                    <items>
+                        <MenuItem fx:id="menuAcerca" text="A_cerca de ...">
+                            <accelerator>
+                                <KeyCodeCombination alt="DOWN" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="menuAyuda" text="Manual de a_yuda">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <SplitPane fx:id="splitPane" dividerPositions="0.5300751879699248" layoutY="30.0" prefHeight="470.0" prefWidth="800.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <TableView fx:id="tablaAlumnos" prefHeight="498.0" prefWidth="422.0">
+                            <columns>
+                                <TableColumn fx:id="clDNI" prefWidth="140.0" text="DNI" />
+                                <TableColumn fx:id="clModulo" text="MODULO" />
+                                <TableColumn fx:id="clNota" text="NOTA" />
+                                <TableColumn fx:id="clRecuperacion" prefWidth="120.0" text="RECUPERACION" />
+                            </columns>
+                        </TableView>
+                    </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="490.0" prefWidth="669.0">
+                    <children>
+                        <Button fx:id="btnGuardar" layoutX="125.0" layoutY="364.0" mnemonicParsing="false" text="Guardar notas" />
+                        <TextField fx:id="txfDNI" layoutX="157.0" layoutY="109.0" />
+                        <TextField fx:id="txfModulo" layoutX="157.0" layoutY="159.0" />
+                        <TextField fx:id="txfRecuperacion" layoutX="157.0" layoutY="259.0" />
+                        <TextField fx:id="txfNota" layoutX="157.0" layoutY="214.0" />
+                        <Label fx:id="lblDNI" layoutX="67.0" layoutY="114.0" text="DNI:">
+                            <font>
+                                <Font name="Arial Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblModulo" layoutX="67.0" layoutY="164.0" text="Modulo:">
+                            <font>
+                                <Font name="Arial Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblNota" layoutX="67.0" layoutY="219.0" text="Nota:">
+                            <font>
+                                <Font name="Arial Bold" size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblRecuperacion" layoutX="67.0" layoutY="264.0" text="Recuperación:">
+                            <font>
+                                <Font name="Arial Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>
