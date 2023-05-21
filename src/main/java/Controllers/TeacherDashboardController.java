@@ -701,7 +701,7 @@ public class TeacherDashboardController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(genderL);
         addStudents_gender.setItems(ObList);
     }
-
+    //Koment
     private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
 
     public void addStudentsStatusList() {
