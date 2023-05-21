@@ -232,7 +232,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#addAbsenceSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onAction="#addAbsenceSearch" onKeyTyped="#addAbsenceSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                         <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
                                                         <TableView fx:id="addStudents_tableView" layoutX="7.0" layoutY="57.0" onMouseClicked="#addStudentsSelect" prefHeight="190.0" prefWidth="865.0" stylesheets="@Design/dashboardDesign.css">
                                                             <columns>

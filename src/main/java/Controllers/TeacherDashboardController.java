@@ -76,24 +76,24 @@ public class TeacherDashboardController implements Initializable {
     private TableColumn<AbsenceData, Integer> addAbsence_col_absenceNum;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_absence;
+    private TableColumn<AbsenceData, Integer> addAbsence_col_absence;
     @FXML
-    private TableColumn<?, ?> addAbsence_col_class;
+    private TableColumn<AbsenceData, String> addAbsence_col_class;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_class1;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_date;
+    private TableColumn<AbsenceData,String> addAbsence_col_date;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_firstName;
+    private TableColumn<AbsenceData,String > addAbsence_col_firstName;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_firstName1;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_gender;
+    private TableColumn<AbsenceData, String> addAbsence_col_gender;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_gender1;
@@ -101,28 +101,28 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private TextField addAbsence_Id;
     @FXML
-    private TableColumn<?, ?> addAbsence_col_lastName;
+    private TableColumn<AbsenceData,String > addAbsence_col_lastName;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_lastName1;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_reasonability;
+    private TableColumn<AbsenceData,String > addAbsence_col_reasonability;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_reasonable;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_status;
+    private TableColumn<AbsenceData, String> addAbsence_col_status;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_stid;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_studentNum;
+    private TableColumn<AbsenceData,Integer> addAbsence_col_studentNum;
 
     @FXML
-    private TableColumn<?, ?> addAbsence_col_time;
+    private TableColumn<AbsenceData, Integer> addAbsence_col_time;
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_total;
@@ -603,20 +603,19 @@ public class TeacherDashboardController implements Initializable {
     }
 
     public void addAbsenceSearch() {
-
         FilteredList<AbsenceData> filter = new FilteredList<>(addStudentsListD, e -> true);
 
         addAbsence_search.textProperty().addListener((Observable, oldValue, newValue) -> {
-
             filter.setPredicate(predicateStudentData -> {
-
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
                 String searchKey = newValue.toLowerCase();
 
-                if (predicateStudentData.getStudent_id().toString().contains(searchKey)) {
+                if (predicateStudentData.getA_id().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getStudent_id().toString().contains(searchKey)) {
                     return true;
                 } else if (predicateStudentData.getClass_().toLowerCase().contains(searchKey)) {
                     return true;
@@ -642,12 +641,11 @@ public class TeacherDashboardController implements Initializable {
             });
         });
 
-        SortedList<AbsenceData> sortList = new SortedList<>(filter);
-
-        sortList.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
-        addStudents_tableView.setItems(sortList);
-
+        SortedList<AbsenceData> sortList1 = new SortedList<>(filter);
+        sortList1.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
+        addStudents_tableView.setItems(sortList1);
     }
+
 
     public void addAbsencesCourseList() {
 
@@ -740,7 +738,9 @@ public class TeacherDashboardController implements Initializable {
             result = prepare.executeQuery();
 
             while (result.next()) {
-                studentD = new AbsenceData(result.getInt("student_id"),
+                studentD = new AbsenceData(
+                        result.getInt("a_id"),
+                        result.getInt("student_id"),
                         result.getString("class_"),
                         result.getString("course_name"),
                         result.getInt("time"),
@@ -786,7 +786,7 @@ public class TeacherDashboardController implements Initializable {
         AbsenceData studentD = (AbsenceData) addStudents_tableView.getSelectionModel().getSelectedItem();
         int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
 
-        if ((num - 1) < -1) {
+        if ((num - 1) <-1) {
             return;
         }
 
@@ -796,20 +796,6 @@ public class TeacherDashboardController implements Initializable {
         Absence_date.setValue(LocalDate.parse(String.valueOf(studentD.getDate_())));
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private double x = 0;
@@ -904,13 +890,15 @@ public class TeacherDashboardController implements Initializable {
             studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
+
             addAbsencesShowListData();
-            addAbsenceSearch();
             addStudentsClassList();
             addAbsencesCourseList();
             addStudentsGenderList();
             addStudentsStatusList();
             AbsenceList();
+            addAbsenceSearch();
+
 
         } else if (event.getSource() == studentAbstence_btn) {
             home_form.setVisible(false);
@@ -921,6 +909,8 @@ public class TeacherDashboardController implements Initializable {
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
 
+            addAbsencesShowListData();
+            addAbsenceSearch();
 
         }
     }
@@ -950,7 +940,6 @@ public class TeacherDashboardController implements Initializable {
 
         // TO SHOW IMMIDIATELY WHEN WE PROCEED TO DASHBOARD APPLICATION FORM
         addAbsencesShowListData();
-        addAbsenceSearch();
         addStudentsGenderList();
         addStudentsStatusList();
         addAbsencesCourseList();

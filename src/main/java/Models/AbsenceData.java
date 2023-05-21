@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 public class AbsenceData {
 
+        private Integer a_id;
         private Integer student_id;
         private String class_;
         private String course_name;
@@ -19,7 +20,8 @@ public class AbsenceData {
 
 
         // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE
-        public AbsenceData(Integer student_id, String class_, String course_name,Integer time, String firstName, String lastName, String gender, Date date, String status, String reasonability) {
+        public AbsenceData(Integer a_id,Integer student_id, String class_, String course_name,Integer time, String firstName, String lastName, String gender, Date date_, String status, String reasonability) {
+            this.a_id= a_id;
             this.student_id= student_id;
             this.class_ = class_;
             this.course_name = course_name;
@@ -33,6 +35,9 @@ public class AbsenceData {
         }
 
 
+        public Integer getA_id() {
+        return a_id;
+    }
         public Integer getStudent_id() {
             return student_id;
         }
