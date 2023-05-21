@@ -827,6 +827,7 @@ public class dashboardController implements Initializable {
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
 
+
         addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
         addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
         addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));

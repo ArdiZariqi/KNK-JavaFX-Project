@@ -148,8 +148,8 @@ public class LoginAdminPortalController implements Initializable {
 
                 if (loginUser != null) {
                     alert.successMessage("Login Successfully!");
-
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/dashboard.fxml"));
+                    admin_loginBtn.getScene().getWindow().hide();
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
 
                     Stage stage = new Stage();
                     stage.setTitle("Absence Management System(Admin)");
@@ -164,10 +164,11 @@ public class LoginAdminPortalController implements Initializable {
                         stage.setX(event.getScreenX() - x);
                         stage.setY(event.getScreenY() - y);
                     });
-
+                    stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();
 
-                    admin_loginBtn.getScene().getWindow().hide();
+
+
                 } else {
                     alert.errorMessage("Incorrect Username/Password");
                 }
@@ -378,7 +379,7 @@ public void changePassword() {
                 root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/sign-up.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
-
+                stage.setMaximized(true);
                 stage.initStyle(StageStyle.TRANSPARENT);
 
                 stage.show();

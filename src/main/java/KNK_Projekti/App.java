@@ -1,5 +1,6 @@
 package KNK_Projekti;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +11,6 @@ import javafx.stage.StageStyle;
 
 
 public class App extends Application {
-
     private double x = 0;
     private double y = 0;
     @Override
@@ -19,7 +19,6 @@ public class App extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
 
         Scene scene = new Scene(root);
-
 
 
         root.setOnMousePressed((MouseEvent event) ->{
@@ -38,8 +37,7 @@ public class App extends Application {
             stage.setOpacity(1);
         });
 
-        stage.initStyle(StageStyle.TRANSPARENT);
-
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }

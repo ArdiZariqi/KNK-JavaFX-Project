@@ -36,16 +36,21 @@
                                                 <Font name="Tahoma" size="15.0" />
                                             </font>
                                         </Label>
-                                        <Button fx:id="close" layoutX="1021.0" layoutY="5.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="@Design/dashboardDesign.css" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                        <Button fx:id="close" layoutX="1043.0" layoutY="6.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="55.0" styleClass="close" stylesheets="@Design/dashboardDesign.css" AnchorPane.rightAnchor="0.9999999999997726" AnchorPane.topAnchor="6.0">
                                             <graphic>
                                                 <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="minimize" layoutX="1000.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="@Design/dashboardDesign.css">
+                                        <Button fx:id="minimize" layoutX="966.0" layoutY="7.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="@Design/dashboardDesign.css">
                                             <graphic>
                                                 <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                             </graphic>
                                         </Button>
+                              <Button fx:id="maximize" layoutX="1009.0" layoutY="7.0" mnemonicParsing="false" onAction="#maximize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="@Design/dashboardDesign.css">
+                                 <graphic>
+                                    <FontAwesomeIcon glyphName="SQUARE" size="1.0em" />
+                                 </graphic>
+                              </Button>
                                     </children>
                                 </AnchorPane>
                             </children>
@@ -218,7 +223,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="5.0" layoutY="14.0" prefHeight="527.0" prefWidth="879.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -232,7 +237,7 @@
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onAction="#addAbsenceSearch" onKeyTyped="#addAbsenceSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                                                        <TextField fx:id="addAbsence_search" layoutX="14.0" layoutY="14.0" onKeyPressed="#addAbsenceSearch" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                         <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
                                                         <TableView fx:id="addStudents_tableView" layoutX="7.0" layoutY="57.0" onMouseClicked="#addStudentsSelect" prefHeight="190.0" prefWidth="865.0" stylesheets="@Design/dashboardDesign.css">
                                                             <columns>
@@ -325,7 +330,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                        <AnchorPane fx:id="studentAbstence_form" layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css" visible="false">
+                        <AnchorPane fx:id="studentAbstence_form" layoutX="10.0" layoutY="10.0" prefHeight="538.0" prefWidth="882.0" stylesheets="@Design/dashboardDesign.css">
                            <styleClass>
                               <String fx:value="white-bg" />
                               <String fx:value="shadow" />

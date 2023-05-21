@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import DBconnection.connectDb;
+import Models.AbsenceSummary;
 import Models.courseData;
 import Models.getData;
 import javafx.collections.FXCollections;
@@ -173,10 +174,13 @@ public class TeacherDashboardController implements Initializable {
     private TableView<AbsenceData> addStudents_tableView;
 
     @FXML
-    private TableView<AbsenceData> addStudents_tableView1;
+    private TableView<AbsenceSummary> addStudents_tableView1;
 
     @FXML
     private Button close;
+
+    @FXML
+    private Button maximize;
 
     @FXML
     private Button home_btn;
@@ -613,27 +617,27 @@ public class TeacherDashboardController implements Initializable {
 
                 String searchKey = newValue.toLowerCase();
 
-                if (predicateStudentData.getA_id().toString().contains(searchKey)) {
+                if (predicateStudentData.getA_id().toString().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getStudent_id().toString().contains(searchKey)) {
+                } else if (predicateStudentData.getStudent_id().toString().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getClass_().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getClass_().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getCourse_name().toString().contains(searchKey)) {
+                } else if (predicateStudentData.getCourse_name().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getTime().toString().contains(searchKey)) {
+                }else if (predicateStudentData.getTime().toString().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getFirstName().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getFirstName().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getLastName().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getLastName().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getGender().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getGender().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getDate_().toString().contains(searchKey)) {
+                } else if (predicateStudentData.getDate_().toString().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getStatus().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getStatus().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getReasonability().toLowerCase().contains(searchKey)) {
+                } else if (predicateStudentData.getReasonability().toLowerCase().startsWith(searchKey)) {
                     return true;
                 } else {
                     return false;
@@ -790,12 +794,121 @@ public class TeacherDashboardController implements Initializable {
             return;
         }
 
+        addAbsence_Id.setText(String.valueOf(studentD.getA_id()));
         addAbsence_studentNum.setText(String.valueOf(studentD.getStudent_id()));
+        addAbsence_time.setText(String.valueOf(studentD.getTime()));
         addStudents_firstName.setText(studentD.getFirstName());
         addStudents_lastName.setText(studentD.getLastName());
         Absence_date.setValue(LocalDate.parse(String.valueOf(studentD.getDate_())));
 
     }
+
+    //Page 3
+    public void addAbsenceSearch1() {
+        FilteredList<AbsenceSummary> filter = new FilteredList<>(addStudentsListD1, e -> true);
+
+        Absence_search1.textProperty().addListener((Observable, oldValue, newValue) -> {
+            filter.setPredicate(predicateStudentData -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (predicateStudentData.getStudent_id().toString().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getClass_().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getCourse_name().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFirstName().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getLastName().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getGender().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else{
+                    return false;
+                }
+            });
+        });
+
+        SortedList<AbsenceSummary> sortList1 = new SortedList<>(filter);
+        sortList1.comparatorProperty().bind(addStudents_tableView1.comparatorProperty());
+        addStudents_tableView1.setItems(sortList1);
+    }
+
+    public ObservableList<AbsenceSummary> addAbsencesListData1() {
+        ObservableList<AbsenceSummary> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT *from  AbsenceSummary";
+
+        connect = connectDb.getConnection();
+
+        try {
+            AbsenceSummary studentD1;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD1 = new AbsenceSummary(
+                        result.getInt("student_id"),
+                        result.getString("class_"),
+                        result.getString("course_name"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getInt("total_reasonable_absences"),
+                        result.getInt("total_unreasonable_absences"),
+                        result.getInt("total_absences"));
+
+                listStudents.add(studentD1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the resources in the finally block
+            try {
+                if (result != null) {
+                    result.close();
+                }
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (connect != null) {
+                    connect.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listStudents;
+    }
+
+
+    private ObservableList<AbsenceSummary> addStudentsListD1;
+
+    public void addAbsencesShowListData1() {
+        addStudentsListD1 = addAbsencesListData1();
+
+
+        addAbsence_col_stid.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+        addAbsence_col_class1.setCellValueFactory(new PropertyValueFactory<>("class_"));
+        addAbsence_col_Course1.setCellValueFactory(new PropertyValueFactory<>("course_name"));
+        addAbsence_col_firstName1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        addAbsence_col_lastName1.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        addAbsence_col_gender1.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        addAbsence_col_reasonable.setCellValueFactory(new PropertyValueFactory<>("total_reasonable_absences"));
+        addAbsence_col_unreasonable.setCellValueFactory(new PropertyValueFactory<>("total_unreasonable_absences"));
+        addAbsence_col_total.setCellValueFactory(new PropertyValueFactory<>("total_absences"));
+
+        addStudents_tableView1.setItems(addStudentsListD1);
+
+    }
+
+
 
 
     private double x = 0;
@@ -856,8 +969,6 @@ public class TeacherDashboardController implements Initializable {
     public void displayUsername(){
         username.setText(getData.username);
     }
-    // THATS IT FOR THESE VIDEOS, THANKS FOR WATCHING!! SUBSCRIBE AND TURN ON NOTIFICATION
-//    TO NOTIF YOU FOR MORE UPCOMING VIDEOS THANKS FOR THE SUPPORT! : )
     public void defaultNav(){
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
     }
@@ -891,6 +1002,7 @@ public class TeacherDashboardController implements Initializable {
 
 //            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
 
+
             addAbsencesShowListData();
             addStudentsClassList();
             addAbsencesCourseList();
@@ -908,10 +1020,8 @@ public class TeacherDashboardController implements Initializable {
             studentAbstence_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
-
-            addAbsencesShowListData();
-            addAbsenceSearch();
-
+            addAbsencesShowListData1();
+            addAbsenceSearch1();
         }
     }
 
@@ -923,6 +1033,24 @@ public class TeacherDashboardController implements Initializable {
         Stage stage = (Stage) main_form.getScene().getWindow();
         stage.setIconified(true);
     }
+
+    private double previousWidth;
+    private double previousHeight;
+
+    public void maximize() {
+        Stage stage = (Stage) main_form.getScene().getWindow();
+
+        if (stage.isMaximized()) {
+            // Restore the previous size
+            stage.setMaximized(false);
+        } else {
+            // Maximize the window
+            stage.setMaximized(true);
+        }
+    }
+
+
+
 
     // SORRY ABOUT THAT, I JUST NAMED THE DIFFERENT COMPONENTS WITH THE SAME NAME
     // MAKE SURE THAT THE NAME YOU GAVE TO THEM ARE DIFFERENT TO THE OTHER OKAY?
