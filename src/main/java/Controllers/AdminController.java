@@ -1,8 +1,10 @@
 package Controllers;
+
 import DBconnection.connectDb;
+import Models.AbsenceData;
+import Models.Data;
 import Models.getData;
 import Models.studentData;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -37,309 +39,389 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.*;
 
+
 public class AdminController implements Initializable {
 
-        @FXML
-        private Button addStudents_addBtn;
+    @FXML
+    private Button addStudents_addBtn;
 
-        @FXML
-        private DatePicker addStudents_birth;
+    @FXML
+    private DatePicker addStudents_birth;
 
-        @FXML
-        private Button addStudents_btn;
+    @FXML
+    private Button addStudents_btn;
 
-        @FXML
-        private Button addStudents_clearBtn;
+    @FXML
+    private Button addStudents_clearBtn;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_birth;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_birth;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_course;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_course;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_firstName;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_firstName;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_gender;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_gender;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_lastName;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_lastName;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_status;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_status;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_studentNum;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_studentNum;
 
-        @FXML
-        private TableColumn<?, ?> addStudents_col_year;
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_year;
 
-        @FXML
-        private ComboBox<?> addStudents_course;
+    @FXML
+    private ComboBox<?> addStudents_course;
 
-        @FXML
-        private Button addStudents_deleteBtn;
+    @FXML
+    private Button addStudents_deleteBtn;
 
-        @FXML
-        private TextField addStudents_firstName;
+    @FXML
+    private TextField addStudents_firstName;
 
-        @FXML
-        private AnchorPane addStudents_form;
+    @FXML
+    private AnchorPane addStudents_form;
 
-        @FXML
-        private ComboBox<?> addStudents_gender;
+    @FXML
+    private ComboBox<?> addStudents_gender;
 
-        @FXML
-        private ImageView addStudents_imageView;
+    @FXML
+    private ImageView addStudents_imageView;
 
-        @FXML
-        private Button addStudents_insertBtn;
+    @FXML
+    private Button addStudents_insertBtn;
 
-        @FXML
-        private TextField addStudents_lastName;
+    @FXML
+    private TextField addStudents_lastName;
 
-        @FXML
-        private TextField addStudents_search;
+    @FXML
+    private TextField addStudents_search;
 
-        @FXML
-        private ComboBox<?> addStudents_status;
+    @FXML
+    private ComboBox<?> addStudents_status;
 
-        @FXML
-        private TextField addStudents_studentNum;
+    @FXML
+    private TextField addStudents_studentNum;
 
-        @FXML
-        private TableView<studentData> addStudents_tableView;
+    @FXML
+    private TableView<studentData> addStudents_tableView;
 
-        @FXML
-        private Button addStudents_updateBtn;
+    @FXML
+    private Button addStudents_updateBtn;
 
-        @FXML
-        private ComboBox<?> addStudents_year;
+    @FXML
+    private ComboBox<?> addStudents_year;
 
-        @FXML
-        private Button close;
+    @FXML
+    private Button close;
 
-        @FXML
-        private Button home_btn;
+    @FXML
+    private Button home_btn;
 
-        @FXML
-        private AnchorPane home_form;
+    @FXML
+    private AnchorPane home_form;
 
-        @FXML
-        private Label home_totalEnrolled;
+    @FXML
+    private Label home_totalEnrolled;
 
-        @FXML
-        private BarChart<?, ?> home_totalEnrolledChart;
+    @FXML
+    private BarChart<?, ?> home_totalEnrolledChart;
 
-        @FXML
-        private Label home_totalFemale;
+    @FXML
+    private Label home_totalFemale;
 
-        @FXML
-        private AreaChart<?, ?> home_totalFemaleChart;
+    @FXML
+    private AreaChart<?, ?> home_totalFemaleChart;
 
-        @FXML
-        private Label home_totalMale;
+    @FXML
+    private Label home_totalMale;
 
-        @FXML
-        private LineChart<?, ?> home_totalMaleChart;
+    @FXML
+    private LineChart<?, ?> home_totalMaleChart;
 
-        @FXML
-        private Button logout;
+    @FXML
+    private Button logout;
 
-        @FXML
-        private AnchorPane main_form;
+    @FXML
+    private AnchorPane main_form;
 
-        @FXML
-        private Button minimize;
+    @FXML
+    private Button minimize;
 
-        @FXML
-        private Button studentAbstence_btn;
+    @FXML
+    private Button studentAbstence_btn;
 
-        @FXML
-        private TableColumn<?, ?> studentAbstence_col_course;
+    @FXML
+    private TableColumn<studentData, String> studentAbstence_col_course;
 
-        @FXML
-        private TableColumn<?, ?> studentAbstence_col_final;
+    @FXML
+    private TableColumn<studentData, String> studentAbstence_col_final;
 
-        @FXML
-        private TableColumn<?, ?> studentAbstence_col_firstSem;
+    @FXML
+    private TableColumn<studentData, String> studentAbstence_col_firstSem;
 
-        @FXML
-        private TableColumn<?, ?> studentAbstence_col_secondSem;
+    @FXML
+    private TableColumn<studentData, String> studentAbstence_col_secondSem;
 
-        @FXML
-        private TableColumn<?, ?> studentAbstence_col_studentNum;
+    @FXML
+    private TableColumn<studentData, String> studentAbstence_col_studentNum;
 
-        @FXML
-        private TableColumn<?, ?> studentAbstence_col_year;
+    @FXML
+    private TableColumn<studentData, String> studentAbstence_col_year;
 
-        @FXML
-        private AnchorPane studentAbstence_form;
+    @FXML
+    private AnchorPane studentAbstence_form;
 
-        @FXML
-        private TextField studentAbstence_search;
+    @FXML
+    private TextField studentAbstence_search;
 
-        @FXML
-        private TableView<studentData> studentAbstence_tableView;
+    @FXML
+    private TableView<studentData> studentAbstence_tableView;
 
-        @FXML
-        private Label username;
+    @FXML
+    private Label username;
 
-        private Connection connect;
-        private PreparedStatement prepare;
-        private Statement statement;
-        private ResultSet result;
+    private Connection connect;
+    private PreparedStatement prepare;
+    private Statement statement;
+    private ResultSet result;
 
-        private Image image;
+    private Image image;
+    public void homeDisplayTotalEnrolledStudents() {
 
-        public void homeDisplayTotalEnrolledStudents() {
+        String sql = "SELECT COUNT(id) FROM student";
 
-            String sql = "SELECT COUNT(id) FROM student";
+        connect = connectDb.getConnection();
 
-            connect = connectDb.getConnection();
+        int countEnrolled = 0;
 
-            int countEnrolled = 0;
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
 
-            try {
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
-
-                if (result.next()) {
-                    countEnrolled = result.getInt("COUNT(id)");
-                }
-
-                home_totalEnrolled.setText(String.valueOf(countEnrolled));
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (result.next()) {
+                countEnrolled = result.getInt("COUNT(id)");
             }
 
+            home_totalEnrolled.setText(String.valueOf(countEnrolled));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        public void homeDisplayFemaleEnrolled() {
+    }
 
-            String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
+    public void homeDisplayFemaleEnrolled() {
 
-            connect = connectDb.getConnection();
+        String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
 
-            try {
-                int countFemale = 0;
+        connect = connectDb.getConnection();
 
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
+        try {
+            int countFemale = 0;
 
-                if (result.next()) {
-                    countFemale = result.getInt("COUNT(id)");
-                }
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
 
-                home_totalFemale.setText(String.valueOf(countFemale));
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (result.next()) {
+                countFemale = result.getInt("COUNT(id)");
             }
 
+            home_totalFemale.setText(String.valueOf(countFemale));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        public void homeDisplayMaleEnrolled() {
+    }
 
-            String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
+    public void homeDisplayMaleEnrolled() {
 
-            connect = connectDb.getConnection();
-            try {
-                int countMale = 0;
+        String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
 
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
+        connect = connectDb.getConnection();
+        try {
+            int countMale = 0;
 
-                if (result.next()) {
-                    countMale = result.getInt("COUNT(id)");
-                }
-                home_totalMale.setText(String.valueOf(countMale));
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (result.next()) {
+                countMale = result.getInt("COUNT(id)");
+            }
+            home_totalMale.setText(String.valueOf(countMale));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void homeDisplayTotalEnrolledChart() {
+
+        home_totalEnrolledChart.getData().clear();
+
+        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+
+        connect = connectDb.getConnection();
+
+        try {
+            XYChart.Series chart = new XYChart.Series();
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
             }
 
+            home_totalEnrolledChart.getData().add(chart);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        public void homeDisplayTotalEnrolledChart() {
+    }
 
-            home_totalEnrolledChart.getData().clear();
+    public void homeDisplayFemaleEnrolledChart() {
 
-            String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+        home_totalFemaleChart.getData().clear();
 
-            connect = connectDb.getConnection();
+        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-            try {
-                XYChart.Series chart = new XYChart.Series();
+        connect = connectDb.getConnection();
 
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
+        try {
+            XYChart.Series chart = new XYChart.Series();
 
-                while (result.next()) {
-                    chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-                }
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
 
-                home_totalEnrolledChart.getData().add(chart);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            while (result.next()) {
+                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
             }
 
+            home_totalFemaleChart.getData().add(chart);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        public void homeDisplayFemaleEnrolledChart() {
+    }
 
-            home_totalFemaleChart.getData().clear();
+    public void homeDisplayEnrolledMaleChart() {
 
-            String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+        home_totalMaleChart.getData().clear();
 
-            connect = connectDb.getConnection();
+        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-            try {
-                XYChart.Series chart = new XYChart.Series();
+        connect = connectDb.getConnection();
 
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
+        try {
+            XYChart.Series chart = new XYChart.Series();
 
-                while (result.next()) {
-                    chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-                }
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
 
-                home_totalFemaleChart.getData().add(chart);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            while (result.next()) {
+                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
             }
 
+            home_totalMaleChart.getData().add(chart);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String[] yearList = {"First Year", "Second Year", "Third Year", "Fourth Year"};
+
+    public void addStudentsYearList() {
+
+        List<String> yearL = new ArrayList<>();
+
+        for (String data : yearList) {
+            yearL.add(data);
         }
 
-        public void homeDisplayEnrolledMaleChart() {
+        ObservableList ObList = FXCollections.observableArrayList(yearL);
+        addStudents_year.setItems(ObList);
+    }
 
-            home_totalMaleChart.getData().clear();
+    private String[] genderList = {"Male", "Female", "Others"};
 
-            String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+    public void addStudentsGenderList() {
+        List<String> genderL = new ArrayList<>();
 
-            connect = connectDb.getConnection();
+        for (String data : genderList) {
+            genderL.add(data);
+        }
 
-            try {
-                XYChart.Series chart = new XYChart.Series();
+        ObservableList ObList = FXCollections.observableArrayList(genderL);
+        addStudents_gender.setItems(ObList);
+    }
 
-                prepare = connect.prepareStatement(sql);
-                result = prepare.executeQuery();
+    private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
 
-                while (result.next()) {
-                    chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-                }
+    public void addStudentsStatusList() {
+        List<String> statusL = new ArrayList<>();
 
-                home_totalMaleChart.getData().add(chart);
+        for (String data : statusList) {
+            statusL.add(data);
+        }
 
-            } catch (Exception e) {
-                e.printStackTrace();
+        ObservableList ObList = FXCollections.observableArrayList(statusL);
+        addStudents_status.setItems(ObList);
+    }
+
+    public void addStudentsCourseList() {
+
+        String listCourse = "SELECT * FROM course";
+
+        connect = connectDb.getConnection();
+
+        try {
+
+            ObservableList listC = FXCollections.observableArrayList();
+
+            prepare = connect.prepareStatement(listCourse);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                listC.add(result.getString("course"));
             }
+            addStudents_course.setItems(listC);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addStudentsInsertImage() {
+
+        FileChooser open = new FileChooser();
+        open.setTitle("Open Image File");
+        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image File", "*jpg", "*png"));
+
+        File file = open.showOpenDialog(main_form.getScene().getWindow());
+
+        if (file != null) {
+
+            image = new Image(file.toURI().toString(), 120, 149, false, true);
+            addStudents_imageView.setImage(image);
+
+            getData.path = file.getAbsolutePath();
 
         }
+    }
 
     public void addStudentsAdd() {
 
@@ -367,7 +449,6 @@ public class AdminController implements Initializable {
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
             } else {
-
                 String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
                         + addStudents_studentNum.getText() + "'";
 
@@ -421,6 +502,7 @@ public class AdminController implements Initializable {
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
 
+
                     addStudentsShowListData();
                     addStudentsClear();
                 }
@@ -429,6 +511,20 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void addStudentsClear() {
+        addStudents_studentNum.setText("");
+        addStudents_year.getSelectionModel().clearSelection();
+        addStudents_course.getSelectionModel().clearSelection();
+        addStudents_firstName.setText("");
+        addStudents_lastName.setText("");
+        addStudents_gender.getSelectionModel().clearSelection();
+        addStudents_birth.setValue(null);
+        addStudents_status.getSelectionModel().clearSelection();
+        addStudents_imageView.setImage(null);
+
+        getData.path = "";
     }
 
     public void addStudentsUpdate() {
@@ -483,9 +579,7 @@ public class AdminController implements Initializable {
                     alert.setContentText("Successfully Updated!");
                     alert.showAndWait();
 
-                    // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
                     addStudentsClear();
 
                 } else {
@@ -539,7 +633,6 @@ public class AdminController implements Initializable {
                     prepare = connect.prepareStatement(checkData);
                     result = prepare.executeQuery();
 
-                    // IF THE STUDENT NUMBER IS EXIST THEN PROCEED TO DELETE
                     if (result.next()) {
                         String deleteAbstence = "DELETE FROM student_Abstence WHERE "
                                 + "studentNum = '" + addStudents_studentNum.getText() + "'";
@@ -555,9 +648,7 @@ public class AdminController implements Initializable {
                     alert.setContentText("Successfully Deleted!");
                     alert.showAndWait();
 
-                    // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
                     addStudentsClear();
 
                 } else {
@@ -568,39 +659,83 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public void addStudentsClear() {
-        addStudents_studentNum.setText("");
-        addStudents_year.getSelectionModel().clearSelection();
-        addStudents_course.getSelectionModel().clearSelection();
-        addStudents_firstName.setText("");
-        addStudents_lastName.setText("");
-        addStudents_gender.getSelectionModel().clearSelection();
-        addStudents_birth.setValue(null);
-        addStudents_status.getSelectionModel().clearSelection();
-        addStudents_imageView.setImage(null);
+    public ObservableList<studentData> studentAbstencesListData() {
 
-        getData.path = "";
-    }
+        ObservableList<studentData> listData = FXCollections.observableArrayList();
 
-    public void addStudentsInsertImage() {
+        String sql = "SELECT * FROM student_Abstence";
 
-        FileChooser open = new FileChooser();
-        open.setTitle("Open Image File");
-        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image File", "*jpg", "*png"));
+        connect = connectDb.getConnection();
+        try {
+            studentData studentD;
 
-        File file = open.showOpenDialog(main_form.getScene().getWindow());
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
 
-        if (file != null) {
+            while (result.next()) {
+                studentD = new studentData(result.getInt("studentNum"),
+                        result.getString("year"),
+                        result.getString("course"),
+                        result.getDouble("first_sem"),
+                        result.getDouble("second_sem"),
+                        result.getDouble("final"));
 
-            image = new Image(file.toURI().toString(), 120, 149, false, true);
-            addStudents_imageView.setImage(image);
-
-            getData.path = file.getAbsolutePath();
-
+                listData.add(studentD);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return listData;
+    }
+
+    private ObservableList<studentData> studentAbstencesList;
+
+    public ObservableList<studentData> addStudentsListData() {
+
+        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM student";
+
+        connect = connectDb.getConnection();
+
+        try {
+            studentData studentD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD = new studentData(result.getInt("studentNum"),
+                        result.getString("year"),
+                        result.getString("course"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getDate("birth"),
+                        result.getString("status"),
+                        result.getString("image"));
+
+                listStudents.add(studentD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+
+    public void studentAbstencesShowListData() {
+        studentAbstencesList = studentAbstencesListData();
+
+        studentAbstence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        studentAbstence_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        studentAbstence_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        studentAbstence_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
+        studentAbstence_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
+        studentAbstence_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
+
+        studentAbstence_tableView.setItems(studentAbstencesList);
     }
 
     public void addStudentsSearch() {
@@ -638,195 +773,19 @@ public class AdminController implements Initializable {
                 }
             });
         });
+
         SortedList<studentData> sortList = new SortedList<>(filter);
 
-        sortList.comparatorProperty().bind((ObservableValue<? extends Comparator<? super studentData>>) addStudents_tableView.comparatorProperty());
+        sortList.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
         addStudents_tableView.setItems(sortList);
-
-    }
-    private String[] yearList = {"First Year", "Second Year", "Third Year", "Fourth Year"};
-
-    public void addStudentsYearList() {
-
-        List<String> yearL = new ArrayList<>();
-
-        for (String data : yearList) {
-            yearL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(yearL);
-        addStudents_year.setItems(ObList);
-
-    }
-
-    public void addStudentsCourseList() {
-
-        String listCourse = "SELECT * FROM course";
-
-        connect = connectDb.getConnection();
-
-        try {
-
-            ObservableList listC = FXCollections.observableArrayList();
-
-            prepare = connect.prepareStatement(listCourse);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                listC.add(result.getString("course"));
-            }
-            addStudents_course.setItems(listC);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private String[] genderList = {"Male", "Female", "Others"};
-
-    public void addStudentsGenderList() {
-        List<String> genderL = new ArrayList<>();
-
-        for (String data : genderList) {
-            genderL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(genderL);
-        addStudents_gender.setItems(ObList);
-    }
-
-    private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
-
-    public void addStudentsStatusList() {
-        List<String> statusL = new ArrayList<>();
-
-        for (String data : statusList) {
-            statusL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(statusL);
-        addStudents_status.setItems(ObList);
-    }
-
-
-    public ObservableList<studentData> addStudentsListData() {
-
-        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM student";
-
-        connect = connectDb.getConnection();
-
-        try {
-            studentData studentD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new studentData(result.getInt("studentNum"),
-                        result.getString("year"),
-                        result.getString("course"),
-                        result.getString("firstName"),
-                        result.getString("lastName"),
-                        result.getString("gender"),
-                        result.getDate("birth"),
-                        result.getString("status"),
-                        result.getString("image"));
-
-                listStudents.add(studentD);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listStudents;
     }
 
     private ObservableList<studentData> addStudentsListD;
 
-    public void addStudentsShowListData() {
-        addStudentsListD = addStudentsListData();
+    public void studentAbstencesSelect() {
 
-        addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
-        addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
-        addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
-        addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        addStudents_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        addStudents_col_gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        addStudents_col_birth.setCellValueFactory(new PropertyValueFactory<>("birth"));
-        addStudents_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        addStudents_tableView.setItems(addStudentsListD);
-
-    }
-
-    public void addStudentsSelect() {
-
-        studentData studentD = (studentData) addStudents_tableView.getSelectionModel().getSelectedItem();
-        int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
-
-        if ((num - 1) < -1) {
-            return;
-        }
-
-        addStudents_studentNum.setText(String.valueOf(studentD.getStudentNum()));
-        addStudents_firstName.setText(studentD.getFirstName());
-        addStudents_lastName.setText(studentD.getLastName());
-        addStudents_birth.setValue(LocalDate.parse(String.valueOf(studentD.getBirth())));
-
-        String uri = "file:" + studentD.getImage();
-
-        image = new Image(uri, 120, 149, false, true);
-        addStudents_imageView.setImage(image);
-
-        getData.path = studentD.getImage();
-
-    }
-
-    public ObservableList<studentData> studentAbstencesListData() {
-
-        ObservableList<studentData> listData = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM student_Abstence";
-
-        connect = connectDb.getConnection();
-        try {
-            studentData studentD;
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new studentData(result.getInt("studentNum"),
-                        result.getString("year"),
-                        result.getString("course"),
-                        result.getDouble("first_sem"),
-                        result.getDouble("second_sem"),
-                        result.getDouble("final"));
-
-                listData.add(studentD);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listData;
-    }
-
-    private ObservableList<studentData> studentAbstencesList;
-
-    public void studentAbstencesShowListData() {
-        studentAbstencesList = studentAbstencesListData();
-
-        studentAbstence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
-        studentAbstence_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
-        studentAbstence_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
-        studentAbstence_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
-        studentAbstence_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
-        studentAbstence_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
-
-        studentAbstence_tableView.setItems(studentAbstencesList);
-
+        studentData studentD = studentAbstence_tableView.getSelectionModel().getSelectedItem();
+        int num = studentAbstence_tableView.getSelectionModel().getSelectedIndex();
     }
 
     public void studentAbstencesSearch() {
@@ -862,14 +821,79 @@ public class AdminController implements Initializable {
 
         SortedList<studentData> sortList = new SortedList<>(filter);
 
-        sortList.comparatorProperty().bind((ObservableValue<? extends Comparator<? super studentData>>) studentAbstence_tableView.comparatorProperty());
+        sortList.comparatorProperty().bind(studentAbstence_tableView.comparatorProperty());
         studentAbstence_tableView.setItems(sortList);
+    }
+    public void addStudentsShowListData() {
+        addStudentsListD = addStudentsListData();
+
+        addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        addStudents_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        addStudents_col_gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        addStudents_col_birth.setCellValueFactory(new PropertyValueFactory<>("birth"));
+        addStudents_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        addStudents_tableView.setItems(addStudentsListD);
 
     }
 
-    private double x = 0;
-    private double y = 0;
+    public void displayUsername() {
+        username.setText(Data.username);
+    }
 
+    @FXML
+    void switchForm(ActionEvent event) {
+        if (event.getSource() == home_btn) {
+            home_form.setVisible(true);
+            addStudents_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
+
+
+            home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+
+            homeDisplayTotalEnrolledStudents();
+            homeDisplayMaleEnrolled();
+            homeDisplayFemaleEnrolled();
+            homeDisplayEnrolledMaleChart();
+            homeDisplayFemaleEnrolledChart();
+            homeDisplayTotalEnrolledChart();
+
+
+        } else if (event.getSource() == addStudents_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(true);
+            studentAbstence_form.setVisible(false);
+
+            addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            home_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+            addStudentsShowListData();
+            addStudentsYearList();
+            addStudentsGenderList();
+            addStudentsStatusList();
+            addStudentsCourseList();
+            addStudentsSearch();
+
+        } else if (event.getSource() == studentAbstence_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            studentAbstence_form.setVisible(true);
+
+            studentAbstence_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            home_btn.setStyle("-fx-background-color:transparent");
+
+            studentAbstencesShowListData();
+            studentAbstencesSearch();
+        }
+    }
+    private double x=0;
+    private double y=0;
     public void logout() {
 
         try {
@@ -883,10 +907,9 @@ public class AdminController implements Initializable {
 
             if (option.get().equals(ButtonType.OK)) {
 
-                //HIDE YOUR DASHBOARD FORM
+
                 logout.getScene().getWindow().hide();
 
-                //LINK YOUR LOGIN FORM
                 Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
@@ -919,102 +942,36 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+    public void addStudentsSelect() {
 
-    public void close() {
+        studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
+        int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        addStudents_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        addStudents_firstName.setText(studentD.getFirstName());
+        addStudents_lastName.setText(studentD.getLastName());
+        addStudents_birth.setValue(LocalDate.parse(String.valueOf(studentD.getBirth())));
+
+        String uri = "file:" + studentD.getImage();
+
+        image = new Image(uri, 120, 149, false, true);
+        addStudents_imageView.setImage(image);
+
+        getData.path = studentD.getImage();
+    }
+    public void close(){
         System.exit(0);
     }
-
     public void minimize() {
         Stage stage = (Stage) main_form.getScene().getWindow();
         stage.setIconified(true);
     }
-
-        @FXML
-        void addStudentsAdd(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsClear(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsCourseList(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsDelete(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsGenderList(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsInsertImage(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsSearch(KeyEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsSelect(MouseEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsStatusList(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsUpdate(ActionEvent event) {
-
-        }
-
-        @FXML
-        void addStudentsYearList(ActionEvent event) {
-
-        }
-
-        @FXML
-        void close(ActionEvent event) {
-
-        }
-
-        @FXML
-        void logout(ActionEvent event) {
-
-        }
-
-        @FXML
-        void minimize(ActionEvent event) {
-
-        }
-
-        @FXML
-        void studentAbstencesSearch(KeyEvent event) {
-
-        }
-
-        @FXML
-        void studentAbstencesSelect(MouseEvent event) {
-
-        }
-
-        @FXML
-        void switchForm(ActionEvent event) {
-
-        }
+    @Override
     public void initialize(URL location, ResourceBundle resources){
 
         homeDisplayTotalEnrolledStudents();
@@ -1023,18 +980,13 @@ public class AdminController implements Initializable {
         homeDisplayEnrolledMaleChart();
         homeDisplayFemaleEnrolledChart();
         homeDisplayTotalEnrolledChart();
+
         addStudentsShowListData();
         addStudentsYearList();
         addStudentsGenderList();
         addStudentsStatusList();
         addStudentsCourseList();
-
         studentAbstencesShowListData();
-
     }
-
 }
-
-
-
 
