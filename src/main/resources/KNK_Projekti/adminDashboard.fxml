@@ -57,8 +57,8 @@
                         <children>
                             <AnchorPane prefHeight="555.0" prefWidth="203.0" styleClass="nav-form" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
-                                    <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="69.0" layoutY="100.0" size="7em" />
-                                    <Label layoutX="78.0" layoutY="112.0" text="Admin" textFill="WHITE">
+                                    <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="69.0" layoutY="122.0" size="7em" />
+                                    <Label layoutX="78.0" layoutY="134.0" text="Admin" textFill="WHITE">
                                         <font>
                                             <Font name="Tahoma" size="17.0" />
                                         </font>
@@ -99,11 +99,12 @@
                                             <String fx:value="shadow" />
                                         </styleClass>
                                     </Button>
-                                    <Label layoutX="58.0" layoutY="516.0" text="Sign Out" textFill="WHITE">
+                                    <Label fx:id="signout" layoutX="58.0" layoutY="516.0" text="Sign Out" textFill="WHITE">
                                         <font>
                                             <Font name="Tahoma" size="15.0" />
                                         </font>
                                     </Label>
+                              <ComboBox fx:id="languageID" layoutX="27.0" layoutY="14.0" prefWidth="150.0" promptText="English" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" />
                                 </children>
                             </AnchorPane>
                         </children>
@@ -112,7 +113,7 @@
                 <center>
                     <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <children>
-                            <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="home_form" layoutX="90.0" layoutY="138.0" prefHeight="555.0" prefWidth="897.0" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
                                     <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                         <styleClass>
@@ -129,7 +130,7 @@
                                                     <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                         <children>
                                                             <FontAwesomeIcon fill="WHITE" glyphName="USERS" layoutX="14.0" layoutY="77.0" size="4em" />
-                                                            <Label layoutX="74.0" layoutY="84.0" text="Total Enrolled Students" textFill="WHITE">
+                                                            <Label fx:id="home_totalEnrolledLabel" layoutX="74.0" layoutY="84.0" text="Total Enrolled Students" textFill="WHITE">
                                                                 <font>
                                                                     <Font name="Tahoma" size="15.0" />
                                                                 </font>
@@ -144,7 +145,7 @@
                                                     <AnchorPane layoutX="310.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                         <children>
                                                             <FontAwesomeIcon fill="WHITE" glyphName="FEMALE" layoutX="14.0" layoutY="79.0" size="4em" />
-                                                            <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Female Students" textFill="WHITE">
+                                                            <Label fx:id="home_totalFemaleEnrolled" layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Female Students" textFill="WHITE">
                                                                 <font>
                                                                     <Font name="Tahoma" size="15.0" />
                                                                 </font>
@@ -159,7 +160,7 @@
                                                     <AnchorPane layoutX="605.0" layoutY="7.0" prefHeight="120.0" prefWidth="253.0" styleClass="card" stylesheets="@Design/dashboardDesign.css">
                                                         <children>
                                                             <FontAwesomeIcon fill="WHITE" glyphName="MALE" layoutX="14.0" layoutY="79.0" size="4em" />
-                                                            <Label layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Male Students" textFill="WHITE">
+                                                            <Label fx:id="home_totalMaleEnrolled" layoutX="56.0" layoutY="86.0" prefHeight="19.0" prefWidth="175.0" text="Enrolled Male Students" textFill="WHITE">
                                                                 <font>
                                                                     <Font name="Tahoma" size="15.0" />
                                                                 </font>
@@ -225,7 +226,7 @@
                                     </AnchorPane>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="addStudents_form" layoutX="99.0" layoutY="143.0" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
                                     <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
                                         <styleClass>
@@ -255,49 +256,49 @@
                                                     </TableView>
                                                 </children>
                                             </AnchorPane>
-                                            <Label layoutX="32.0" layoutY="279.0" text="Student #:">
+                                            <Label fx:id="studentLabel" layoutX="32.0" layoutY="279.0" text="Student #:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <TextField fx:id="addStudents_studentNum" layoutX="109.0" layoutY="276.0" prefHeight="25.0" prefWidth="116.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="66.0" layoutY="316.0" text="Year:">
+                                            <Label fx:id="yearLabel" layoutX="66.0" layoutY="316.0" text="Year:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="313.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="51.0" layoutY="355.0" text="Course:">
+                                            <Label fx:id="courseLabel" layoutX="51.0" layoutY="355.0" text="Course:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <ComboBox fx:id="addStudents_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="313.0" layoutY="279.0" text="First Name:">
+                                            <Label fx:id="fNameLabel" layoutX="313.0" layoutY="279.0" text="First Name:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <TextField fx:id="addStudents_firstName" layoutX="390.0" layoutY="276.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="313.0" layoutY="316.0" text="Last Name:">
+                                            <Label fx:id="lNameLabel" layoutX="313.0" layoutY="316.0" text="Last Name:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <TextField fx:id="addStudents_lastName" layoutX="390.0" layoutY="313.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="334.0" layoutY="355.0" text="Gender:">
+                                            <Label fx:id="genderLabel" layoutX="334.0" layoutY="355.0" text="Gender:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <ComboBox fx:id="addStudents_gender" layoutX="390.0" layoutY="351.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="315.0" layoutY="391.0" text="Birth Date:">
+                                            <Label fx:id="birthDateLabel" layoutX="315.0" layoutY="391.0" text="Birth Date:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
                                             <DatePicker fx:id="addStudents_birth" layoutX="390.0" layoutY="388.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label layoutX="337.0" layoutY="425.0" text="Status:">
+                                            <Label fx:id="statusLabel" layoutX="337.0" layoutY="425.0" text="Status:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>

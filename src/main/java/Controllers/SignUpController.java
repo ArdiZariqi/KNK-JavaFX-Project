@@ -14,16 +14,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import service.LanguageUtil;
 import service.UserService;
 import service.interfaces.UserServiceInterface;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
-import static Models.Users.users;
+import java.sql.SQLException;
+import java.util.*;
+
 import static Models.Users.questionList;
 
 public class SignUpController implements Initializable {
@@ -38,67 +36,68 @@ public class SignUpController implements Initializable {
     @FXML
     private PasswordField adminSignUp_password;
     @FXML
-    private ComboBox<?> adminSignUp_user;
+    private ComboBox<String> adminSignUp_user;
     @FXML
     private TextField adminSignUp_username;
     @FXML
-    private ComboBox<?> adminSignUp_selectQuestion;
+    private ComboBox<String> adminSignUp_selectQuestion;
     @FXML
     private TextField adminSignUp_answer;
+    @FXML
+    private ComboBox<String> signupLanguage;
+    @FXML
+    private Label signupLabel;
+    @FXML
+    private Label signUp;
 
-    private Connection connect;
-    private PreparedStatement prepare;
-    private ResultSet result;
-    private Statement statement;
     private UserServiceInterface userService;
 
     public SignUpController() {
         this.userService = new UserService();
     }
 
-    public void questions(){
+    public void questions() {
         List<String> listQ = new ArrayList<>();
 
-        for (String data : questionList){
+        for (String data : questionList) {
             listQ.add(data);
         }
 
-        ObservableList listData = FXCollections.observableArrayList(listQ);
+        ObservableList<String> listData = FXCollections.observableArrayList(listQ);
         adminSignUp_selectQuestion.setItems(listData);
     }
 
     public void register() {
         alertMessage alert = new alertMessage();
-        if(adminSignUp_email.getText().isEmpty() || adminSignUp_username.getText().isEmpty()
+        String selectedLanguage = signupLanguage.getValue();
+        LanguageUtil.setLanguage(selectedLanguage);
+        if (adminSignUp_email.getText().isEmpty() || adminSignUp_username.getText().isEmpty()
                 || adminSignUp_password.getText().isEmpty() || adminSignUp_confirmPassword.getText().isEmpty()
-                || adminSignUp_selectQuestion.getSelectionModel().getSelectedItem() == null
-                || adminSignUp_answer.getText().isEmpty()){
-            alert.errorMessage("All fields are necessary to be filled");
-        } else if (!adminSignUp_password.getText().equals(adminSignUp_confirmPassword.getText())){
-            alert.errorMessage("Password does not match");
+                || adminSignUp_selectQuestion.getSelectionModel().isEmpty()
+                || adminSignUp_answer.getText().isEmpty()) {
+            alert.errorMessage(LanguageUtil.getMessage("error.fieldsRequired"));
+        } else if (!adminSignUp_password.getText().equals(adminSignUp_confirmPassword.getText())) {
+            alert.errorMessage(LanguageUtil.getMessage("error.passwordMismatch"));
         } else if (adminSignUp_password.getText().length() < 8) {
-            alert.errorMessage("Invalid Password, at least 8 characters needed");
+            alert.errorMessage(LanguageUtil.getMessage("error.invalidPassword"));
         } else {
             try {
                 String email = adminSignUp_email.getText();
-                String accountType = (String) adminSignUp_user.getSelectionModel().getSelectedItem();
+                String accountType = adminSignUp_user.getSelectionModel().getSelectedItem();
                 String username = adminSignUp_username.getText();
                 String password = adminSignUp_password.getText();
-                String question = (String) adminSignUp_selectQuestion.getSelectionModel().getSelectedItem();
+                String question = adminSignUp_selectQuestion.getSelectionModel().getSelectedItem();
                 String answer = adminSignUp_answer.getText();
                 Date date = new Date();
-                Date updateDate = null;  // You can set the update date if needed
 
-                User user = userService.signUp(email, accountType, username, password, question, answer, date, updateDate);
+                User user = userService.signUp(email, accountType, username, password, question, answer, date, null);
 
                 if (user != null) {
-                    alert.successMessage("Registered Successfully");
+                    alert.successMessage(LanguageUtil.getMessage("signup.success.registered"));
 
                     registerClearFields();
 
-                    registerClearFields();
-
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/AdminPortal.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
 
@@ -106,19 +105,18 @@ public class SignUpController implements Initializable {
 
                     adminSignUp_user.getScene().getWindow().hide();
                 } else {
-                    alert.errorMessage("Failed to register");
+                    alert.errorMessage(LanguageUtil.getMessage("signup.error.registrationFailed"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                alert.errorMessage("Failed to register");
+                alert.errorMessage(LanguageUtil.getMessage("signup.error.registrationFailed"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-
-    public void registerClearFields(){
+    public void registerClearFields() {
         adminSignUp_email.setText("");
         adminSignUp_password.setText("");
         adminSignUp_confirmPassword.setText("");
@@ -126,11 +124,10 @@ public class SignUpController implements Initializable {
         adminSignUp_answer.setText("");
     }
 
-    public void switchFormSignUp(ActionEvent event){
+    public void switchFormSignUp(ActionEvent event) {
         try {
-            if (event.getSource() == adminSignUp_loginBtn || event.getSource() == admin_SignUpBtn){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/AdminPortal.fxml"));
+            if (event.getSource() == adminSignUp_loginBtn || event.getSource() == admin_SignUpBtn) {
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
@@ -141,34 +138,25 @@ public class SignUpController implements Initializable {
                 adminSignUp_user.getScene().getWindow().hide();
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void signUpSelectUser(){
-
-
-        List<String> listU = new ArrayList<>();
-
-
-        for (String data : users){
-            listU.add(data);
-        }
-
-        ObservableList listData = FXCollections.observableArrayList(listU);
+    public void signUpSelectUser() {
+        ObservableList<String> listData = FXCollections.observableArrayList(Models.Users.users);
         adminSignUp_user.setItems(listData);
     }
 
     @FXML
-    private void close(MouseEvent event){
-        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    private void close(MouseEvent event) {
+        Stage s = (Stage) ((Node) event.getSource()).getScene().getWindow();
         s.close();
     }
 
     @FXML
-    private void min(MouseEvent event){
-        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+    private void min(MouseEvent event) {
+        Stage s = (Stage) ((Node) event.getSource()).getScene().getWindow();
         s.setIconified(true);
     }
 
@@ -176,5 +164,42 @@ public class SignUpController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         signUpSelectUser();
         questions();
+
+        signupLanguage.setItems(FXCollections.observableArrayList("English", "Shqip"));
+        signupLanguage.setValue("English");
+        signupLanguage.setOnAction(e -> {
+            String language = signupLanguage.getValue().toLowerCase();
+            LanguageUtil.setLanguage(language);
+            setLanguage();
+        });
+
+        setLanguage();
+    }
+
+    public void setLanguage() {
+        String selectedLanguage = signupLanguage.getValue();
+        LanguageUtil.setLanguage(selectedLanguage);
+
+        admin_SignUpBtn.setText(LanguageUtil.getMessage("button.signup"));
+        adminSignUp_confirmPassword.setPromptText(LanguageUtil.getMessage("prompt.confirmPassword"));
+        adminSignUp_email.setPromptText(LanguageUtil.getMessage("prompt.email"));
+        adminSignUp_loginBtn.setText(LanguageUtil.getMessage("button.login"));
+        adminSignUp_password.setPromptText(LanguageUtil.getMessage("prompt.password"));
+        adminSignUp_selectQuestion.setPromptText(LanguageUtil.getMessage("prompt.selectQuestion"));
+        adminSignUp_username.setPromptText(LanguageUtil.getMessage("prompt.username"));
+        adminSignUp_answer.setPromptText(LanguageUtil.getMessage("prompt.answer"));
+        adminSignUp_user.setPromptText(LanguageUtil.getMessage("prompt.selectUser"));
+        ObservableList userTypeList = FXCollections.observableArrayList(
+                LanguageUtil.getMessage("signup.user.userType1"),
+                LanguageUtil.getMessage("signup.user.userType2"));
+        adminSignUp_user.setItems(userTypeList);
+        ObservableList questionList = FXCollections.observableArrayList(
+                LanguageUtil.getMessage("signup.question.question1"),
+                LanguageUtil.getMessage("signup.question.question2"),
+                LanguageUtil.getMessage("signup.question.question3"),
+                LanguageUtil.getMessage("signup.question.question4"));
+        adminSignUp_selectQuestion.setItems(questionList);
+        signupLabel.setText(LanguageUtil.getMessage("signup.label.haveAnAccount"));
+        signUp.setText(LanguageUtil.getMessage("button.signup"));
     }
 }

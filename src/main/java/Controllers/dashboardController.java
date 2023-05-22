@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import DBconnection.connectDb;
 import Models.courseData;
 import Models.studentData;
 import Models.getData;
@@ -49,6 +48,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import service.ConnectionUtil;
 
 
 public class dashboardController implements Initializable {
@@ -271,7 +271,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT COUNT(id) FROM student";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         int countEnrolled = 0;
 
@@ -295,7 +295,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             int countFemale = 0;
@@ -319,7 +319,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
         try {
             int countMale = 0;
 
@@ -343,7 +343,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -369,7 +369,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -395,7 +395,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -421,7 +421,7 @@ public class dashboardController implements Initializable {
                 + "(studentNum,year,course,firstName,lastName,gender,birth,status,image,date) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -523,7 +523,7 @@ public class dashboardController implements Initializable {
                 + "', image = '" + uri + "' WHERE studentNum = '"
                 + addStudents_studentNum.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -578,7 +578,7 @@ public class dashboardController implements Initializable {
         String deleteData = "DELETE FROM student WHERE studentNum = '"
                 + addStudents_studentNum.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -741,7 +741,7 @@ public class dashboardController implements Initializable {
 
         String listCourse = "SELECT * FROM course";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
 
@@ -795,7 +795,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT * FROM student";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             studentData studentD;
@@ -868,7 +868,7 @@ public class dashboardController implements Initializable {
 
         String insertData = "INSERT INTO course (course,description,degree) VALUES(?,?,?)";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -928,7 +928,7 @@ public class dashboardController implements Initializable {
                 + availableCourse_degree.getText() + "' WHERE course = '"
                 + availableCourse_course.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -981,7 +981,7 @@ public class dashboardController implements Initializable {
         String deleteData = "DELETE FROM course WHERE course = '"
                 + availableCourse_course.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -1040,7 +1040,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT * FROM course";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             courseData courseD;
@@ -1095,7 +1095,7 @@ public class dashboardController implements Initializable {
         String checkData = "SELECT * FROM student_Abstence WHERE studentNum = '"
                 + studentAbstence_studentNum.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         double finalResult = 0;
 
@@ -1179,7 +1179,7 @@ public class dashboardController implements Initializable {
 
         String sql = "SELECT * FROM student_Abstence";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
         try {
             studentData studentD;
 
@@ -1292,7 +1292,7 @@ public class dashboardController implements Initializable {
                 logout.getScene().getWindow().hide();
 
                 //LINK YOUR LOGIN FORM
-                Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 

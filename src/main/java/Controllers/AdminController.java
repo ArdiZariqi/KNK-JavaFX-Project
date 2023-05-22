@@ -1,7 +1,5 @@
 package Controllers;
 
-import DBconnection.connectDb;
-import Models.AbsenceData;
 import Models.Data;
 import Models.getData;
 import Models.studentData;
@@ -30,6 +28,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import service.ConnectionUtil;
+import service.LanguageUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +51,6 @@ public class AdminController implements Initializable {
 
     @FXML
     private Button addStudents_addBtn;
-
     @FXML
     private DatePicker addStudents_birth;
 
@@ -135,6 +134,8 @@ public class AdminController implements Initializable {
 
     @FXML
     private AnchorPane home_form;
+    @FXML
+    private Label studentLabel;
 
     @FXML
     private Label home_totalEnrolled;
@@ -195,6 +196,30 @@ public class AdminController implements Initializable {
 
     @FXML
     private Label username;
+    @FXML
+    private ComboBox<String> languageID;
+    @FXML
+    private Label signout;
+    @FXML
+    private Label home_totalEnrolledLabel;
+    @FXML
+    private Label home_totalFemaleEnrolled;
+    @FXML
+    private Label home_totalMaleEnrolled;
+    @FXML
+    private Label yearLabel;
+    @FXML
+    private Label courseLabel;
+    @FXML
+    private Label fNameLabel;
+    @FXML
+    private Label lNameLabel;
+    @FXML
+    private Label genderLabel;
+    @FXML
+    private Label birthDateLabel;
+    @FXML
+    private Label statusLabel;
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -208,7 +233,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT COUNT(id) FROM student";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         int countEnrolled = 0;
 
@@ -232,7 +257,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             int countFemale = 0;
@@ -256,7 +281,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
         try {
             int countMale = 0;
 
@@ -280,7 +305,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -306,7 +331,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -332,7 +357,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -395,7 +420,7 @@ public class AdminController implements Initializable {
 
         String listCourse = "SELECT * FROM course";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
 
@@ -438,7 +463,7 @@ public class AdminController implements Initializable {
                 + "(studentNum,year,course,firstName,lastName,gender,birth,status,image,date) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -458,6 +483,7 @@ public class AdminController implements Initializable {
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
             } else {
+                // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
                 String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
                         + addStudents_studentNum.getText() + "'";
 
@@ -491,28 +517,15 @@ public class AdminController implements Initializable {
 
                     prepare.executeUpdate();
 
-                    String insertStudentAbstence = "INSERT INTO student_Abstence "
-                            + "(studentNum,year,course,first_sem,second_sem,final) "
-                            + "VALUES(?,?,?,?,?,?)";
-
-                    prepare = connect.prepareStatement(insertStudentAbstence);
-                    prepare.setString(1, addStudents_studentNum.getText());
-                    prepare.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(4, "0");
-                    prepare.setString(5, "0");
-                    prepare.setString(6, "0");
-
-                    prepare.executeUpdate();
-
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
 
-
+                    // TO UPDATE THE TABLEVIEW
                     addStudentsShowListData();
+                    // TO CLEAR THE FIELDS
                     addStudentsClear();
                 }
             }
@@ -552,7 +565,7 @@ public class AdminController implements Initializable {
                 + "', image = '" + uri + "' WHERE studentNum = '"
                 + addStudents_studentNum.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -605,7 +618,7 @@ public class AdminController implements Initializable {
         String deleteData = "DELETE FROM student WHERE studentNum = '"
                 + addStudents_studentNum.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -633,23 +646,11 @@ public class AdminController implements Initializable {
 
                 if (option.get().equals(ButtonType.OK)) {
 
-                    statement = connect.createStatement();
-                    statement.executeUpdate(deleteData);
 
-                    String checkData = "SELECT studentNum FROM student_Abstence "
-                            + "WHERE studentNum = '" + addStudents_studentNum.getText() + "'";
 
-                    prepare = connect.prepareStatement(checkData);
-                    result = prepare.executeQuery();
-
-                    if (result.next()) {
-                        String deleteAbstence = "DELETE FROM student_Abstence WHERE "
-                                + "studentNum = '" + addStudents_studentNum.getText() + "'";
 
                         statement = connect.createStatement();
-                        statement.executeUpdate(deleteAbstence);
-
-                    }// IF NOT THEN NVM
+                        statement.executeUpdate(deleteData);
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
@@ -676,7 +677,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT * FROM student_Abstence";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
         try {
             studentData studentD;
 
@@ -707,7 +708,7 @@ public class AdminController implements Initializable {
 
         String sql = "SELECT * FROM student";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             studentData studentD;
@@ -941,7 +942,7 @@ public class AdminController implements Initializable {
 
                 logout.getScene().getWindow().hide();
 
-                Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
@@ -1018,7 +1019,61 @@ public class AdminController implements Initializable {
         addStudentsStatusList();
         addStudentsCourseList();
         studentAbstencesShowListData();
+        languageID.setItems(FXCollections.observableArrayList("English", "Shqip"));
+        languageID.setValue("English");
+        languageID.setOnAction(e -> {
+            setLanguage();
+        });
+
+        setLanguage();
     }
+
+    public void setLanguage() {
+
+        String selectedLanguage = languageID.getValue();
+        LanguageUtil.setLanguage(selectedLanguage);
+
+        home_btn.setText(LanguageUtil.getMessage("home.btn"));
+        home_totalEnrolledLabel.setText(LanguageUtil.getMessage("home.totalEnrolled"));
+        home_totalFemaleEnrolled.setText(LanguageUtil.getMessage("home.totalFemale"));
+        home_totalMaleEnrolled.setText(LanguageUtil.getMessage("home.totalMale"));
+        home_totalEnrolledChart.setTitle(LanguageUtil.getMessage("tot.enrolled.chart"));
+        home_totalFemaleChart.setTitle(LanguageUtil.getMessage("tot.female.enrolled"));
+        home_totalMaleChart.setTitle(LanguageUtil.getMessage("tot.male.enrolled"));
+        addStudents_btn.setText(LanguageUtil.getMessage("addStudents.btn"));
+        addStudents_addBtn.setText(LanguageUtil.getMessage("addStudents.addBtn"));
+        addStudents_clearBtn.setText(LanguageUtil.getMessage("addStudents.clearBtn"));
+        addStudents_deleteBtn.setText(LanguageUtil.getMessage("addStudents.deleteBtn"));
+        addStudents_insertBtn.setText(LanguageUtil.getMessage("addStudents.insertBtn"));
+        addStudents_updateBtn.setText(LanguageUtil.getMessage("addStudents.updateBtn"));
+        addStudents_col_studentNum.setText(LanguageUtil.getMessage("student.id"));
+        addStudents_col_year.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
+        addStudents_col_course.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+        addStudents_col_firstName.setText(LanguageUtil.getMessage("student.first.name"));
+        addStudents_col_lastName.setText(LanguageUtil.getMessage("student.last.name"));
+        addStudents_col_gender.setText(LanguageUtil.getMessage("student.gender"));
+        addStudents_col_birth.setText(LanguageUtil.getMessage("student.birth.date"));
+        addStudents_col_status.setText(LanguageUtil.getMessage("student.status"));
+        studentLabel.setText(LanguageUtil.getMessage("student.id"));
+        yearLabel.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
+        courseLabel.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+        fNameLabel.setText(LanguageUtil.getMessage("student.first.name"));
+        lNameLabel.setText(LanguageUtil.getMessage("student.last.name"));
+        genderLabel.setText(LanguageUtil.getMessage("student.gender"));
+        birthDateLabel.setText(LanguageUtil.getMessage("student.birth.date"));
+        statusLabel.setText(LanguageUtil.getMessage("student.status"));
+        addStudents_search.setText(LanguageUtil.getMessage("search.student"));
+        studentAbstence_search.setText(LanguageUtil.getMessage("search.student"));
+        studentAbstence_btn.setText(LanguageUtil.getMessage("student.absences"));
+        studentAbstence_col_course.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+        studentAbstence_col_final.setText(LanguageUtil.getMessage("studentAbstence.col_final"));
+        studentAbstence_col_firstSem.setText(LanguageUtil.getMessage("studentAbstence.col_firstSem"));
+        studentAbstence_col_secondSem.setText(LanguageUtil.getMessage("studentAbstence.col_secondSem"));
+        studentAbstence_col_studentNum.setText(LanguageUtil.getMessage("student.id"));
+        studentAbstence_col_year.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
+        signout.setText(LanguageUtil.getMessage("signout"));
+    }
+
 }
 
 //help button

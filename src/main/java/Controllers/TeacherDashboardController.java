@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import DBconnection.connectDb;
 import Models.AbsenceSummary;
 import Models.courseData;
 import Models.getData;
@@ -48,8 +47,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-
+import service.ConnectionUtil;
 
 
 public class TeacherDashboardController implements Initializable {
@@ -240,7 +238,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT COUNT(a_id) FROM Absences";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         int countEnrolled = 0;
 
@@ -264,7 +262,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT COUNT(a_id) FROM Absences WHERE gender = 'Female' and status = 'Enrolled'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             int countFemale = 0;
@@ -288,7 +286,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT COUNT(a_id) FROM Absences WHERE gender = 'Male' and status = 'Enrolled'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
         try {
             int countMale = 0;
 
@@ -312,7 +310,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -338,7 +336,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -364,7 +362,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             XYChart.Series chart = new XYChart.Series();
@@ -390,7 +388,7 @@ public class TeacherDashboardController implements Initializable {
                 "(student_id, class_, course_name, time, firstName, lastName, gender, date_, status, reasonability,date) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -480,7 +478,7 @@ public class TeacherDashboardController implements Initializable {
                 + addAbsence_Id.getText() + "'";
 
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -538,7 +536,7 @@ public class TeacherDashboardController implements Initializable {
         String deleteData = "DELETE FROM Absences WHERE a_id = '"
                 + addAbsence_Id.getText() + "'";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -660,7 +658,7 @@ public class TeacherDashboardController implements Initializable {
 
         String listCourse = "SELECT * FROM course";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
 
@@ -739,7 +737,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT * FROM Absences";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             AbsenceData studentD;
@@ -848,7 +846,7 @@ public class TeacherDashboardController implements Initializable {
 
         String sql = "SELECT *from  AbsenceSummary";
 
-        connect = connectDb.getConnection();
+        connect = ConnectionUtil.getConnection();
 
         try {
             AbsenceSummary studentD1;
@@ -936,7 +934,7 @@ public class TeacherDashboardController implements Initializable {
                 logout.getScene().getWindow().hide();
 
                 //LINK YOUR LOGIN FORM
-                Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
