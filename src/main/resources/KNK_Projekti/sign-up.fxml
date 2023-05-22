@@ -23,6 +23,11 @@
                         <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                      </graphic>
                   </Button>
+                  <Button fx:id="helpButton" layoutX="12.0" layoutY="344.0" mnemonicParsing="false" onAction="#openHelp" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Help">
+                     <graphic>
+                        <FontAwesomeIcon fill="BLACK" glyphName="QUESTION_CIRCLE" size="1.5em" />
+                     </graphic>
+                  </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#close" prefHeight="26.0" prefWidth="56.0" styleClass="close" stylesheets="@Design/loginDesign.css">
                      <graphic>
                         <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
