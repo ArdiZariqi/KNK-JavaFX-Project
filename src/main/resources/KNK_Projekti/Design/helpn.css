@@ -1,0 +1,43 @@
+.title-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #245580;
+}
+
+.subtitle-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: #245580;
+}
+
+.help-text-area {
+    -fx-font-size: 14px;
+    -fx-background-color: #F4F7FA;
+}
+
+.close-button {
+    -fx-background-color: #245580;
+    -fx-text-fill: white;
+}
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.subtitle-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.help-text-area {
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+}
+
+.close-button {
+    -fx-font-size: 16px;
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-text-fill: white;
+}
+
+.close-button:hover {
+    -fx-background-color: #45a049; /* Darker green */
+}

@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -31,6 +32,7 @@ import service.ConnectionUtil;
 import service.LanguageUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,9 +40,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.*;
+import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
 
 
 public class AdminController implements Initializable {
+
+    @FXML
+    private Button helpButton;
 
     @FXML
     private Button addStudents_addBtn;
@@ -220,6 +227,8 @@ public class AdminController implements Initializable {
     private ResultSet result;
 
     private Image image;
+
+
     public void homeDisplayTotalEnrolledStudents() {
 
         String sql = "SELECT COUNT(id) FROM student";
@@ -846,6 +855,27 @@ public class AdminController implements Initializable {
     }
 
     @FXML
+    void openHelp(ActionEvent event) {
+        if (event.getSource() == helpButton) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("helpn.fxml"));
+                Parent root = loader.load();
+
+                // Additional code to configure the help view if needed
+
+                // Create a new stage and set the help view as its scene
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Handle the exception appropriately
+            }
+        }
+    }
+
+
+    @FXML
     void switchForm(ActionEvent event) {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
@@ -1044,4 +1074,8 @@ public class AdminController implements Initializable {
     }
 
 }
+
+//help button
+
+
 
