@@ -68,7 +68,7 @@
                                             </font>
                                         </Label>
                                         <Line endX="85.0" layoutX="109.0" layoutY="173.0" startX="-100.0" stroke="WHITE" />
-                                        <Button fx:id="helpButton" layoutX="-3.0" layoutY="10.0" mnemonicParsing="false" onAction="#openHelp" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Help">
+                                        <Button fx:id="helpButton" layoutX="12.0" layoutY="344.0" mnemonicParsing="false" onAction="#openHelp" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" text="Help">
                                             <graphic>
                                                 <FontAwesomeIcon fill="WHITE" glyphName="QUESTION_CIRCLE" size="1.5em" />
                                             </graphic>

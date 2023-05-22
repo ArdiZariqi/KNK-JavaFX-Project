@@ -1,6 +1,5 @@
 package Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +8,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class HelpController {
+
+public class HelpController1 {
     @FXML
     private Button closeButton;
 
@@ -22,7 +22,7 @@ public class HelpController {
         try {
 
             Parent root = null;
-            root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
 

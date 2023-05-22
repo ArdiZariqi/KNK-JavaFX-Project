@@ -1,6 +1,7 @@
 package Controllers;
 import Models.AbsenceData;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -40,7 +42,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -224,6 +226,8 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private Label username;
 
+    @FXML
+    private Button helpButton;
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -527,6 +531,7 @@ public class TeacherDashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     public void addAbsencesDelete() {
 
@@ -973,6 +978,26 @@ public class TeacherDashboardController implements Initializable {
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
     }
 
+    @FXML
+    public void openHelp(ActionEvent event){
+        try {
+            if (event.getSource() == helpButton ){
+                Parent root = null;
+                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpn.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+
+                stage.initStyle(StageStyle.TRANSPARENT);
+
+                stage.show();
+
+                helpButton.getScene().getWindow().hide();
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void switchForm(ActionEvent event) {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
@@ -1025,9 +1050,13 @@ public class TeacherDashboardController implements Initializable {
         }
     }
 
-    public void close() {
+
+    @FXML
+    private void close() {
+
         System.exit(0);
     }
+
 
     public void minimize() {
         Stage stage = (Stage) main_form.getScene().getWindow();

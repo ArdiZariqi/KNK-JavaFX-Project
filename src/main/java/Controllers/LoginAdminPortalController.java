@@ -14,7 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -149,7 +149,7 @@ public class LoginAdminPortalController implements Initializable {
                 if (loginUser != null) {
                     alert.successMessage("Login Successfully!");
                     admin_loginBtn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
 
                     Stage stage = new Stage();
                     stage.setTitle("Absence Management System(Admin)");
@@ -163,6 +163,22 @@ public class LoginAdminPortalController implements Initializable {
                     root.setOnMouseDragged((MouseEvent event) -> {
                         stage.setX(event.getScreenX() - x);
                         stage.setY(event.getScreenY() - y);
+                    });
+
+                    KeyCombination keyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+                    KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
+
+                    stage.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+                        if (minimizeKeyCombination.match(event)) {
+                            stage.setIconified(true);
+                        }
+                    });
+
+                    stage.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+                        if (keyCombination.match(event)) {
+                            stage.close();
+                        }
                     });
                     stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();

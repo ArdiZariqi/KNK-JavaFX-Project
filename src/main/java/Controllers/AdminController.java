@@ -854,22 +854,23 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    void openHelp(ActionEvent event) {
-        if (event.getSource() == helpButton) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("helpn.fxml"));
-                Parent root = loader.load();
-
-                // Additional code to configure the help view if needed
-
-                // Create a new stage and set the help view as its scene
+    public void openHelp(ActionEvent event){
+        try {
+            if (event.getSource() == helpButton ){
+                Parent root = null;
+                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpn1.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+
+                stage.initStyle(StageStyle.TRANSPARENT);
+
                 stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Handle the exception appropriately
+
+                helpButton.getScene().getWindow().hide();
             }
+
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
