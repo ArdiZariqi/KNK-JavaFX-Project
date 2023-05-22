@@ -17,7 +17,7 @@
             <Label styleClass="subtitle-label" text="How to Use the Platform:" />
             <TextArea editable="false" prefHeight="400.0" prefWidth="760.0" styleClass="help-text-area" text="This platform helps you manage student absences in a middle school. Here are the steps to use the platform effectively: &#10;&#10;1. Search for a Student: &#10;- Enter the student's name or ID in the search field. &#10;- Click the &quot;Search&quot; button to find the student in the system. &#10;&#10;2. View Student Absences: &#10;- Once the student is found, their information will be displayed in the table. &#10;- The table columns show the student's ID, name, grade, and absence count. &#10;&#10;3. Add an Absence: &#10;- To add an absence for a student, click the &quot;Add Absence&quot; button. &#10;- Follow the prompts to enter the necessary details such as the date and reason for the absence. &#10;&#10;4. Edit or Delete Absences: &#10;- To edit or delete an existing absence, select the absence from the table. &#10;- Use the provided options to make changes or remove the absence. &#10;&#10;5. Save and Export Data: &#10;- The platform automatically saves changes to the absence records. &#10;- You can also export the absence data to a file for further analysis or reporting. &#10;&#10;For any further assistance, please refer to the documentation or contact the support team.">
                 This platform helps you manage student absences in a middle school. Here are the steps to use the platform effectively:
-
+                //gg
                 1. Search for a Student:
                 - Enter the student's name or ID in the search field.
                 - Click the "Search" button to find the student in the system.
