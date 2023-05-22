@@ -62,6 +62,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button changePw_proceedBtn;
     @FXML
+    private Button helpButton;
+    @FXML
     private TextField forgetPw_ansewer;
     @FXML
     private Button forgetPw_backBtn;
@@ -130,6 +132,26 @@ public class LoginController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    @FXML
+    public void openHelp(ActionEvent event){
+        try {
+            if (event.getSource() == helpButton ){
+                Parent root = null;
+                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpLogin.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+
+                stage.initStyle(StageStyle.TRANSPARENT);
+
+                stage.show();
+
+                helpButton.getScene().getWindow().hide();
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
