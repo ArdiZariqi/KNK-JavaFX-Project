@@ -1,0 +1,19 @@
+.title-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #245580;
+}
+
+.subtitle-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: #245580;
+}
+
+.help-text-area {
+    -fx-font-size: 14px;
+    -fx-background-color: #F4F7FA;
+}
+
+.close-button {
+    -fx-background-color: #245580;
+    -fx-text-fill: white;
+}
