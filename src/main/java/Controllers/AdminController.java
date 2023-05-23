@@ -853,7 +853,7 @@ public class AdminController implements Initializable {
     public void displayUsername() {
         username.setText(Data.username);
     }
-
+//koment
     @FXML
     public void openHelp(ActionEvent event){
         try {
