@@ -5,9 +5,9 @@ import java.util.ResourceBundle;
 
 public class LanguageUtil {
     private static ResourceBundle bundle;
-    private static Locale currentLocale;
 
     public static void setLanguage(String language) {
+        Locale currentLocale;
         if (language.equalsIgnoreCase("Shqip")) {
             currentLocale = new Locale("sq");
         } else {

@@ -48,6 +48,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import service.ConnectionUtil;
+import service.LanguageUtil;
 
 
 public class TeacherDashboardController implements Initializable {
@@ -136,12 +137,16 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private Button addAbsence_deleteBtn;
+    @FXML
+    private Label reasonabilityLabel;
 
     @FXML
     private TextField addAbsence_search;
 
     @FXML
     private TextField addAbsence_studentNum;
+    @FXML
+    private Label label;
 
     @FXML
     private TextField addAbsence_time;
@@ -157,6 +162,8 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private TextField addStudents_firstName;
+    @FXML
+    private Label signout;
 
     @FXML
     private AnchorPane addStudents_form;
@@ -169,6 +176,8 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private ComboBox<?> addStudents_status;
+    @FXML
+    private ComboBox<String> languageId;
 
     @FXML
     private TableView<AbsenceData> addStudents_tableView;
@@ -178,6 +187,8 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private Button close;
+    @FXML
+    private Label timeLabel;
 
     @FXML
     private Button maximize;
@@ -196,6 +207,10 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private BarChart<?, ?> home_totalEnrolledChart;
+    @FXML
+    private Label fNameLabel;
+    @FXML
+    private Label lNameLabel;
 
     @FXML
     private Label home_totalFemale;
@@ -205,6 +220,8 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private Label home_totalMale;
+    @FXML
+    private Label courseLabel;
 
     @FXML
     private LineChart<?, ?> home_totalMaleChart;
@@ -214,9 +231,13 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private AnchorPane main_form;
+    @FXML
+    private Label statusLabel;
 
     @FXML
     private Button minimize;
+    @FXML
+    private Label classLabel;
 
     @FXML
     private Button studentAbstence_btn;
@@ -226,6 +247,18 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private Button helpButton;
+    @FXML
+    private Label home_totalAbsencesLabel;
+    @FXML
+    private Label home_totalFemaleAbsences;
+    @FXML
+    private Label home_totalMaleAbsences;
+    @FXML
+    private Label studentLabel;
+    @FXML
+    private Label genderLabel;
+    @FXML
+    private Label birthDateLabel;
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -236,7 +269,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void homeDisplayTotalStudentsAbsence() {
 
-        String sql = "SELECT COUNT(a_id) FROM Absences";
+        String sql = "SELECT COUNT(a_id) FROM student_Abstence";
 
         connect = ConnectionUtil.getConnection();
 
@@ -260,7 +293,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void homeDisplayTotalFemaleAbsences() {
 
-        String sql = "SELECT COUNT(a_id) FROM Absences WHERE gender = 'Female' and status = 'Enrolled'";
+        String sql = "SELECT COUNT(a_id) FROM student_Abstence WHERE gender = 'Female' and status = 'Enrolled'";
 
         connect = ConnectionUtil.getConnection();
 
@@ -284,7 +317,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void homeDisplayTotalMaleAbsences() {
 
-        String sql = "SELECT COUNT(a_id) FROM Absences WHERE gender = 'Male' and status = 'Enrolled'";
+        String sql = "SELECT COUNT(a_id) FROM student_Abstence WHERE gender = 'Male' and status = 'Enrolled'";
 
         connect = ConnectionUtil.getConnection();
         try {
@@ -308,7 +341,7 @@ public class TeacherDashboardController implements Initializable {
 
         home_totalEnrolledChart.getData().clear();
 
-        String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
+        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
         connect = ConnectionUtil.getConnection();
 
@@ -334,7 +367,7 @@ public class TeacherDashboardController implements Initializable {
 
         home_totalFemaleChart.getData().clear();
 
-        String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
+        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
         connect = ConnectionUtil.getConnection();
 
@@ -360,7 +393,7 @@ public class TeacherDashboardController implements Initializable {
 
         home_totalMaleChart.getData().clear();
 
-        String sql = "SELECT date_, COUNT(a_id) FROM Absences WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
+        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
 
         connect = ConnectionUtil.getConnection();
 
@@ -384,7 +417,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void AbsencesAdd() {
 
-        String insertData = "INSERT INTO Absences " +
+        String insertData = "INSERT INTO student_Abstence " +
                 "(student_id, class_, course_name, time, firstName, lastName, gender, date_, status, reasonability,date) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
@@ -463,7 +496,7 @@ public class TeacherDashboardController implements Initializable {
     public void addAbsencesUpdate() {
 
 
-        String updateData = "UPDATE Absences SET "
+        String updateData = "UPDATE student_Abstence SET "
                 + "student_id = '" + addAbsence_studentNum.getText()
                 + "', class_ = '" + addAbsence_class.getSelectionModel().getSelectedItem()
                 + "', course_name = '" + addAbsence_course.getSelectionModel().getSelectedItem()
@@ -533,7 +566,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void addAbsencesDelete() {
 
-        String deleteData = "DELETE FROM Absences WHERE a_id = '"
+        String deleteData = "DELETE FROM student_Abstence WHERE a_id = '"
                 + addAbsence_Id.getText() + "'";
 
         connect = ConnectionUtil.getConnection();
@@ -735,7 +768,7 @@ public class TeacherDashboardController implements Initializable {
 
         ObservableList<AbsenceData> listStudents = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM Absences";
+        String sql = "SELECT * FROM student_Abstence";
 
         connect = ConnectionUtil.getConnection();
 
@@ -934,7 +967,7 @@ public class TeacherDashboardController implements Initializable {
                 logout.getScene().getWindow().hide();
 
                 //LINK YOUR LOGIN FORM
-                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
@@ -1101,7 +1134,72 @@ public class TeacherDashboardController implements Initializable {
         addStudentsClassList();
         AbsenceList();
 
+        languageId.setItems(FXCollections.observableArrayList("English", "Shqip"));
+        languageId.setValue("English");
+        languageId.setOnAction(e -> {
+            setLanguage();
+        });
 
+        setLanguage();
+    }
+    public void setLanguage() {
+
+        String selectedLanguage = languageId.getValue();
+        LanguageUtil.setLanguage(selectedLanguage);
+
+        home_btn.setText(LanguageUtil.getMessage("home.btn"));
+        home_totalAbsencesLabel.setText(LanguageUtil.getMessage("home.totalAbsence"));
+        home_totalFemaleAbsences.setText(LanguageUtil.getMessage("home.totalFemale.Absences"));
+        home_totalMaleAbsences.setText(LanguageUtil.getMessage("home.totalMale.Absences"));
+        home_totalEnrolledChart.setTitle(LanguageUtil.getMessage("home.totalAbsence"));
+        home_totalFemaleChart.setTitle(LanguageUtil.getMessage("tot.female.absences"));
+        home_totalMaleChart.setTitle(LanguageUtil.getMessage("tot.male.absences"));
+        addStudents_btn.setText(LanguageUtil.getMessage("add.absences.btn"));
+        addAbsence_addBtn.setText(LanguageUtil.getMessage("addStudents.addBtn"));
+        addAbsence_clearBtn.setText(LanguageUtil.getMessage("addStudents.clearBtn"));
+        addAbsence_deleteBtn.setText(LanguageUtil.getMessage("addStudents.deleteBtn"));
+        addAbsence_updateBtn.setText(LanguageUtil.getMessage("addStudents.updateBtn"));
+        addAbsence_col_firstName.setText(LanguageUtil.getMessage("student.first.name"));
+        addAbsence_col_firstName1.setText(LanguageUtil.getMessage("student.first.name"));
+        addAbsence_col_lastName.setText(LanguageUtil.getMessage("student.last.name"));
+        addAbsence_col_lastName1.setText(LanguageUtil.getMessage("student.last.name"));
+        addAbsence_col_gender.setText(LanguageUtil.getMessage("student.gender"));
+        addAbsence_col_gender1.setText(LanguageUtil.getMessage("student.gender"));
+        addAbsence_col_date.setText(LanguageUtil.getMessage("student.birth.date"));
+        addAbsence_col_status.setText(LanguageUtil.getMessage("student.status"));
+        addAbsence_col_reasonability.setText(LanguageUtil.getMessage("add.absence.reasonability"));
+        addAbsence_col_reasonable.setText(LanguageUtil.getMessage("total.reasonable"));
+        addAbsence_col_unreasonable.setText(LanguageUtil.getMessage("total.unreasonable"));
+        addAbsence_col_total.setText(LanguageUtil.getMessage("total.absences"));
+        studentLabel.setText(LanguageUtil.getMessage("student.id"));
+        classLabel.setText(LanguageUtil.getMessage("class.label"));
+        timeLabel.setText(LanguageUtil.getMessage("time.label"));
+        label.setText(LanguageUtil.getMessage("label."));
+        reasonabilityLabel.setText(LanguageUtil.getMessage("add.absence.reasonability"));
+        addAbsence_col_Course1.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+        addAbsence_col_class1.setText(LanguageUtil.getMessage("class.col"));
+        addAbsence_col_stid.setText(LanguageUtil.getMessage("student.id"));
+        addAbsence_class.setPromptText(LanguageUtil.getMessage("select.class"));
+        addAbsence_course.setPromptText(LanguageUtil.getMessage("select.course"));
+        addStudents_gender.setPromptText(LanguageUtil.getMessage("select.gender"));
+        addStudents_status.setPromptText(LanguageUtil.getMessage("select.status"));
+        addStudents_Absences.setPromptText(LanguageUtil.getMessage("select.reasonability"));
+        courseLabel.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+        fNameLabel.setText(LanguageUtil.getMessage("student.first.name"));
+        lNameLabel.setText(LanguageUtil.getMessage("student.last.name"));
+        genderLabel.setText(LanguageUtil.getMessage("student.gender"));
+        birthDateLabel.setText(LanguageUtil.getMessage("student.birth.date"));
+        statusLabel.setText(LanguageUtil.getMessage("student.status"));
+        Absence_search1.setPromptText(LanguageUtil.getMessage("search.student"));
+        addAbsence_search.setPromptText(LanguageUtil.getMessage("search.student"));
+        studentAbstence_btn.setText(LanguageUtil.getMessage("student.absences"));
+        addAbsence_col_Course.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+        addAbsence_col_class.setText(LanguageUtil.getMessage("class.col"));
+        addAbsence_col_time.setText(LanguageUtil.getMessage("time.col"));
+        addAbsence_col_studentNum.setText(LanguageUtil.getMessage("student.id"));
+        addAbsence_col_absence.setText(LanguageUtil.getMessage("absence.id"));
+        signout.setText(LanguageUtil.getMessage("signout"));
+        helpButton.setText(LanguageUtil.getMessage("help.btn"));
     }
 
 }

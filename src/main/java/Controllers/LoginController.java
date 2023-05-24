@@ -5,7 +5,6 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import Models.User;
@@ -81,6 +80,14 @@ public class LoginController implements Initializable {
     private Label loginLabel;
     @FXML
     private Label loginAccount;
+    @FXML
+    private ComboBox<String> loginLanguage1;
+    @FXML
+    private ComboBox<String> loginLanguage2;
+    @FXML
+    private Label forgetPwLabel;
+    @FXML
+    private Label forgetPwLabel1;
     private double x= 0 ;
     private double y= 0;
 
@@ -104,7 +111,7 @@ public class LoginController implements Initializable {
                 if (loginUser != null) {
                     alert.successMessage(LanguageUtil.getMessage("login.success"));
                     admin_loginBtn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherDashboard.fxml"));
 
                     Stage stage = new Stage();
                     stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
@@ -170,7 +177,7 @@ public class LoginController implements Initializable {
     public void forgotPassword() {
         alertMessage alert = new alertMessage();
 
-        String selectedLanguage = loginLanguage.getValue();
+        String selectedLanguage = loginLanguage1.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         if (forgetPw_username.getText().isEmpty()
@@ -313,6 +320,18 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         selectUser();
         forgotListQuestion();
+        loginLanguage1.setItems(FXCollections.observableArrayList("English", "Shqip"));
+        loginLanguage1.setValue("English");
+        loginLanguage1.setOnAction(e -> {
+            setLanguage1();
+        });
+        setLanguage1();
+        loginLanguage2.setItems(FXCollections.observableArrayList("English", "Shqip"));
+        loginLanguage2.setValue("English");
+        loginLanguage2.setOnAction(e -> {
+            setLanguage2();
+        });
+        setLanguage2();
         loginLanguage.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage.setValue("English");
         loginLanguage.setOnAction(e -> {
@@ -340,5 +359,35 @@ public class LoginController implements Initializable {
                 LanguageUtil.getMessage("signup.user.userType1"),
                 LanguageUtil.getMessage("signup.user.userType2"));
         admin_user.setItems(userTypeList);
+    }
+
+    public void setLanguage1(){
+        String selectedLanguage = loginLanguage1.getValue();
+        LanguageUtil.setLanguage(selectedLanguage);
+
+        forgetPwLabel.setText(LanguageUtil.getMessage("change.password"));
+        changePw_newPassword.setPromptText(LanguageUtil.getMessage("new.password"));
+        changePW_confirmPassword.setPromptText(LanguageUtil.getMessage("prompt.confirmPassword"));
+        changePw_proceedBtn.setText(LanguageUtil.getMessage("change.password"));
+        changePw_backBtn.setText(LanguageUtil.getMessage("back.btn"));
+    }
+
+    public void setLanguage2(){
+        String selectedLanguage = loginLanguage2.getValue();
+        LanguageUtil.setLanguage(selectedLanguage);
+
+        forgetPwLabel1.setText(LanguageUtil.getMessage("forgot.password.label"));
+        forgetPw_username.setPromptText(LanguageUtil.getMessage("prompt.username"));
+        forgetPw_selectQuestion.setPromptText(LanguageUtil.getMessage("prompt.selectQuestion"));
+        ObservableList questionList = FXCollections.observableArrayList(
+                LanguageUtil.getMessage("signup.question.question1"),
+                LanguageUtil.getMessage("signup.question.question2"),
+                LanguageUtil.getMessage("signup.question.question3"),
+                LanguageUtil.getMessage("signup.question.question4")
+        );
+        forgetPw_selectQuestion.setItems(questionList);
+        forgetPw_ansewer.setPromptText(LanguageUtil.getMessage("prompt.answer"));
+        forgetPw_proceedBtn.setText(LanguageUtil.getMessage("proceed.btn"));
+        forgetPw_backBtn.setText(LanguageUtil.getMessage("back.btn"));
     }
 }

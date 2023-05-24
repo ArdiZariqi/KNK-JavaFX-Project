@@ -6,7 +6,7 @@ module KNK.Projekti {
     requires javafx.fxml;
     requires javafx.controls;
     requires java.sql;
-//    requires mysql.connector.java;
+    requires mysql.connector.j;
 //    requires fontawesomefx;
     requires java.desktop;
 

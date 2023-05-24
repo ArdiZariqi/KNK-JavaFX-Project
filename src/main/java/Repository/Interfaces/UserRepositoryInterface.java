@@ -6,7 +6,7 @@ import Models.dto.CreateUserDto;
 import java.sql.SQLException;
 
 public interface UserRepositoryInterface {
-    public User insert(CreateUserDto user) throws SQLException;
-    public User getByUsername(String username) throws SQLException;
+    User insert(CreateUserDto user) throws SQLException;
+    User getByUsername(String username) throws SQLException;
     void update(User user) throws SQLException;
 }

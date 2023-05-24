@@ -1073,7 +1073,6 @@ public class AdminController implements Initializable {
         studentAbstence_col_year.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
         signout.setText(LanguageUtil.getMessage("signout"));
     }
-
 }
 
 //help button
