@@ -114,7 +114,7 @@ public class LoginController implements Initializable {
                 if (loginUser != null) {
                     alert.successMessage(LanguageUtil.getMessage("login.success"));
                     admin_loginBtn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
 
                     Stage stage = new Stage();
                     stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
