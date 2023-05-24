@@ -1,8 +1,6 @@
 package Controllers;
 
-import Models.Data;
-import Models.getData;
-import Models.studentData;
+import Models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.w3c.dom.Text;
 import service.ConnectionUtil;
 import service.LanguageUtil;
 
@@ -220,6 +219,38 @@ public class AdminController implements Initializable {
     private Label birthDateLabel;
     @FXML
     private Label statusLabel;
+    @FXML
+    private TextField scheduleLabel;
+    @FXML
+    private TextField dayLabel;
+    @FXML
+    private TextField timeLabel;
+    @FXML
+    private TextField courseLabel1;
+    @FXML
+    private Button scheduleAdd;
+    @FXML
+    private Button scheduleUpdate;
+    @FXML
+    private Button scheduleClear;
+    @FXML
+    private Button scheduleDelete;
+    @FXML
+    private TableColumn<scheduleData, String> scheduleId;
+    @FXML
+    private TableColumn<scheduleData, String> scheduleDay;
+    @FXML
+    private TableColumn<scheduleData, String> scheduleTime;
+    @FXML
+    private TableColumn<scheduleData, String> scheduleCourse1;
+    @FXML
+    private TableView<scheduleData> scheduleTableView;
+    @FXML
+    private AnchorPane studentSchedule_form;
+    @FXML
+    private Button studentSchedule_btn;
+
+
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -735,18 +766,7 @@ public class AdminController implements Initializable {
         return listStudents;
     }
 
-    public void studentAbstencesShowListData() {
-        studentAbstencesList = studentAbstencesListData();
 
-        studentAbstence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
-        studentAbstence_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
-        studentAbstence_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
-        studentAbstence_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
-        studentAbstence_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
-        studentAbstence_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
-
-        studentAbstence_tableView.setItems(studentAbstencesList);
-    }
 
     public void addStudentsSearch() {
 
@@ -792,48 +812,6 @@ public class AdminController implements Initializable {
 
     private ObservableList<studentData> addStudentsListD;
 
-    public void studentAbstencesSelect() {
-
-        studentData studentD = studentAbstence_tableView.getSelectionModel().getSelectedItem();
-        int num = studentAbstence_tableView.getSelectionModel().getSelectedIndex();
-    }
-
-    public void studentAbstencesSearch() {
-
-        FilteredList<studentData> filter = new FilteredList<>(studentAbstencesList, e -> true);
-
-        studentAbstence_search.textProperty().addListener((Observable, oldValue, newValue) -> {
-
-            filter.setPredicate(predicateStudentData -> {
-
-                if (newValue.isEmpty() || newValue == null) {
-                    return true;
-                }
-                String searchKey = newValue.toLowerCase();
-
-                if (predicateStudentData.getStudentNum().toString().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getYear().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getCourse().toLowerCase().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getFirstSem().toString().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getSecondSem().toString().contains(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getFinals().toString().contains(searchKey)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
-
-        SortedList<studentData> sortList = new SortedList<>(filter);
-
-        sortList.comparatorProperty().bind(studentAbstence_tableView.comparatorProperty());
-        studentAbstence_tableView.setItems(sortList);
-    }
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
 
@@ -847,6 +825,236 @@ public class AdminController implements Initializable {
         addStudents_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         addStudents_tableView.setItems(addStudentsListD);
+
+    }
+
+    public void studentScheduleAdd() {
+
+        String insertData = "INSERT INTO schedule (schedule_id, day, time, course) VALUES(?,?,?,?)";
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+            Alert alert;
+
+            if (scheduleLabel.getText().isEmpty()
+                    || dayLabel.getText().isEmpty()
+                    || timeLabel.getText().isEmpty()
+                    || courseLabel1.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+
+                String checkData = "SELECT schedule_id FROM schedule WHERE schedule_id = '"
+                        + scheduleLabel.getText() + "'";
+
+                statement = connect.createStatement();
+                result = statement.executeQuery(checkData);
+
+                if (result.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Schedule: " + scheduleLabel.getText() + " was already exist!");
+                    alert.showAndWait();
+                } else {
+                    prepare = connect.prepareStatement(insertData);
+                    prepare.setString(1, scheduleLabel.getText());
+                    prepare.setString(2, dayLabel.getText());
+                    prepare.setString(3, timeLabel.getText());
+                    prepare.setString(4, courseLabel1.getText());
+
+                    prepare.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Added!");
+                    alert.showAndWait();
+
+
+                    availableScheduleShowListData();
+                    studentScheduleClear();
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void studentScheduleUpdate() {
+
+        String updateData = "UPDATE schedule_id SET description = '"
+                + scheduleLabel.getText() + "', degree = '"
+                + dayLabel.getText() + "' WHERE course = '"
+                + timeLabel.getText() + "'"
+                + courseLabel1.getText();
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+            Alert alert;
+
+            if (scheduleLabel.getText().isEmpty()
+                    || dayLabel.getText().isEmpty()
+                    || timeLabel.getText().isEmpty()
+                    || courseLabel1.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE Schedule: " + scheduleLabel.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(updateData);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Updated!");
+                    alert.showAndWait();
+
+
+                    availableScheduleShowListData();
+                    studentScheduleClear();
+
+                } else {
+                    return;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void studentScheduleDelete() {
+
+        String deleteData = "DELETE FROM schedule_id WHERE  schedule_id = '"
+                + scheduleLabel.getText() + "'";
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+            Alert alert;
+
+            if (scheduleLabel.getText().isEmpty()
+                    || dayLabel.getText().isEmpty()
+                    || timeLabel.getText().isEmpty()
+                    || courseLabel1.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields");
+                alert.showAndWait();
+            } else {
+//
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to DELETE Schedule: " + scheduleLabel.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connect.createStatement();
+                    statement.executeUpdate(deleteData);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully Deleted!");
+                    alert.showAndWait();
+
+
+                    availableScheduleShowListData();
+                    studentScheduleClear();
+
+                } else {
+                    return;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void studentScheduleClear() {
+        scheduleLabel.setText("");
+        dayLabel.setText("");
+        timeLabel.setText("");
+        courseLabel1.setText("");
+    }
+
+    public ObservableList<scheduleData> availableScheduleListData() {
+
+        ObservableList<scheduleData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM schedule";
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+            scheduleData scheduleD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                scheduleD = new scheduleData(result.getString("schedule_id"),
+                        result.getString("day"),
+                        result.getString("time"),
+                        result.getString("course"));
+
+                listData.add(scheduleD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private ObservableList<scheduleData> availableScheduleList;
+
+    public void availableScheduleShowListData() {
+        availableScheduleList = availableScheduleListData();
+
+        scheduleId.setCellValueFactory(new PropertyValueFactory<>("schedule_id"));
+        scheduleDay.setCellValueFactory(new PropertyValueFactory<>("day"));
+        scheduleTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        scheduleCourse1.setCellValueFactory(new PropertyValueFactory<>("course"));
+
+        scheduleTableView.setItems(availableScheduleList);
+
+    }
+
+    public void availableScheduleSelect() {
+        scheduleData scheduleD = scheduleTableView.getSelectionModel().getSelectedItem();
+        int num = scheduleTableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        scheduleLabel.setText(scheduleD.getScheduleId());
+        dayLabel.setText(scheduleD.getScheduleDay());
+        timeLabel.setText(scheduleD.getScheduleTime());
+        courseLabel.setText(scheduleD.getScheduleCourse());
 
     }
 
@@ -881,12 +1089,12 @@ public class AdminController implements Initializable {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
-            studentAbstence_form.setVisible(false);
+            studentSchedule_form.setVisible(false);
 
 
             home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
-            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+            studentSchedule_btn.setStyle("-fx-background-color:transparent");
 
             homeDisplayTotalEnrolledStudents();
             homeDisplayMaleEnrolled();
@@ -899,29 +1107,30 @@ public class AdminController implements Initializable {
         } else if (event.getSource() == addStudents_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(true);
-            studentAbstence_form.setVisible(false);
+            studentSchedule_form.setVisible(false);
 
             addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             home_btn.setStyle("-fx-background-color:transparent");
-            studentAbstence_btn.setStyle("-fx-background-color:transparent");
+            studentSchedule_btn.setStyle("-fx-background-color:transparent");
             addStudentsShowListData();
             addStudentsYearList();
             addStudentsGenderList();
             addStudentsStatusList();
             addStudentsCourseList();
             addStudentsSearch();
-
+//koment
         } else if (event.getSource() == studentAbstence_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
-            studentAbstence_form.setVisible(true);
+            studentSchedule_form.setVisible(true);
 
-            studentAbstence_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            studentSchedule_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
+            availableScheduleShowListData();
 
-            studentAbstencesShowListData();
-            studentAbstencesSearch();
+
+
         }
     }
     private double x=0;
@@ -1018,7 +1227,8 @@ public class AdminController implements Initializable {
         addStudentsGenderList();
         addStudentsStatusList();
         addStudentsCourseList();
-        studentAbstencesShowListData();
+        availableScheduleShowListData();
+
         languageID.setItems(FXCollections.observableArrayList("English", "Shqip"));
         languageID.setValue("English");
         languageID.setOnAction(e -> {
