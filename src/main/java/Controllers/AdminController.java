@@ -1118,7 +1118,7 @@ public class AdminController implements Initializable {
             addStudentsStatusList();
             addStudentsCourseList();
             addStudentsSearch();
-
+//koment
         } else if (event.getSource() == studentAbstence_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
