@@ -12,6 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -111,11 +114,14 @@ public class LoginController implements Initializable {
                 if (loginUser != null) {
                     alert.successMessage(LanguageUtil.getMessage("login.success"));
                     admin_loginBtn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherDashboard.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
 
                     Stage stage = new Stage();
                     stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
                     stage.setScene(new Scene(root));
+
+
+
 
                     root.setOnMousePressed((MouseEvent event) -> {
                         x = event.getSceneX();
@@ -125,7 +131,28 @@ public class LoginController implements Initializable {
                     root.setOnMouseDragged((MouseEvent event) -> {
                         stage.setX(event.getScreenX() - x);
                         stage.setY(event.getScreenY() - y);
+
                     });
+
+                    KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+                    KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
+
+
+                    stage.getScene().setOnKeyPressed(event -> {
+                        if (minimizeKeyCombination.match(event)) {
+                            Stage window = (Stage) stage.getScene().getWindow();
+                            window.setIconified(true);
+                        }
+                    });
+
+
+                    root.setOnKeyPressed(event-> {
+                        if (closeKeyCombination.match(event)) {
+                            System.exit(0);
+                        }
+                    });
+
                     stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();
 

@@ -5,6 +5,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,6 +22,21 @@ public class App extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
 
         Scene scene = new Scene(root);
+
+        KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+        KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+
+        scene.setOnKeyPressed(event-> {
+            if (minimizeKeyCombination.match(event)) {
+                stage.setIconified(true);
+            }
+        });
+
+        root.setOnKeyPressed(event-> {
+            if (closeKeyCombination.match(event)) {
+                System.exit(0);
+            }
+        });
 
 
         root.setOnMousePressed((MouseEvent event) ->{
