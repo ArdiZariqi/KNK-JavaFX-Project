@@ -491,16 +491,15 @@ public class AdminController implements Initializable {
     public void addStudentsAdd() {
 
         String insertData = "INSERT INTO student "
-                + "(studentNum,year,course,firstName,lastName,gender,birth,status,image,date) "
-                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+                + "(year,course,firstName,lastName,gender,birth,status,image,date) "
+                + "VALUES(?,?,?,?,?,?,?,?,?)";
 
         connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
 
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+            if (addStudents_year.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -515,7 +514,7 @@ public class AdminController implements Initializable {
                 alert.showAndWait();
             } else {
                 // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-                String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
+                String checkData = "SELECT id FROM student WHERE id = '"
                         + addStudents_studentNum.getText() + "'";
 
                 statement = connect.createStatement();
@@ -525,26 +524,25 @@ public class AdminController implements Initializable {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Student #" + addStudents_studentNum.getText() + " was already exist!");
+                    alert.setContentText("Student #" + addStudents_studentNum.getText() + " already exist!");
                     alert.showAndWait();
                 } else {
                     prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, addStudents_studentNum.getText());
-                    prepare.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(4, addStudents_firstName.getText());
-                    prepare.setString(5, addStudents_lastName.getText());
-                    prepare.setString(6, (String) addStudents_gender.getSelectionModel().getSelectedItem());
-                    prepare.setString(7, String.valueOf(addStudents_birth.getValue()));
-                    prepare.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
+                    prepare.setString(1, (String) addStudents_year.getSelectionModel().getSelectedItem());
+                    prepare.setString(2, (String) addStudents_course.getSelectionModel().getSelectedItem());
+                    prepare.setString(3, addStudents_firstName.getText());
+                    prepare.setString(4, addStudents_lastName.getText());
+                    prepare.setString(5, (String) addStudents_gender.getSelectionModel().getSelectedItem());
+                    prepare.setString(6, String.valueOf(addStudents_birth.getValue()));
+                    prepare.setString(7, (String) addStudents_status.getSelectionModel().getSelectedItem());
 
                     String uri = getData.path;
                     uri = uri.replace("\\", "\\\\");
-                    prepare.setString(9, uri);
+                    prepare.setString(8, uri);
 
                     Date date = new Date();
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                    prepare.setString(10, String.valueOf(sqlDate));
+                    prepare.setString(9, String.valueOf(sqlDate));
 
                     prepare.executeUpdate();
 
@@ -567,7 +565,6 @@ public class AdminController implements Initializable {
     }
 
     public void addStudentsClear() {
-        addStudents_studentNum.setText("");
         addStudents_year.getSelectionModel().clearSelection();
         addStudents_course.getSelectionModel().clearSelection();
         addStudents_firstName.setText("");
@@ -593,15 +590,14 @@ public class AdminController implements Initializable {
                 + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
                 + "', birth = '" + addStudents_birth.getValue()
                 + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
-                + "', image = '" + uri + "' WHERE studentNum = '"
+                + "', image = '" + uri + "' WHERE id = '"
                 + addStudents_studentNum.getText() + "'";
 
         connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+            if (addStudents_year.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -747,7 +743,7 @@ public class AdminController implements Initializable {
             result = prepare.executeQuery();
 
             while (result.next()) {
-                studentD = new studentData(result.getInt("studentNum"),
+                studentD = new studentData(result.getInt("id"),
                         result.getString("year"),
                         result.getString("course"),
                         result.getString("firstName"),
@@ -1006,6 +1002,8 @@ public class AdminController implements Initializable {
         ObservableList<scheduleData> listData = FXCollections.observableArrayList();
 
         String sql = "SELECT * FROM schedule";
+// Set values for other properties as well
+
 
         connect = ConnectionUtil.getConnection();
 
@@ -1089,7 +1087,7 @@ public class AdminController implements Initializable {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
-            studentSchedule_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
 
             home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
@@ -1107,7 +1105,7 @@ public class AdminController implements Initializable {
         } else if (event.getSource() == addStudents_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(true);
-            studentSchedule_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
             addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             home_btn.setStyle("-fx-background-color:transparent");
@@ -1119,18 +1117,14 @@ public class AdminController implements Initializable {
             addStudentsCourseList();
             addStudentsSearch();
 //koment
-        } else if (event.getSource() == studentAbstence_btn) {
+        } else if (event.getSource() == studentSchedule_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
-            studentSchedule_form.setVisible(true);
-
+            studentAbstence_form.setVisible(true);
             studentSchedule_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
             availableScheduleShowListData();
-
-
-
         }
     }
     private double x=0;

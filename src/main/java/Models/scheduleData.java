@@ -34,4 +34,19 @@ public class scheduleData {
         return scheduleCourse;
     }
 
+    public void setScheduleId(String scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
+    public void setScheduleDay(String scheduleDay) {
+        this.scheduleDay = scheduleDay;
+    }
+
+    public void setScheduleTime(String scheduleTime) {
+        this.scheduleTime = scheduleTime;
+    }
+
+    public void setScheduleCourse(String scheduleCourse) {
+        this.scheduleCourse = scheduleCourse;
+    }
 }

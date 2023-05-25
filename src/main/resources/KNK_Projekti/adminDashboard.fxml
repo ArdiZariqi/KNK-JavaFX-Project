@@ -113,7 +113,7 @@
                 <center>
                     <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <children>
-                            <AnchorPane fx:id="home_form" layoutX="5.0" layoutY="138.0" prefHeight="554.0" prefWidth="892.0" stylesheets="@Design/dashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="home_form" layoutX="5.0" layoutY="138.0" prefHeight="554.0" prefWidth="892.0" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
                                     <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                         <styleClass>
@@ -323,7 +323,7 @@
                                 </children>
                             </AnchorPane>
 
-                            <AnchorPane fx:id="studentAbstence_form" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <AnchorPane fx:id="studentAbstence_form" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <children>
                                     <AnchorPane fx:id="studentSchedule_form" layoutX="12.0" layoutY="11.0" prefHeight="527.0" prefWidth="873.0" stylesheets="@Design/dashboardDesign.css">
                                         <styleClass>
@@ -373,7 +373,7 @@
                                        </children></AnchorPane>
                                     <AnchorPane layoutX="285.0" layoutY="8.0" prefHeight="498.0" prefWidth="574.0">
                                        <children>
-                                          <TableView fx:id="scheduleTableView" layoutX="16.0" layoutY="2.0" prefHeight="494.0" prefWidth="570.0">
+                                          <TableView fx:id="scheduleTableView" onMouseClicked="#availableScheduleSelect" layoutX="16.0" layoutY="2.0" prefHeight="494.0" prefWidth="570.0">
                                             <columns>
                                               <TableColumn fx:id="scheduleId" prefWidth="140.800048828125" text="Schedule #" />
                                               <TableColumn fx:id="scheduleDay" minWidth="0.0" prefWidth="137.5999755859375" text="Day" />
