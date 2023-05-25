@@ -81,6 +81,7 @@ public class UserRepository implements UserRepositoryInterface {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getSaltedPassword());
             statement.setString(2, user.getSalt());
+            statement.setString(3,user.getUsername());
             statement.executeUpdate();
         }
     }
