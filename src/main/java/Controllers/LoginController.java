@@ -235,7 +235,7 @@ public class LoginController implements Initializable {
     public void forgotPassword() {
         alertMessage alert = new alertMessage();
 
-        String selectedLanguage = loginLanguage1.getValue();
+        String selectedLanguage = loginLanguage2.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         if (forgetPw_username.getText().isEmpty()
@@ -264,7 +264,7 @@ public class LoginController implements Initializable {
     public void changePassword() {
         alertMessage alert = new alertMessage();
 
-        String selectedLanguage = loginLanguage.getValue();
+        String selectedLanguage = loginLanguage1.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         if (changePw_newPassword.getText().isEmpty() || changePW_confirmPassword.getText().isEmpty()) {

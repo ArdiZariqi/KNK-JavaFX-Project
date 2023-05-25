@@ -69,7 +69,7 @@
       <AnchorPane fx:id="changePw_form" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css" visible="false">
          <children>
             <FontAwesomeIcon fill="#5073bb" glyphName="LOCK" layoutX="134.0" layoutY="114.0" size="6em" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="55.0" />
-            <Label fx:id="forgetPwLabel1" alignment="CENTER" layoutX="87.0" layoutY="124.0" text="Forget Password" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="135.0">
+            <Label fx:id="forgetPwLabel1" alignment="CENTER" layoutX="87.0" layoutY="124.0" text="Forget Password" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="135.0">
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font>
