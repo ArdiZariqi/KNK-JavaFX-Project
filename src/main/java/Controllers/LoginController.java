@@ -401,8 +401,8 @@ public class LoginController implements Initializable {
         loginLabel.setText(LanguageUtil.getMessage("login.label"));
     }
 
-    public void setLanguage1(){
-        String selectedLanguage = loginLanguage1.getValue();
+    public void setLanguage2(){
+        String selectedLanguage = loginLanguage2.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         forgetPwLabel.setText(LanguageUtil.getMessage("change.password"));
@@ -412,8 +412,8 @@ public class LoginController implements Initializable {
         changePw_backBtn.setText(LanguageUtil.getMessage("back.btn"));
     }
 
-    public void setLanguage2(){
-        String selectedLanguage = loginLanguage2.getValue();
+    public void setLanguage1(){
+        String selectedLanguage = loginLanguage1.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         forgetPwLabel1.setText(LanguageUtil.getMessage("forgot.password.label"));
