@@ -52,8 +52,6 @@ public class LoginController implements Initializable {
     @FXML
     private Hyperlink admin_signUpBtn;
     @FXML
-    private ComboBox<String> admin_user;
-    @FXML
     private PasswordField changePW_confirmPassword;
     @FXML
     private Button changePw_backBtn;
@@ -300,6 +298,7 @@ public class LoginController implements Initializable {
 
                     changePw_newPassword.setText("");
                     changePW_confirmPassword.setText("");
+
                 } else {
                     alert.errorMessage(LanguageUtil.getMessage("changePw.userNotFound"));
                 }
@@ -339,11 +338,10 @@ public class LoginController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/sign-up.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
-//                stage.setMaximized(true);
                 stage.initStyle(StageStyle.TRANSPARENT);
 
                 stage.show();
-                admin_user.getScene().getWindow().hide();
+                loginAccount.getScene().getWindow().hide();
             }
         }catch (Exception e) {
             e.printStackTrace();
