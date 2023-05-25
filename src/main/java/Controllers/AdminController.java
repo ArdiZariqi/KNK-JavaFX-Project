@@ -1273,14 +1273,7 @@ public class AdminController implements Initializable {
         birthDateLabel.setText(LanguageUtil.getMessage("student.birth.date"));
         statusLabel.setText(LanguageUtil.getMessage("student.status"));
         addStudents_search.setText(LanguageUtil.getMessage("search.student"));
-        studentAbstence_search.setText(LanguageUtil.getMessage("search.student"));
-        studentAbstence_btn.setText(LanguageUtil.getMessage("student.absences"));
-        studentAbstence_col_course.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
-        studentAbstence_col_final.setText(LanguageUtil.getMessage("studentAbstence.col_final"));
-        studentAbstence_col_firstSem.setText(LanguageUtil.getMessage("studentAbstence.col_firstSem"));
-        studentAbstence_col_secondSem.setText(LanguageUtil.getMessage("studentAbstence.col_secondSem"));
-        studentAbstence_col_studentNum.setText(LanguageUtil.getMessage("student.id"));
-        studentAbstence_col_year.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
+
         signout.setText(LanguageUtil.getMessage("signout"));
     }
 }
