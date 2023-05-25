@@ -204,8 +204,7 @@ public class LoginController implements Initializable {
     public void openHelp(ActionEvent event){
         try {
             if (event.getSource() == helpButton ){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpLogin.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpLogin.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
@@ -351,18 +350,6 @@ public class LoginController implements Initializable {
         }
     }
 
-//    public void selectUser(){
-//
-//        List<String> listU = new ArrayList<>();
-//
-//        for (String data : users){
-//            listU.add(data);
-//        }
-//
-//        ObservableList listData = FXCollections.observableArrayList(listU);
-//        admin_user.setItems(listData);
-//    }
-
     @FXML
     private void close(MouseEvent event){
         Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -377,7 +364,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        selectUser();
         forgotListQuestion();
         loginLanguage1.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage1.setValue("English");
@@ -413,11 +399,6 @@ public class LoginController implements Initializable {
         admin_signUpBtn.setText(LanguageUtil.getMessage("login.signupBtn"));
         loginAccount.setText(LanguageUtil.getMessage("login.Acc"));
         loginLabel.setText(LanguageUtil.getMessage("login.label"));
-//        admin_user.setPromptText(LanguageUtil.getMessage("prompt.selectUser"));
-//        ObservableList userTypeList = FXCollections.observableArrayList(
-//                LanguageUtil.getMessage("signup.user.userType1"),
-//                LanguageUtil.getMessage("signup.user.userType2"));
-//        admin_user.setItems(userTypeList);
     }
 
     public void setLanguage1(){
