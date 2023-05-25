@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -14,10 +15,18 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SignUpController">
    <children>
-      <AnchorPane fx:id="adminSignUp_form" layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="346.0" styleClass="white-form" stylesheets="@Design/loginDesign.css">
+      <AnchorPane fx:id="adminSignUp_form" layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="360.0" styleClass="white-form" stylesheets="@Design/loginDesign.css">
          <children>
             <HBox alignment="TOP_RIGHT" layoutX="2.0" layoutY="-3.0" prefHeight="30.0" prefWidth="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
+                  <HBox prefHeight="24.0" prefWidth="241.0">
+                     <children>
+                        <ComboBox fx:id="signupLanguage" prefHeight="26.0" prefWidth="96.0" />
+                     </children>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </HBox>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#min" prefHeight="26.0" prefWidth="56.0" styleClass="close" stylesheets="@Design/loginDesign.css">
                      <graphic>
                         <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
@@ -60,7 +69,6 @@
             <ComboBox fx:id="adminSignUp_user" layoutX="55.0" layoutY="151.0" onAction="#switchFormSignUp" prefHeight="30.0" prefWidth="250.0" promptText="Sign up as:" AnchorPane.leftAnchor="54.599999999999994" AnchorPane.rightAnchor="54.599999999999994" />
             <ComboBox fx:id="adminSignUp_selectQuestion" layoutX="55.0" layoutY="364.0" prefHeight="30.0" prefWidth="250.0" promptText="Select Question" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="54.200000000000045" />
             <TextField fx:id="adminSignUp_answer" layoutX="55.0" layoutY="402.0" prefHeight="30.0" prefWidth="250.0" promptText="Answer" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="54.200000000000045" />
-            <ComboBox fx:id="signupLanguage" layoutX="226.0" layoutY="25.0" prefHeight="26.0" prefWidth="78.0" />
          </children>
       </AnchorPane>
    </children>

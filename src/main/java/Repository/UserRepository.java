@@ -76,12 +76,13 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     public void update(User user) throws SQLException {
-        String sql = "UPDATE users SET saltedPassword=?, salt=? WHERE username=?";
+        String sql = "UPDATE users SET saltedPassword=?, salt=?, update_date=? WHERE username=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getSaltedPassword());
             statement.setString(2, user.getSalt());
-            statement.setString(3,user.getUsername());
+            statement.setDate(3, new java.sql.Date(user.getDate().getTime()));
+            statement.setString(4,user.getUsername());
             statement.executeUpdate();
         }
     }

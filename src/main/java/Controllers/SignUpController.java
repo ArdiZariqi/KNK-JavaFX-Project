@@ -50,7 +50,7 @@ public class SignUpController implements Initializable {
     @FXML
     private Label signUp;
 
-    private UserServiceInterface userService;
+    private final UserServiceInterface userService;
 
     public SignUpController() {
         this.userService = new UserService();
@@ -59,9 +59,7 @@ public class SignUpController implements Initializable {
     public void questions() {
         List<String> listQ = new ArrayList<>();
 
-        for (String data : questionList) {
-            listQ.add(data);
-        }
+        Collections.addAll(listQ, questionList);
 
         ObservableList<String> listData = FXCollections.observableArrayList(listQ);
         adminSignUp_selectQuestion.setItems(listData);

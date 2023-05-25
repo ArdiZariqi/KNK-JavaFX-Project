@@ -131,7 +131,7 @@
             </Label>
             <TextField fx:id="admin_username" layoutX="37.0" layoutY="186.0" onAction="#loginAccount" prefHeight="42.0" prefWidth="307.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
             <PasswordField fx:id="admin_password" layoutX="37.0" layoutY="247.0" onAction="#loginAccount" prefHeight="42.0" prefWidth="307.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="240.20000000000005" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
-            <TextField fx:id="admin_showPassword" layoutX="33.0" layoutY="275.0" onAction="#showPassword" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" visible="false" />
+            <TextField fx:id="admin_showPassword" layoutX="36.0" layoutY="247.0" onAction="#showPassword" prefHeight="42.0" prefWidth="307.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" visible="false" />
             <CheckBox fx:id="admin_selectShowPassword" layoutX="43.0" layoutY="325.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" AnchorPane.leftAnchor="50.0" />
             <Hyperlink fx:id="admin_forgotPassword" layoutX="215.0" layoutY="321.0" onAction="#switchForm" text="Forgot Password?" AnchorPane.rightAnchor="50.0">
                <font>

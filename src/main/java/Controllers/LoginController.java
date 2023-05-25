@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import static Models.Users.questionList;
-import static Models.Users.users;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,7 +33,7 @@ import service.interfaces.UserServiceInterface;
 
 
 public class LoginController implements Initializable {
-    private UserService userService;
+    private final UserService userService;
     @FXML
     private TextField admin_username;
     @FXML
@@ -310,9 +309,7 @@ public class LoginController implements Initializable {
 
     public void forgotListQuestion(){
         List<String> listQ = new ArrayList<>();
-        for (String data : questionList){
-            listQ.add(data);
-        }
+        Collections.addAll(listQ, questionList);
 
         ObservableList listData = FXCollections.observableArrayList(listQ);
         forgetPw_selectQuestion.setItems(listData);
@@ -365,21 +362,15 @@ public class LoginController implements Initializable {
         forgotListQuestion();
         loginLanguage1.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage1.setValue("English");
-        loginLanguage1.setOnAction(e -> {
-            setLanguage1();
-        });
+        loginLanguage1.setOnAction(e -> setLanguage1());
         setLanguage1();
         loginLanguage2.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage2.setValue("English");
-        loginLanguage2.setOnAction(e -> {
-            setLanguage2();
-        });
+        loginLanguage2.setOnAction(e -> setLanguage2());
         setLanguage2();
         loginLanguage.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage.setValue("English");
-        loginLanguage.setOnAction(e -> {
-            setLanguage();
-        });
+        loginLanguage.setOnAction(e -> setLanguage());
 
         setLanguage();
     }
