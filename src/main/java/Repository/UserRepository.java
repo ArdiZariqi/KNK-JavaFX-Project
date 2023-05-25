@@ -42,7 +42,6 @@ public class UserRepository implements UserRepositoryInterface {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int userId = resultSet.getInt("user_id");
                 String email = resultSet.getString("email");
                 String accountType = resultSet.getString("account_type");
                 String saltedPassword = resultSet.getString("saltedPassword");
@@ -54,7 +53,7 @@ public class UserRepository implements UserRepositoryInterface {
 
                 statement.executeQuery();
 
-                return new User(userId, email, accountType, username, saltedPassword, salt, question, answer, date, updateDate);
+                return new User(email, accountType, username, saltedPassword, salt, question, answer, date, updateDate);
 
             } else {
                 return null;
@@ -62,13 +61,26 @@ public class UserRepository implements UserRepositoryInterface {
         }
     }
 
+    public String getAccountType(String username) throws SQLException {
+        String sql = "SELECT account_type FROM users WHERE username=?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("account_type");
+            } else {
+                return null;
+            }
+        }
+    }
+
     public void update(User user) throws SQLException {
-        String sql = "UPDATE users SET saltedPassword=?, salt=? WHERE user_id=?";
+        String sql = "UPDATE users SET saltedPassword=?, salt=? WHERE username=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getSaltedPassword());
             statement.setString(2, user.getSalt());
-            statement.setInt(3, user.getUserId());
             statement.executeUpdate();
         }
     }

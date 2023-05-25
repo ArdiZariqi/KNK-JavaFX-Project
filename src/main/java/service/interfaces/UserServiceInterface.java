@@ -10,5 +10,6 @@ public interface UserServiceInterface {
                 String question, String answer, Date date, Date updateDate) throws SQLException;
 
     User getUserByUsername(String username) throws SQLException;
+    String getByAccountType(String username) throws SQLException;
     void updateUser(User user) throws SQLException;
 }

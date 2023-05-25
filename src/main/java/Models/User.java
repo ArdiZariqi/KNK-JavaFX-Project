@@ -14,9 +14,8 @@ public class User {
     private Date date;
     private Date updateDate;
 
-    public User(int userId, String email, String accountType, String username, String saltedPassword,
+    public User(String email, String accountType, String username, String saltedPassword,
                 String salt, String question, String answer, Date date, Date updateDate) {
-        this.userId = userId;
         this.email = email;
         this.accountType = accountType;
         this.username = username;

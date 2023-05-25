@@ -104,59 +104,91 @@ public class LoginController implements Initializable {
         String selectedLanguage = loginLanguage.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
-        if (admin_username.getText().isEmpty() || admin_password.getText().isEmpty()
-                || admin_user.getSelectionModel().isEmpty()) {
+        if (admin_username.getText().isEmpty() || admin_password.getText().isEmpty()) {
             alert.errorMessage(LanguageUtil.getMessage("error.fieldsRequired"));
         } else {
             try {
                 User loginUser = userService.login(admin_username.getText(), admin_password.getText());
-
                 if (loginUser != null) {
-                    alert.successMessage(LanguageUtil.getMessage("login.success"));
-                    admin_loginBtn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
+                    String accountType = userService.getByAccountType(admin_username.getText());
+                    if (accountType.equals("Teacher")){
+                        alert.successMessage(LanguageUtil.getMessage("login.success"));
+                        admin_loginBtn.getScene().getWindow().hide();
+                        Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
 
-                    Stage stage = new Stage();
-                    stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
-                    stage.setScene(new Scene(root));
+                        Stage stage = new Stage();
+                        stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
+                        stage.setScene(new Scene(root));
+                        root.setOnMousePressed((MouseEvent event) -> {
+                            x = event.getSceneX();
+                            y = event.getSceneY();
+                        });
+
+                        root.setOnMouseDragged((MouseEvent event) -> {
+                            stage.setX(event.getScreenX() - x);
+                            stage.setY(event.getScreenY() - y);
+
+                        });
+
+                        KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+                        KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
+                        stage.getScene().setOnKeyPressed(event -> {
+                            if (minimizeKeyCombination.match(event)) {
+                                Stage window = (Stage) stage.getScene().getWindow();
+                                window.setIconified(true);
+                            }
+                        });
+
+                        root.setOnKeyPressed(event-> {
+                            if (closeKeyCombination.match(event)) {
+                                System.exit(0);
+                            }
+                        });
+
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.show();
+                    }else {
+
+                        alert.successMessage(LanguageUtil.getMessage("login.success"));
+                        admin_loginBtn.getScene().getWindow().hide();
+                        Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
+
+                        Stage stage = new Stage();
+                        stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
+                        stage.setScene(new Scene(root));
 
 
+                        root.setOnMousePressed((MouseEvent event) -> {
+                            x = event.getSceneX();
+                            y = event.getSceneY();
+                        });
 
+                        root.setOnMouseDragged((MouseEvent event) -> {
+                            stage.setX(event.getScreenX() - x);
+                            stage.setY(event.getScreenY() - y);
 
-                    root.setOnMousePressed((MouseEvent event) -> {
-                        x = event.getSceneX();
-                        y = event.getSceneY();
-                    });
+                        });
 
-                    root.setOnMouseDragged((MouseEvent event) -> {
-                        stage.setX(event.getScreenX() - x);
-                        stage.setY(event.getScreenY() - y);
+                        KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+                        KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
 
-                    });
+                        stage.getScene().setOnKeyPressed(event -> {
+                            if (minimizeKeyCombination.match(event)) {
+                                Stage window = (Stage) stage.getScene().getWindow();
+                                window.setIconified(true);
+                            }
+                        });
 
-                    KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
-                    KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+                        root.setOnKeyPressed(event-> {
+                            if (closeKeyCombination.match(event)) {
+                                System.exit(0);
+                            }
+                        });
 
-
-
-                    stage.getScene().setOnKeyPressed(event -> {
-                        if (minimizeKeyCombination.match(event)) {
-                            Stage window = (Stage) stage.getScene().getWindow();
-                            window.setIconified(true);
-                        }
-                    });
-
-
-                    root.setOnKeyPressed(event-> {
-                        if (closeKeyCombination.match(event)) {
-                            System.exit(0);
-                        }
-                    });
-
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.show();
-
-
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.show();
+                    }
 
                 } else {
                     alert.errorMessage(LanguageUtil.getMessage("login.incorrectData"));
@@ -319,17 +351,17 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void selectUser(){
-
-        List<String> listU = new ArrayList<>();
-
-        for (String data : users){
-            listU.add(data);
-        }
-
-        ObservableList listData = FXCollections.observableArrayList(listU);
-        admin_user.setItems(listData);
-    }
+//    public void selectUser(){
+//
+//        List<String> listU = new ArrayList<>();
+//
+//        for (String data : users){
+//            listU.add(data);
+//        }
+//
+//        ObservableList listData = FXCollections.observableArrayList(listU);
+//        admin_user.setItems(listData);
+//    }
 
     @FXML
     private void close(MouseEvent event){
@@ -345,7 +377,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        selectUser();
+//        selectUser();
         forgotListQuestion();
         loginLanguage1.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage1.setValue("English");
@@ -381,11 +413,11 @@ public class LoginController implements Initializable {
         admin_signUpBtn.setText(LanguageUtil.getMessage("login.signupBtn"));
         loginAccount.setText(LanguageUtil.getMessage("login.Acc"));
         loginLabel.setText(LanguageUtil.getMessage("login.label"));
-        admin_user.setPromptText(LanguageUtil.getMessage("prompt.selectUser"));
-        ObservableList userTypeList = FXCollections.observableArrayList(
-                LanguageUtil.getMessage("signup.user.userType1"),
-                LanguageUtil.getMessage("signup.user.userType2"));
-        admin_user.setItems(userTypeList);
+//        admin_user.setPromptText(LanguageUtil.getMessage("prompt.selectUser"));
+//        ObservableList userTypeList = FXCollections.observableArrayList(
+//                LanguageUtil.getMessage("signup.user.userType1"),
+//                LanguageUtil.getMessage("signup.user.userType2"));
+//        admin_user.setItems(userTypeList);
     }
 
     public void setLanguage1(){
