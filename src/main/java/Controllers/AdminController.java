@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -20,18 +19,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.w3c.dom.Text;
 import service.ConnectionUtil;
 import service.LanguageUtil;
-
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,8 +34,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.*;
-import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
+
+//import static Models.Users.classList;
 
 
 public class AdminController implements Initializable {
@@ -246,12 +241,15 @@ public class AdminController implements Initializable {
     @FXML
     private TableView<scheduleData> scheduleTableView;
     @FXML
+    private TableColumn<scheduleData, String> addStudents_col_class;
+    @FXML
+    private ComboBox<?> addStudents_class;
+    @FXML
+    private Label classLabel;
+    @FXML
     private AnchorPane studentSchedule_form;
     @FXML
     private Button studentSchedule_btn;
-
-
-
     private Connection connect;
     private PreparedStatement prepare;
     private Statement statement;
@@ -421,6 +419,19 @@ public class AdminController implements Initializable {
         addStudents_year.setItems(ObList);
     }
 
+    private String[]  classList ={ "Klasa 10","Klasa 11","Klasa 12" };
+
+    public void addStudentsClassList() {
+        List<String> classL = new ArrayList<>();
+
+        for (String data : classList) {
+            classL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(classL);
+        addStudents_class.setItems(ObList);
+    }
+
     private String[] genderList = {"Male", "Female", "Others"};
 
     public void addStudentsGenderList() {
@@ -491,8 +502,8 @@ public class AdminController implements Initializable {
     public void addStudentsAdd() {
 
         String insertData = "INSERT INTO student "
-                + "(year,course,firstName,lastName,gender,birth,status,image,date) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
+                + "(year,class, course,firstName,lastName,gender,birth,status,image,date) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         connect = ConnectionUtil.getConnection();
 
@@ -529,20 +540,21 @@ public class AdminController implements Initializable {
                 } else {
                     prepare = connect.prepareStatement(insertData);
                     prepare.setString(1, (String) addStudents_year.getSelectionModel().getSelectedItem());
-                    prepare.setString(2, (String) addStudents_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, addStudents_firstName.getText());
-                    prepare.setString(4, addStudents_lastName.getText());
-                    prepare.setString(5, (String) addStudents_gender.getSelectionModel().getSelectedItem());
-                    prepare.setString(6, String.valueOf(addStudents_birth.getValue()));
-                    prepare.setString(7, (String) addStudents_status.getSelectionModel().getSelectedItem());
+                    prepare.setString(2,(String) addStudents_class.getSelectionModel().getSelectedItem());
+                    prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
+                    prepare.setString(4, addStudents_firstName.getText());
+                    prepare.setString(5, addStudents_lastName.getText());
+                    prepare.setString(6, (String) addStudents_gender.getSelectionModel().getSelectedItem());
+                    prepare.setString(7, String.valueOf(addStudents_birth.getValue()));
+                    prepare.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
 
                     String uri = getData.path;
                     uri = uri.replace("\\", "\\\\");
-                    prepare.setString(8, uri);
+                    prepare.setString(9, uri);
 
                     Date date = new Date();
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                    prepare.setString(9, String.valueOf(sqlDate));
+                    prepare.setString(10, String.valueOf(sqlDate));
 
                     prepare.executeUpdate();
 
@@ -566,6 +578,7 @@ public class AdminController implements Initializable {
 
     public void addStudentsClear() {
         addStudents_year.getSelectionModel().clearSelection();
+        addStudents_class.getSelectionModel().clearSelection();
         addStudents_course.getSelectionModel().clearSelection();
         addStudents_firstName.setText("");
         addStudents_lastName.setText("");
@@ -584,6 +597,7 @@ public class AdminController implements Initializable {
 
         String updateData = "UPDATE student SET "
                 + "year = '" + addStudents_year.getSelectionModel().getSelectedItem()
+                + "class = '" + addStudents_class.getSelectionModel().getSelectedItem()
                 + "', course = '" + addStudents_course.getSelectionModel().getSelectedItem()
                 + "', firstName = '" + addStudents_firstName.getText()
                 + "', lastName = '" + addStudents_lastName.getText()
@@ -598,6 +612,7 @@ public class AdminController implements Initializable {
         try {
             Alert alert;
             if (addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_class.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -651,6 +666,7 @@ public class AdminController implements Initializable {
             Alert alert;
             if (addStudents_studentNum.getText().isEmpty()
                     || addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_class.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -714,6 +730,7 @@ public class AdminController implements Initializable {
             while (result.next()) {
                 studentD = new studentData(result.getInt("studentNum"),
                         result.getString("year"),
+                        result.getString("class"),
                         result.getString("course"),
                         result.getDouble("first_sem"),
                         result.getDouble("second_sem"),
@@ -745,6 +762,7 @@ public class AdminController implements Initializable {
             while (result.next()) {
                 studentD = new studentData(result.getInt("id"),
                         result.getString("year"),
+                        result.getString("class"),
                         result.getString("course"),
                         result.getString("firstName"),
                         result.getString("lastName"),
@@ -812,6 +830,7 @@ public class AdminController implements Initializable {
         addStudentsListD = addStudentsListData();
 
         addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        addStudents_col_class.setCellValueFactory(new PropertyValueFactory<>("class"));
         addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
         addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
         addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -926,10 +945,7 @@ public class AdminController implements Initializable {
                     availableScheduleShowListData();
                     studentScheduleClear();
 
-                } else {
-                    return;
                 }
-
             }
 
         } catch (Exception e) {
@@ -979,8 +995,6 @@ public class AdminController implements Initializable {
                     availableScheduleShowListData();
                     studentScheduleClear();
 
-                } else {
-                    return;
                 }
             }
 
@@ -1027,10 +1041,8 @@ public class AdminController implements Initializable {
         return listData;
     }
 
-    private ObservableList<scheduleData> availableScheduleList;
-
     public void availableScheduleShowListData() {
-        availableScheduleList = availableScheduleListData();
+        ObservableList<scheduleData> availableScheduleList = availableScheduleListData();
 
         scheduleId.setCellValueFactory(new PropertyValueFactory<>("schedule_id"));
         scheduleDay.setCellValueFactory(new PropertyValueFactory<>("day"));
@@ -1049,16 +1061,17 @@ public class AdminController implements Initializable {
             return;
         }
 
-        scheduleLabel.setText(scheduleD.getScheduleId());
-        dayLabel.setText(scheduleD.getScheduleDay());
-        timeLabel.setText(scheduleD.getScheduleTime());
-        courseLabel.setText(scheduleD.getScheduleCourse());
+        scheduleLabel.setText(String.valueOf(scheduleD.getScheduleId()));
+        dayLabel.setText(String.valueOf(scheduleD.getScheduleDay()));
+        timeLabel.setText(String.valueOf(scheduleD.getScheduleTime()));
+        courseLabel.setText(String.valueOf(scheduleD.getScheduleCourse()));
 
     }
-
-    public void displayUsername() {
-        username.setText(Data.username);
-    }
+//
+//
+//    public void displayUsername() {
+//        username.setText(Data.username);
+//    }
 //koment
     @FXML
     public void openHelp(ActionEvent event){
@@ -1112,6 +1125,7 @@ public class AdminController implements Initializable {
             studentSchedule_btn.setStyle("-fx-background-color:transparent");
             addStudentsShowListData();
             addStudentsYearList();
+            addStudentsClassList();
             addStudentsGenderList();
             addStudentsStatusList();
             addStudentsCourseList();
@@ -1145,7 +1159,7 @@ public class AdminController implements Initializable {
 
                 logout.getScene().getWindow().hide();
 
-                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
@@ -1208,7 +1222,6 @@ public class AdminController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources){
-
         homeDisplayTotalEnrolledStudents();
         homeDisplayMaleEnrolled();
         homeDisplayFemaleEnrolled();
@@ -1216,6 +1229,7 @@ public class AdminController implements Initializable {
         homeDisplayFemaleEnrolledChart();
         homeDisplayTotalEnrolledChart();
 
+        addStudentsClassList();
         addStudentsShowListData();
         addStudentsYearList();
         addStudentsGenderList();

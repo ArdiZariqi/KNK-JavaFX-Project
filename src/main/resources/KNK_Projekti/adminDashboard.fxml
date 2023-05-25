@@ -245,13 +245,14 @@
                                                     <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="192.0" prefWidth="845.0" stylesheets="@Design/dashboardDesign.css">
                                                         <columns>
                                                             <TableColumn fx:id="addStudents_col_studentNum" prefWidth="75.0" text="Student #" />
-                                                            <TableColumn fx:id="addStudents_col_year" prefWidth="87.0" text="Year" />
-                                                            <TableColumn fx:id="addStudents_col_course" text="Course" />
-                                                            <TableColumn fx:id="addStudents_col_firstName" prefWidth="153.0" text="First Name" />
-                                                            <TableColumn fx:id="addStudents_col_lastName" prefWidth="128.0" text="Last Name" />
-                                                            <TableColumn fx:id="addStudents_col_gender" prefWidth="102.0" text="Gender" />
-                                                            <TableColumn fx:id="addStudents_col_birth" prefWidth="114.0" text="Birth Date" />
-                                                            <TableColumn fx:id="addStudents_col_status" prefWidth="102.0" text="status" />
+                                                            <TableColumn fx:id="addStudents_col_year" prefWidth="84.0" text="Year" />
+                                                <TableColumn fx:id="addStudents_col_class" maxWidth="133.60000000000002" prefWidth="92.00006103515625" text="Class" />
+                                                            <TableColumn fx:id="addStudents_col_course" prefWidth="83.19999694824219" text="Course" />
+                                                            <TableColumn fx:id="addStudents_col_firstName" prefWidth="116.79998779296875" text="First Name" />
+                                                            <TableColumn fx:id="addStudents_col_lastName" prefWidth="120.0" text="Last Name" />
+                                                            <TableColumn fx:id="addStudents_col_gender" prefWidth="71.20001220703125" text="Gender" />
+                                                            <TableColumn fx:id="addStudents_col_birth" prefWidth="106.4000244140625" text="Birth Date" />
+                                                            <TableColumn fx:id="addStudents_col_status" prefWidth="96.800048828125" text="status" />
                                                         </columns>
                                                     </TableView>
                                                 </children>
@@ -268,12 +269,12 @@
                                                 </font>
                                             </Label>
                                             <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="313.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                            <Label fx:id="courseLabel" layoutX="51.0" layoutY="355.0" text="Course:">
+                                            <Label fx:id="courseLabel" layoutX="50.0" layoutY="391.0" text="Course:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
                                                 </font>
                                             </Label>
-                                            <ComboBox fx:id="addStudents_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                            <ComboBox fx:id="addStudents_course" layoutX="108.0" layoutY="387.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                             <Label fx:id="fNameLabel" layoutX="313.0" layoutY="279.0" text="First Name:">
                                                 <font>
                                                     <Font name="Tahoma" size="14.0" />
@@ -318,6 +319,12 @@
                                             <Button fx:id="addStudents_updateBtn" layoutX="669.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsUpdate" onMouseClicked="#addStudentsUpdate" prefHeight="35.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
                                             <Button fx:id="addStudents_deleteBtn" layoutX="546.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsDelete" onMouseClicked="#addStudentsDelete" prefHeight="35.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
                                             <Button fx:id="addStudents_clearBtn" layoutX="450.0" layoutY="480.0" mnemonicParsing="false" onAction="#addStudentsClear" onMouseClicked="#addStudentsClear" prefHeight="35.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
+                                    <ComboBox fx:id="addStudents_class" layoutX="109.0" layoutY="351.0" onAction="#addStudentsClassList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                    <Label fx:id="classLabel" layoutX="64.0" layoutY="354.0" text="Class:">
+                                       <font>
+                                          <Font name="Tahoma" size="14.0" />
+                                       </font>
+                                    </Label>
                                         </children>
                                     </AnchorPane>
                                 </children>
@@ -373,7 +380,7 @@
                                        </children></AnchorPane>
                                     <AnchorPane layoutX="285.0" layoutY="8.0" prefHeight="498.0" prefWidth="574.0">
                                        <children>
-                                          <TableView fx:id="scheduleTableView" onMouseClicked="#availableScheduleSelect" layoutX="16.0" layoutY="2.0" prefHeight="494.0" prefWidth="570.0">
+                                          <TableView fx:id="scheduleTableView" layoutX="16.0" layoutY="2.0" onMouseClicked="#availableScheduleSelect" prefHeight="494.0" prefWidth="570.0">
                                             <columns>
                                               <TableColumn fx:id="scheduleId" prefWidth="140.800048828125" text="Schedule #" />
                                               <TableColumn fx:id="scheduleDay" minWidth="0.0" prefWidth="137.5999755859375" text="Day" />
