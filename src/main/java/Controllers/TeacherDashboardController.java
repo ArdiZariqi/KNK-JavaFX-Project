@@ -1,7 +1,6 @@
 package Controllers;
+
 import Models.AbsenceData;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import Models.AbsenceSummary;
-import Models.courseData;
 import Models.getData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -39,17 +36,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import service.ConnectionUtil;
 import service.LanguageUtil;
-
 
 public class TeacherDashboardController implements Initializable {
 
@@ -442,8 +434,6 @@ public class TeacherDashboardController implements Initializable {
                 alert.setContentText("Please fill all blank fields");
                 alert.showAndWait();
             } else {
-                // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-
 
                 statement = connect.createStatement();
 
@@ -465,7 +455,6 @@ public class TeacherDashboardController implements Initializable {
                     prepare.setString(8, String.valueOf(Absence_date.getValue()));
                     prepare.setString(9, (String) addStudents_status.getSelectionModel().getSelectedItem());
 
-                    // Set the missing reasonability value
                     prepare.setString(10, (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
                     Date date = new Date();
@@ -474,16 +463,14 @@ public class TeacherDashboardController implements Initializable {
 
                     prepare.executeUpdate();
 
-
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Added!");
                     alert.showAndWait();
 
-                    // TO UPDATE THE TABLEVIEW
                     addAbsencesShowListData();
-                    // TO CLEAR THE FIELDS
+
                     addAbsencesClear();
                 }
             }
@@ -549,9 +536,8 @@ public class TeacherDashboardController implements Initializable {
                     alert.setContentText("Successfully Updated!");
                     alert.showAndWait();
 
-                    // TO UPDATE THE TABLEVIEW
                     addAbsencesShowListData();
-                    // TO CLEAR THE FIELDS
+
                     addAbsencesClear();
 
                 } else {
@@ -562,7 +548,6 @@ public class TeacherDashboardController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     public void addAbsencesDelete() {
 
@@ -601,24 +586,19 @@ public class TeacherDashboardController implements Initializable {
                     statement = connect.createStatement();
                     statement.executeUpdate(deleteData);
 
-
-
-
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Successfully Deleted!");
                     alert.showAndWait();
 
-                    // TO UPDATE THE TABLEVIEW
                     addAbsencesShowListData();
-                    // TO CLEAR THE FIELDS
+
                     addAbsencesClear();
 
                 } else {
                     return;
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -685,7 +665,6 @@ public class TeacherDashboardController implements Initializable {
         sortList1.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
         addStudents_tableView.setItems(sortList1);
     }
-
 
     public void addAbsencesCourseList() {
 
@@ -904,7 +883,6 @@ public class TeacherDashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // Close the resources in the finally block
             try {
                 if (result != null) {
                     result.close();
@@ -923,12 +901,10 @@ public class TeacherDashboardController implements Initializable {
         return listStudents;
     }
 
-
     private ObservableList<AbsenceSummary> addStudentsListD1;
 
     public void addAbsencesShowListData1() {
         addStudentsListD1 = addAbsencesListData1();
-
 
         addAbsence_col_stid.setCellValueFactory(new PropertyValueFactory<>("student_id"));
         addAbsence_col_class1.setCellValueFactory(new PropertyValueFactory<>("class_"));
@@ -941,11 +917,7 @@ public class TeacherDashboardController implements Initializable {
         addAbsence_col_total.setCellValueFactory(new PropertyValueFactory<>("total_absences"));
 
         addStudents_tableView1.setItems(addStudentsListD1);
-
     }
-
-
-
 
     private double x = 0;
     private double y = 0;
@@ -963,10 +935,8 @@ public class TeacherDashboardController implements Initializable {
 
             if (option.get().equals(ButtonType.OK)) {
 
-                //HIDE YOUR DASHBOARD FORM
                 logout.getScene().getWindow().hide();
 
-                //LINK YOUR LOGIN FORM
                 Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
@@ -1056,9 +1026,6 @@ public class TeacherDashboardController implements Initializable {
             home_btn.setStyle("-fx-background-color:transparent");
             studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
-//            TO BECOME UPDATED ONCE YOU CLICK THE ADD STUDENTS BUTTON ON NAV
-
-
             addAbsencesShowListData();
             addStudentsClassList();
             addAbsencesCourseList();
@@ -1094,26 +1061,6 @@ public class TeacherDashboardController implements Initializable {
         stage.setIconified(true);
     }
 
-    private double previousWidth;
-    private double previousHeight;
-
-    public void maximize() {
-        Stage stage = (Stage) main_form.getScene().getWindow();
-
-        if (stage.isMaximized()) {
-            // Restore the previous size
-            stage.setMaximized(false);
-        } else {
-            // Maximize the window
-            stage.setMaximized(true);
-        }
-    }
-
-
-
-
-    // SORRY ABOUT THAT, I JUST NAMED THE DIFFERENT COMPONENTS WITH THE SAME NAME
-    // MAKE SURE THAT THE NAME YOU GAVE TO THEM ARE DIFFERENT TO THE OTHER OKAY?
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
@@ -1126,7 +1073,6 @@ public class TeacherDashboardController implements Initializable {
         homeDisplayFemaleAbsenceChart();
         homeDisplayAbsenceMaleChart();
 
-        // TO SHOW IMMIDIATELY WHEN WE PROCEED TO DASHBOARD APPLICATION FORM
         addAbsencesShowListData();
         addStudentsGenderList();
         addStudentsStatusList();

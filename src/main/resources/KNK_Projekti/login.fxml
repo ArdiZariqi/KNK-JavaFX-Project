@@ -17,84 +17,6 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
    <children>
-      <AnchorPane fx:id="adminPortal_form" focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css">
-         <children>
-            <FontAwesomeIcon fill="#5073bb" glyphName="USER" layoutX="162.0" layoutY="100.0" size="6em" text="" AnchorPane.leftAnchor="162.0" AnchorPane.rightAnchor="162.0" />
-            <Label fx:id="loginAccount" alignment="CENTER" layoutX="152.0" layoutY="124.0" prefHeight="26.0" prefWidth="78.0" text="Login" AnchorPane.leftAnchor="141.0" AnchorPane.rightAnchor="141.0">
-               <font>
-                  <Font name="Tahoma" size="20.0" />
-               </font>
-            </Label>
-            <TextField fx:id="admin_username" layoutX="33.0" layoutY="228.0" onAction="#loginAccount" prefHeight="30.0" prefWidth="307.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
-            <PasswordField fx:id="admin_password" layoutX="34.0" layoutY="275.0" onAction="#loginAccount" prefHeight="30.0" prefWidth="307.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
-            <TextField fx:id="admin_showPassword" layoutX="33.0" layoutY="275.0" onAction="#showPassword" prefHeight="30.0" prefWidth="250.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" visible="false" />
-            <CheckBox fx:id="admin_selectShowPassword" layoutX="43.0" layoutY="325.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" AnchorPane.leftAnchor="50.0" />
-            <Hyperlink fx:id="admin_forgotPassword" layoutX="215.0" layoutY="321.0" onAction="#switchForm" text="Forgot Password?" AnchorPane.rightAnchor="50.0">
-               <font>
-                  <Font name="System Italic" size="13.0" />
-               </font>
-            </Hyperlink>
-            <Button fx:id="admin_loginBtn" layoutX="62.0" layoutY="368.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="40.0" prefWidth="307.0" styleClass="btn" stylesheets="@Design/loginDesign.css" text="Login" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0">
-               <font>
-                  <Font name="System Bold Italic" size="15.0" />
-               </font>
-            </Button>
-            <Label fx:id="loginLabel" layoutX="62.0" layoutY="430.0" text="Don't have an account?">
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="admin_user" layoutX="33.0" layoutY="184.0" onAction="#switchForm" prefHeight="30.0" prefWidth="307.0" promptText="Log in as: " AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
-            <Hyperlink fx:id="admin_signUpBtn" layoutX="226.0" layoutY="427.0" onAction="#switchForm" text="Sign Up">
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
-            </Hyperlink>
-            <HBox alignment="TOP_RIGHT" layoutY="-1.0" prefHeight="34.0" prefWidth="380.0">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="258.0">
-                     <children>
-                        <Button fx:id="helpButton" mnemonicParsing="false" onAction="#openHelp" prefHeight="28.0" prefWidth="41.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" textFill="#1b0101">
-                           <graphic>
-                              <FontAwesomeIcon fill="BLACK" glyphName="QUESTION_CIRCLE" size="1.5em" />
-                           </graphic>
-                        </Button>
-                        <ComboBox fx:id="loginLanguage" prefHeight="26.0" prefWidth="86.0" promptText="Language">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <HBox.margin>
-                              <Insets left="7.0" right="7.0" />
-                           </HBox.margin>
-                        </ComboBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" right="5.0" />
-                     </padding>
-                     <effect>
-                        <InnerShadow />
-                     </effect>
-                  </HBox>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#min" prefHeight="26.0" prefWidth="56.0" styleClass="close" stylesheets="@Design/loginDesign.css">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
-                     </graphic>
-                  </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#close" prefHeight="26.0" prefWidth="56.0" styleClass="close" stylesheets="@Design/loginDesign.css">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
-                     </graphic>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </HBox>
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="forgotPw_form" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css" visible="false">
          <children>
             <FontAwesomeIcon fill="#5073bb" glyphName="LOCK" layoutX="134.0" layoutY="106.0" size="6em" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0" />
@@ -147,7 +69,7 @@
       <AnchorPane fx:id="changePw_form" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css" visible="false">
          <children>
             <FontAwesomeIcon fill="#5073bb" glyphName="LOCK" layoutX="134.0" layoutY="114.0" size="6em" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="55.0" />
-            <Label fx:id="forgetPwLabel1" alignment="CENTER" layoutX="87.0" layoutY="124.0" text="Forget Password" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="135.0">
+            <Label fx:id="forgetPwLabel1" alignment="CENTER" layoutX="87.0" layoutY="124.0" text="Forget Password" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="135.0">
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font>
@@ -178,6 +100,83 @@
                      <children>
                         <ComboBox fx:id="loginLanguage2" prefHeight="26.0" prefWidth="97.0" promptText="Language" />
                      </children>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </HBox>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#min" prefHeight="26.0" prefWidth="56.0" styleClass="close" stylesheets="@Design/loginDesign.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#close" prefHeight="26.0" prefWidth="56.0" styleClass="close" stylesheets="@Design/loginDesign.css">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="adminPortal_form" focusTraversable="true" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css">
+         <children>
+            <FontAwesomeIcon fill="#5073bb" glyphName="USER" layoutX="162.0" layoutY="100.0" size="6em" text="" AnchorPane.leftAnchor="162.0" AnchorPane.rightAnchor="162.0" AnchorPane.topAnchor="45.0" />
+            <Label fx:id="loginAccount" alignment="CENTER" layoutX="152.0" layoutY="124.0" prefHeight="26.0" prefWidth="78.0" text="Login" AnchorPane.leftAnchor="141.0" AnchorPane.rightAnchor="141.0" AnchorPane.topAnchor="130.0">
+               <font>
+                  <Font name="Tahoma" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="admin_username" layoutX="37.0" layoutY="186.0" onAction="#loginAccount" prefHeight="42.0" prefWidth="307.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
+            <PasswordField fx:id="admin_password" layoutX="37.0" layoutY="247.0" onAction="#loginAccount" prefHeight="42.0" prefWidth="307.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.bottomAnchor="240.20000000000005" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0" />
+            <TextField fx:id="admin_showPassword" layoutX="36.0" layoutY="247.0" onAction="#showPassword" prefHeight="42.0" prefWidth="307.0" promptText="Password" styleClass="textfield" stylesheets="@Design/loginDesign.css" visible="false" />
+            <CheckBox fx:id="admin_selectShowPassword" layoutX="43.0" layoutY="325.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" AnchorPane.leftAnchor="50.0" />
+            <Hyperlink fx:id="admin_forgotPassword" layoutX="215.0" layoutY="321.0" onAction="#switchForm" text="Forgot Password?" AnchorPane.rightAnchor="50.0">
+               <font>
+                  <Font name="System Italic" size="13.0" />
+               </font>
+            </Hyperlink>
+            <Button fx:id="admin_loginBtn" layoutX="62.0" layoutY="368.0" mnemonicParsing="false" onAction="#loginAccount" prefHeight="40.0" prefWidth="307.0" styleClass="btn" stylesheets="@Design/loginDesign.css" text="Login" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="37.0">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Button>
+            <Label fx:id="loginLabel" layoutX="62.0" layoutY="430.0" text="Don't have an account?">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="admin_signUpBtn" layoutX="226.0" layoutY="427.0" onAction="#switchForm" text="Sign Up">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Hyperlink>
+            <HBox alignment="TOP_RIGHT" layoutY="-1.0" prefHeight="34.0" prefWidth="380.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="258.0">
+                     <children>
+                        <Button fx:id="helpButton" mnemonicParsing="false" onAction="#openHelp" prefHeight="28.0" prefWidth="41.0" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" textFill="#1b0101">
+                           <graphic>
+                              <FontAwesomeIcon fill="BLACK" glyphName="QUESTION_CIRCLE" size="1.5em" />
+                           </graphic>
+                        </Button>
+                        <ComboBox fx:id="loginLanguage" prefHeight="26.0" prefWidth="86.0" promptText="Language">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="7.0" right="7.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
                      <effect>
                         <InnerShadow />
                      </effect>

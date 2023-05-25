@@ -42,7 +42,7 @@
                                             <FontAwesomeIcon glyphName="CLOSE" size="1.2em" />
                                         </graphic>
                                     </Button>
-                                    <Button fx:id="minimize" layoutX="1000.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="@Design/dashboardDesign.css">
+                                    <Button fx:id="minimize" layoutX="1000.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" onKeyPressed="#minimize" prefHeight="24.0" prefWidth="43.0" styleClass="minimize" stylesheets="@Design/dashboardDesign.css">
                                         <graphic>
                                             <FontAwesomeIcon glyphName="MINUS" size="1.2em" />
                                         </graphic>
@@ -104,7 +104,7 @@
                                             <Font name="Tahoma" size="15.0" />
                                         </font>
                                     </Label>
-                              <ComboBox fx:id="languageID" layoutX="27.0" layoutY="14.0" prefWidth="150.0" promptText="English" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" />
+                              <ComboBox fx:id="languageID" layoutX="12.0" layoutY="351.0" prefHeight="35.0" prefWidth="180.0" promptText="English" styleClass="nav-btn" stylesheets="@Design/dashboardDesign.css" />
                                 </children>
                             </AnchorPane>
                         </children>

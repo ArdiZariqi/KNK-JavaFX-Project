@@ -46,11 +46,15 @@ public class UserService implements UserServiceInterface {
                 question, answer, date, updateDate);
         this.userRepository.insert(userDto);
 
-        return new User(0, email, accountType, username, saltedHash, salt, question, answer, date, updateDate);
+        return new User(email, accountType, username, saltedHash, salt, question, answer, date, updateDate);
     }
 
     public User getUserByUsername(String username) throws SQLException {
         return userRepository.getByUsername(username);
+    }
+
+    public String getByAccountType(String username) throws SQLException {
+        return userRepository.getAccountType(username);
     }
 
     public void updateUser(User user) throws SQLException {

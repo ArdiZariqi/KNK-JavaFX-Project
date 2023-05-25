@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import static Models.Users.questionList;
-import static Models.Users.users;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -31,7 +33,7 @@ import service.interfaces.UserServiceInterface;
 
 
 public class LoginController implements Initializable {
-    private UserService userService;
+    private final UserService userService;
     @FXML
     private TextField admin_username;
     @FXML
@@ -48,8 +50,6 @@ public class LoginController implements Initializable {
     private AnchorPane adminPortal_form;
     @FXML
     private Hyperlink admin_signUpBtn;
-    @FXML
-    private ComboBox<String> admin_user;
     @FXML
     private PasswordField changePW_confirmPassword;
     @FXML
@@ -101,35 +101,91 @@ public class LoginController implements Initializable {
         String selectedLanguage = loginLanguage.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
-        if (admin_username.getText().isEmpty() || admin_password.getText().isEmpty()
-                || admin_user.getSelectionModel().isEmpty()) {
+        if (admin_username.getText().isEmpty() || admin_password.getText().isEmpty()) {
             alert.errorMessage(LanguageUtil.getMessage("error.fieldsRequired"));
         } else {
             try {
                 User loginUser = userService.login(admin_username.getText(), admin_password.getText());
-
                 if (loginUser != null) {
-                    alert.successMessage(LanguageUtil.getMessage("login.success"));
-                    admin_loginBtn.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherDashboard.fxml"));
+                    String accountType = userService.getByAccountType(admin_username.getText());
+                    if (accountType.equals("Teacher")){
+                        alert.successMessage(LanguageUtil.getMessage("login.success"));
+                        admin_loginBtn.getScene().getWindow().hide();
+                        Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
 
-                    Stage stage = new Stage();
-                    stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
-                    stage.setScene(new Scene(root));
+                        Stage stage = new Stage();
+                        stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
+                        stage.setScene(new Scene(root));
+                        root.setOnMousePressed((MouseEvent event) -> {
+                            x = event.getSceneX();
+                            y = event.getSceneY();
+                        });
 
-                    root.setOnMousePressed((MouseEvent event) -> {
-                        x = event.getSceneX();
-                        y = event.getSceneY();
-                    });
+                        root.setOnMouseDragged((MouseEvent event) -> {
+                            stage.setX(event.getScreenX() - x);
+                            stage.setY(event.getScreenY() - y);
 
-                    root.setOnMouseDragged((MouseEvent event) -> {
-                        stage.setX(event.getScreenX() - x);
-                        stage.setY(event.getScreenY() - y);
-                    });
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.show();
+                        });
+
+                        KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+                        KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
+                        stage.getScene().setOnKeyPressed(event -> {
+                            if (minimizeKeyCombination.match(event)) {
+                                Stage window = (Stage) stage.getScene().getWindow();
+                                window.setIconified(true);
+                            }
+                        });
+
+                        root.setOnKeyPressed(event-> {
+                            if (closeKeyCombination.match(event)) {
+                                System.exit(0);
+                            }
+                        });
+
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.show();
+                    }else {
+
+                        alert.successMessage(LanguageUtil.getMessage("login.success"));
+                        admin_loginBtn.getScene().getWindow().hide();
+                        Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
+
+                        Stage stage = new Stage();
+                        stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
+                        stage.setScene(new Scene(root));
 
 
+                        root.setOnMousePressed((MouseEvent event) -> {
+                            x = event.getSceneX();
+                            y = event.getSceneY();
+                        });
+
+                        root.setOnMouseDragged((MouseEvent event) -> {
+                            stage.setX(event.getScreenX() - x);
+                            stage.setY(event.getScreenY() - y);
+
+                        });
+
+                        KeyCombination closeKeyCombination = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+                        KeyCombination minimizeKeyCombination = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+
+                        stage.getScene().setOnKeyPressed(event -> {
+                            if (minimizeKeyCombination.match(event)) {
+                                Stage window = (Stage) stage.getScene().getWindow();
+                                window.setIconified(true);
+                            }
+                        });
+
+                        root.setOnKeyPressed(event-> {
+                            if (closeKeyCombination.match(event)) {
+                                System.exit(0);
+                            }
+                        });
+
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.show();
+                    }
 
                 } else {
                     alert.errorMessage(LanguageUtil.getMessage("login.incorrectData"));
@@ -145,8 +201,7 @@ public class LoginController implements Initializable {
     public void openHelp(ActionEvent event){
         try {
             if (event.getSource() == helpButton ){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpLogin.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpLogin.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
@@ -177,7 +232,7 @@ public class LoginController implements Initializable {
     public void forgotPassword() {
         alertMessage alert = new alertMessage();
 
-        String selectedLanguage = loginLanguage1.getValue();
+        String selectedLanguage = loginLanguage2.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         if (forgetPw_username.getText().isEmpty()
@@ -206,7 +261,7 @@ public class LoginController implements Initializable {
     public void changePassword() {
         alertMessage alert = new alertMessage();
 
-        String selectedLanguage = loginLanguage.getValue();
+        String selectedLanguage = loginLanguage1.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         if (changePw_newPassword.getText().isEmpty() || changePW_confirmPassword.getText().isEmpty()) {
@@ -242,6 +297,7 @@ public class LoginController implements Initializable {
 
                     changePw_newPassword.setText("");
                     changePW_confirmPassword.setText("");
+
                 } else {
                     alert.errorMessage(LanguageUtil.getMessage("changePw.userNotFound"));
                 }
@@ -253,9 +309,7 @@ public class LoginController implements Initializable {
 
     public void forgotListQuestion(){
         List<String> listQ = new ArrayList<>();
-        for (String data : questionList){
-            listQ.add(data);
-        }
+        Collections.addAll(listQ, questionList);
 
         ObservableList listData = FXCollections.observableArrayList(listQ);
         forgetPw_selectQuestion.setItems(listData);
@@ -281,27 +335,14 @@ public class LoginController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/sign-up.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
-//                stage.setMaximized(true);
                 stage.initStyle(StageStyle.TRANSPARENT);
 
                 stage.show();
-                admin_user.getScene().getWindow().hide();
+                loginAccount.getScene().getWindow().hide();
             }
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void selectUser(){
-
-        List<String> listU = new ArrayList<>();
-
-        for (String data : users){
-            listU.add(data);
-        }
-
-        ObservableList listData = FXCollections.observableArrayList(listU);
-        admin_user.setItems(listData);
     }
 
     @FXML
@@ -318,25 +359,18 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        selectUser();
         forgotListQuestion();
         loginLanguage1.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage1.setValue("English");
-        loginLanguage1.setOnAction(e -> {
-            setLanguage1();
-        });
+        loginLanguage1.setOnAction(e -> setLanguage1());
         setLanguage1();
         loginLanguage2.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage2.setValue("English");
-        loginLanguage2.setOnAction(e -> {
-            setLanguage2();
-        });
+        loginLanguage2.setOnAction(e -> setLanguage2());
         setLanguage2();
         loginLanguage.setItems(FXCollections.observableArrayList("English", "Shqip"));
         loginLanguage.setValue("English");
-        loginLanguage.setOnAction(e -> {
-            setLanguage();
-        });
+        loginLanguage.setOnAction(e -> setLanguage());
 
         setLanguage();
     }
@@ -354,15 +388,10 @@ public class LoginController implements Initializable {
         admin_signUpBtn.setText(LanguageUtil.getMessage("login.signupBtn"));
         loginAccount.setText(LanguageUtil.getMessage("login.Acc"));
         loginLabel.setText(LanguageUtil.getMessage("login.label"));
-        admin_user.setPromptText(LanguageUtil.getMessage("prompt.selectUser"));
-        ObservableList userTypeList = FXCollections.observableArrayList(
-                LanguageUtil.getMessage("signup.user.userType1"),
-                LanguageUtil.getMessage("signup.user.userType2"));
-        admin_user.setItems(userTypeList);
     }
 
-    public void setLanguage1(){
-        String selectedLanguage = loginLanguage1.getValue();
+    public void setLanguage2(){
+        String selectedLanguage = loginLanguage2.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         forgetPwLabel.setText(LanguageUtil.getMessage("change.password"));
@@ -372,8 +401,8 @@ public class LoginController implements Initializable {
         changePw_backBtn.setText(LanguageUtil.getMessage("back.btn"));
     }
 
-    public void setLanguage2(){
-        String selectedLanguage = loginLanguage2.getValue();
+    public void setLanguage1(){
+        String selectedLanguage = loginLanguage1.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
         forgetPwLabel1.setText(LanguageUtil.getMessage("forgot.password.label"));
