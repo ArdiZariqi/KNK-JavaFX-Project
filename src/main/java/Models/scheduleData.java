@@ -1,52 +1,36 @@
 package Models;
 
-import java.sql.Date;
-
-
 public class scheduleData {
 
-    private String scheduleId;
-    private String scheduleDay;
-    private String scheduleTime;
-    private String scheduleCourse;
+    private String schedule_id;
+    private String day;
+    private String time;
+    private String course;
 
 
-    public scheduleData(String scheduleId, String scheduleDay, String scheduleTime, String scheduleCourse) {
-        this.scheduleId = scheduleId;
-        this.scheduleDay = scheduleDay;
-        this.scheduleTime = scheduleTime;
-        this.scheduleCourse = scheduleCourse;
+
+    public scheduleData(String schedule_id, String day, String time, String course) {
+        this.schedule_id = schedule_id;
+        this.day = day;
+        this.time = time;
+        this.course = course;
     }
 
-    public String getScheduleId() {
-        return scheduleId;
+    public String getSchedule_id() {
+        return schedule_id;
     }
 
-    public String getScheduleDay() {
-        return scheduleDay;
+    public String getDay() {
+        return day;
     }
 
-    public String getScheduleTime() {
-        return scheduleTime;
+    public String getTime() {
+        return time;
     }
 
-    public String getScheduleCourse() {
-        return scheduleCourse;
+    public String getCourse() {
+        return course;
     }
 
-    public void setScheduleId(String scheduleId) {
-        this.scheduleId = scheduleId;
-    }
 
-    public void setScheduleDay(String scheduleDay) {
-        this.scheduleDay = scheduleDay;
-    }
-
-    public void setScheduleTime(String scheduleTime) {
-        this.scheduleTime = scheduleTime;
-    }
-
-    public void setScheduleCourse(String scheduleCourse) {
-        this.scheduleCourse = scheduleCourse;
-    }
 }
