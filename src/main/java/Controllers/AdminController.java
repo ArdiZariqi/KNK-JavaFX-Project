@@ -705,7 +705,6 @@ public class AdminController implements Initializable {
             while (result.next()) {
                 studentD = new studentData(result.getInt("id"),
                         result.getString("year"),
-                        result.getString("class"),
                         result.getString("course"),
                         result.getString("firstName"),
                         result.getString("lastName"),
