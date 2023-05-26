@@ -1228,7 +1228,7 @@ public class AdminController implements Initializable {
         homeDisplayEnrolledMaleChart();
         homeDisplayFemaleEnrolledChart();
         homeDisplayTotalEnrolledChart();
-
+//comment
         addStudentsClassList();
         addStudentsShowListData();
         addStudentsYearList();
