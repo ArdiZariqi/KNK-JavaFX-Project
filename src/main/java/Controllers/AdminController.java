@@ -398,7 +398,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    private String[] classList = {"Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
+    private String[] classList = {"First year","Second year","Third year" };
 
     public void addStudentsYearList() {
 
@@ -1215,7 +1215,7 @@ public class AdminController implements Initializable {
 
                 logout.getScene().getWindow().hide();
 
-                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
