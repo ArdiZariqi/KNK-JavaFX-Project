@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -20,18 +19,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.w3c.dom.Text;
 import service.ConnectionUtil;
 import service.LanguageUtil;
-
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,8 +34,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.*;
-import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
+
+//import static Models.Users.classList;
 
 
 public class AdminController implements Initializable {
@@ -246,12 +241,15 @@ public class AdminController implements Initializable {
     @FXML
     private TableView<scheduleData> scheduleTableView;
     @FXML
+    private TableColumn<scheduleData, String> addStudents_col_class;
+    @FXML
+    private ComboBox<?> addStudents_class;
+    @FXML
+    private Label classLabel;
+    @FXML
     private AnchorPane studentSchedule_form;
     @FXML
     private Button studentSchedule_btn;
-
-
-
     private Connection connect;
     private PreparedStatement prepare;
     private Statement statement;
@@ -421,6 +419,19 @@ public class AdminController implements Initializable {
         addStudents_year.setItems(ObList);
     }
 
+    private String[]  classList ={ "Klasa 10","Klasa 11","Klasa 12" };
+
+    public void addStudentsClassList() {
+        List<String> classL = new ArrayList<>();
+
+        for (String data : classList) {
+            classL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(classL);
+        addStudents_class.setItems(ObList);
+    }
+
     private String[] genderList = {"Male", "Female", "Others"};
 
     public void addStudentsGenderList() {
@@ -491,7 +502,7 @@ public class AdminController implements Initializable {
     public void addStudentsAdd() {
 
         String insertData = "INSERT INTO student "
-                + "(studentNum,year,course,firstName,lastName,gender,birth,status,image,date) "
+                + "(year,class, course,firstName,lastName,gender,birth,status,image,date) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         connect = ConnectionUtil.getConnection();
@@ -499,8 +510,7 @@ public class AdminController implements Initializable {
         try {
             Alert alert;
 
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+            if (addStudents_year.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -515,7 +525,7 @@ public class AdminController implements Initializable {
                 alert.showAndWait();
             } else {
                 // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-                String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
+                String checkData = "SELECT id FROM student WHERE id = '"
                         + addStudents_studentNum.getText() + "'";
 
                 statement = connect.createStatement();
@@ -525,12 +535,12 @@ public class AdminController implements Initializable {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Student #" + addStudents_studentNum.getText() + " was already exist!");
+                    alert.setContentText("Student #" + addStudents_studentNum.getText() + " already exist!");
                     alert.showAndWait();
                 } else {
                     prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, addStudents_studentNum.getText());
-                    prepare.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
+                    prepare.setString(1, (String) addStudents_year.getSelectionModel().getSelectedItem());
+                    prepare.setString(2,(String) addStudents_class.getSelectionModel().getSelectedItem());
                     prepare.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
                     prepare.setString(4, addStudents_firstName.getText());
                     prepare.setString(5, addStudents_lastName.getText());
@@ -567,8 +577,8 @@ public class AdminController implements Initializable {
     }
 
     public void addStudentsClear() {
-        addStudents_studentNum.setText("");
         addStudents_year.getSelectionModel().clearSelection();
+        addStudents_class.getSelectionModel().clearSelection();
         addStudents_course.getSelectionModel().clearSelection();
         addStudents_firstName.setText("");
         addStudents_lastName.setText("");
@@ -587,21 +597,22 @@ public class AdminController implements Initializable {
 
         String updateData = "UPDATE student SET "
                 + "year = '" + addStudents_year.getSelectionModel().getSelectedItem()
+                + "class = '" + addStudents_class.getSelectionModel().getSelectedItem()
                 + "', course = '" + addStudents_course.getSelectionModel().getSelectedItem()
                 + "', firstName = '" + addStudents_firstName.getText()
                 + "', lastName = '" + addStudents_lastName.getText()
                 + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
                 + "', birth = '" + addStudents_birth.getValue()
                 + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
-                + "', image = '" + uri + "' WHERE studentNum = '"
+                + "', image = '" + uri + "' WHERE id = '"
                 + addStudents_studentNum.getText() + "'";
 
         connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+            if (addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_class.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -655,6 +666,7 @@ public class AdminController implements Initializable {
             Alert alert;
             if (addStudents_studentNum.getText().isEmpty()
                     || addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_class.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -718,6 +730,7 @@ public class AdminController implements Initializable {
             while (result.next()) {
                 studentD = new studentData(result.getInt("studentNum"),
                         result.getString("year"),
+                        result.getString("class"),
                         result.getString("course"),
                         result.getDouble("first_sem"),
                         result.getDouble("second_sem"),
@@ -747,8 +760,9 @@ public class AdminController implements Initializable {
             result = prepare.executeQuery();
 
             while (result.next()) {
-                studentD = new studentData(result.getInt("studentNum"),
+                studentD = new studentData(result.getInt("id"),
                         result.getString("year"),
+                        result.getString("class"),
                         result.getString("course"),
                         result.getString("firstName"),
                         result.getString("lastName"),
@@ -816,6 +830,7 @@ public class AdminController implements Initializable {
         addStudentsListD = addStudentsListData();
 
         addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        addStudents_col_class.setCellValueFactory(new PropertyValueFactory<>("class"));
         addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
         addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
         addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -930,10 +945,7 @@ public class AdminController implements Initializable {
                     availableScheduleShowListData();
                     studentScheduleClear();
 
-                } else {
-                    return;
                 }
-
             }
 
         } catch (Exception e) {
@@ -983,8 +995,6 @@ public class AdminController implements Initializable {
                     availableScheduleShowListData();
                     studentScheduleClear();
 
-                } else {
-                    return;
                 }
             }
 
@@ -1006,6 +1016,8 @@ public class AdminController implements Initializable {
         ObservableList<scheduleData> listData = FXCollections.observableArrayList();
 
         String sql = "SELECT * FROM schedule";
+// Set values for other properties as well
+
 
         connect = ConnectionUtil.getConnection();
 
@@ -1029,10 +1041,8 @@ public class AdminController implements Initializable {
         return listData;
     }
 
-    private ObservableList<scheduleData> availableScheduleList;
-
     public void availableScheduleShowListData() {
-        availableScheduleList = availableScheduleListData();
+        ObservableList<scheduleData> availableScheduleList = availableScheduleListData();
 
         scheduleId.setCellValueFactory(new PropertyValueFactory<>("schedule_id"));
         scheduleDay.setCellValueFactory(new PropertyValueFactory<>("day"));
@@ -1051,16 +1061,17 @@ public class AdminController implements Initializable {
             return;
         }
 
-        scheduleLabel.setText(scheduleD.getScheduleId());
-        dayLabel.setText(scheduleD.getScheduleDay());
-        timeLabel.setText(scheduleD.getScheduleTime());
-        courseLabel.setText(scheduleD.getScheduleCourse());
+        scheduleLabel.setText(String.valueOf(scheduleD.getScheduleId()));
+        dayLabel.setText(String.valueOf(scheduleD.getScheduleDay()));
+        timeLabel.setText(String.valueOf(scheduleD.getScheduleTime()));
+        courseLabel.setText(String.valueOf(scheduleD.getScheduleCourse()));
 
     }
-
-    public void displayUsername() {
-        username.setText(Data.username);
-    }
+//
+//
+//    public void displayUsername() {
+//        username.setText(Data.username);
+//    }
 //koment
     @FXML
     public void openHelp(ActionEvent event){
@@ -1089,7 +1100,7 @@ public class AdminController implements Initializable {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
-            studentSchedule_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
 
             home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
@@ -1107,30 +1118,27 @@ public class AdminController implements Initializable {
         } else if (event.getSource() == addStudents_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(true);
-            studentSchedule_form.setVisible(false);
+            studentAbstence_form.setVisible(false);
 
             addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             home_btn.setStyle("-fx-background-color:transparent");
             studentSchedule_btn.setStyle("-fx-background-color:transparent");
             addStudentsShowListData();
             addStudentsYearList();
+            addStudentsClassList();
             addStudentsGenderList();
             addStudentsStatusList();
             addStudentsCourseList();
             addStudentsSearch();
 //koment
-        } else if (event.getSource() == studentAbstence_btn) {
+        } else if (event.getSource() == studentSchedule_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
-            studentSchedule_form.setVisible(true);
-
+            studentAbstence_form.setVisible(true);
             studentSchedule_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
             availableScheduleShowListData();
-
-
-
         }
     }
     private double x=0;
@@ -1151,7 +1159,7 @@ public class AdminController implements Initializable {
 
                 logout.getScene().getWindow().hide();
 
-                Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
@@ -1214,7 +1222,6 @@ public class AdminController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources){
-
         homeDisplayTotalEnrolledStudents();
         homeDisplayMaleEnrolled();
         homeDisplayFemaleEnrolled();
@@ -1222,6 +1229,7 @@ public class AdminController implements Initializable {
         homeDisplayFemaleEnrolledChart();
         homeDisplayTotalEnrolledChart();
 
+        addStudentsClassList();
         addStudentsShowListData();
         addStudentsYearList();
         addStudentsGenderList();
