@@ -1,5 +1,6 @@
 package Repository.Interfaces;
 import Models.AbsenceData;
+import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 
 import java.sql.SQLException;
@@ -14,4 +15,5 @@ public interface TeacherUserInterface {
         void AbsencesAdd(AbsenceData absenceData) throws SQLException;
         void addAbsencesUpdate(AbsenceData absenceData) throws SQLException;
         void addAbsencesDelete(AbsenceData absenceData) throws SQLException;
+        ObservableList<AbsenceData> addAbsencesListData() throws SQLException;
 }

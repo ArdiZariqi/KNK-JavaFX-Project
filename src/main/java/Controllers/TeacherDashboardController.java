@@ -5,15 +5,11 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import Models.AbsenceSummary;
-import Models.Users;
 import Models.getData;
-import Repository.Interfaces.TeacherUserInterface;
-import Repository.TeacherRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -43,15 +39,16 @@ import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import service.ConnectionUtil;
-import service.LanguageUtil;
-import service.TeacherService;
-import service.UserService;
-import service.interfaces.TeacherDashboardInterface;
+import service.*;
 
 public class TeacherDashboardController implements Initializable {
 
-    private TeacherRepository repository;
+    private final TeacherDashboardService teacherDashboardService;
+    private final TeacherCourseService teacherCourseService;
+
+    private final TeacherAbsenceSummary teacherAbsenceSummary;
+
+    private final AlertService alertService;
 
     @FXML
     private DatePicker Absence_date;
@@ -133,7 +130,7 @@ public class TeacherDashboardController implements Initializable {
     private TableColumn<?, ?> addAbsence_col_unreasonable;
 
     @FXML
-    private ComboBox<?> addAbsence_course;
+    private ComboBox<String> addAbsence_course;
 
     @FXML
     private Button addAbsence_deleteBtn;
@@ -265,15 +262,16 @@ public class TeacherDashboardController implements Initializable {
     private Statement statement;
     private ResultSet result;
 
-    TeacherService teacherService = new TeacherService();
-
-    public void setRepository(TeacherRepository repository) {
-        this.repository = repository;
+    public TeacherDashboardController() {
+        teacherDashboardService = new TeacherDashboardService();
+        teacherCourseService = new TeacherCourseService();
+        teacherAbsenceSummary = new TeacherAbsenceSummary();
+        alertService =new AlertService();
     }
 
     public void homeDisplayTotalStudentsAbsence() {
         try {
-            int countEnrolled = repository.getTotalStudentsAbsenceCount();
+            int countEnrolled = teacherDashboardService.getTotalAbsenceCount();
             home_totalEnrolled.setText(String.valueOf(countEnrolled));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -282,7 +280,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void homeDisplayTotalFemaleAbsences() {
         try {
-            int countFemale = repository.getTotalFemaleAbsenceCount();
+            int countFemale = teacherDashboardService.getTotalFemaleAbsence();
             home_totalFemale.setText(String.valueOf(countFemale));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -291,7 +289,7 @@ public class TeacherDashboardController implements Initializable {
 
     public void homeDisplayTotalMaleAbsences() {
         try {
-            int countMale = repository.getTotalMaleAbsenceCount();
+            int countMale = teacherDashboardService.getTotalMaleAbsence();
             home_totalMale.setText(String.valueOf(countMale));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -302,7 +300,7 @@ public class TeacherDashboardController implements Initializable {
         home_totalEnrolledChart.getData().clear();
 
         try {
-            XYChart.Series<String, Integer> chartData = repository.getTotalAbsenceChartData();
+            XYChart.Series<String, Integer> chartData = teacherDashboardService.getTotalAbsenceChart();
             home_totalEnrolledChart.getData().add(chartData);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -313,7 +311,7 @@ public class TeacherDashboardController implements Initializable {
         home_totalFemaleChart.getData().clear();
 
         try {
-            XYChart.Series<String, Integer> chartData = repository.getFemaleAbsenceChartData();
+            XYChart.Series<String, Integer> chartData = teacherDashboardService.getFemaleAbsenceChart();
             home_totalFemaleChart.getData().add(chartData);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -324,7 +322,7 @@ public class TeacherDashboardController implements Initializable {
         home_totalMaleChart.getData().clear();
 
         try {
-            XYChart.Series<String, Integer> chartData = repository.getMaleAbsenceChartData();
+            XYChart.Series<String, Integer> chartData = teacherDashboardService.getMaleAbsenceChart();
             home_totalMaleChart.getData().add(chartData);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -345,17 +343,24 @@ public class TeacherDashboardController implements Initializable {
                 || Absence_date.getValue() == null
                 || addStudents_status.getSelectionModel().getSelectedItem() == null
                 || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
-                teacherService.ErrorAlert();
+                alertService.errorAlert();
         } else {
             try {
 
                 Integer a_id=1;
-                AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()), (String) addAbsence_class.getSelectionModel().getSelectedItem(), (String) addAbsence_course.getSelectionModel().getSelectedItem(), Integer.parseInt(addAbsence_time.getText()), addStudents_firstName.getText(), addStudents_lastName.getText(), (String) addStudents_gender.getSelectionModel().getSelectedItem(), java.sql.Date.valueOf(Absence_date.getValue()), (String) addStudents_status.getSelectionModel().getSelectedItem(), (String) addStudents_Absences.getSelectionModel().getSelectedItem());
+                AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()),
+                        (String) addAbsence_class.getSelectionModel().getSelectedItem(),
+                        (String) addAbsence_course.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(addAbsence_time.getText()),
+                        addStudents_firstName.getText(),
+                        addStudents_lastName.getText(),
+                        (String) addStudents_gender.getSelectionModel().getSelectedItem(),
+                        java.sql.Date.valueOf(Absence_date.getValue()),
+                        (String) addStudents_status.getSelectionModel().getSelectedItem(),
+                        (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
-
-                repository.AbsencesAdd(absenceData);
-
-                teacherService.InformationAlert();
+                teacherDashboardService.addAbsence(absenceData);
+                alertService.informationAlert();
                 addAbsencesShowListData();
 
                 addAbsencesClear();
@@ -365,9 +370,6 @@ public class TeacherDashboardController implements Initializable {
             }
         }
     }
-
-
-
 
     public void addAbsencesUpdate() {
         try {
@@ -381,7 +383,7 @@ public class TeacherDashboardController implements Initializable {
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
                     || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
-                teacherService.ErrorAlert();
+                alertService.errorAlert();
             } else {
                 Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -401,16 +403,9 @@ public class TeacherDashboardController implements Initializable {
                             (String) addStudents_status.getSelectionModel().getSelectedItem(),
                             (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
-                    repository.addAbsencesUpdate(absenceData);
-
-                    Alert successAlert = new Alert(AlertType.INFORMATION);
-                    successAlert.setTitle("Information Message");
-                    successAlert.setHeaderText(null);
-                    successAlert.setContentText("Successfully Updated!");
-                    successAlert.showAndWait();
-
+                    teacherDashboardService.updateAbsence(absenceData);
+                    alertService.updateAlert();
                     addAbsencesShowListData();
-
                     addAbsencesClear();
                 }
             }
@@ -419,12 +414,7 @@ public class TeacherDashboardController implements Initializable {
         }
     }
 
-
     public void addAbsencesDelete() {
-
-
-        connect = ConnectionUtil.getConnection();
-
         try {
             Alert alert;
             if (addAbsence_studentNum.getText().isEmpty()
@@ -437,7 +427,7 @@ public class TeacherDashboardController implements Initializable {
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
                     || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
-                teacherService.ErrorAlert();
+                alertService.errorAlert();
             } else {
                 alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -459,16 +449,9 @@ public class TeacherDashboardController implements Initializable {
                             (String)addStudents_status.getSelectionModel().getSelectedItem(),
                             (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
-                    repository.addAbsencesDelete(absenceData);
-
-                    alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Deleted!");
-                    alert.showAndWait();
-
+                    teacherDashboardService.deleteAbsence(absenceData);
+                    alertService.deleteAlert();
                     addAbsencesShowListData();
-
                     addAbsencesClear();
 
                 } else {
@@ -478,9 +461,7 @@ public class TeacherDashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
     public void addAbsencesClear() {
         addAbsence_Id.setText("");
         addAbsence_studentNum.setText("");
@@ -496,7 +477,6 @@ public class TeacherDashboardController implements Initializable {
 
 
     }
-
     public void addAbsenceSearch() {
         FilteredList<AbsenceData> filter = new FilteredList<>(addStudentsListD, e -> true);
 
@@ -540,32 +520,15 @@ public class TeacherDashboardController implements Initializable {
         sortList1.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
         addStudents_tableView.setItems(sortList1);
     }
-
     public void addAbsencesCourseList() {
-
-        String listCourse = "SELECT * FROM course";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-
-            ObservableList listC = FXCollections.observableArrayList();
-
-            prepare = connect.prepareStatement(listCourse);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                listC.add(result.getString("course"));
-            }
+            ObservableList<String> listC = teacherCourseService.ListOfCourses();
             addAbsence_course.setItems(listC);
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
-   private String[]  classList ={ "Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
+    private String[]  classList ={ "Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
     public void addStudentsClassList() {
         List<String> classL = new ArrayList<>();
 
@@ -576,9 +539,6 @@ public class TeacherDashboardController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(classL);
         addAbsence_class.setItems(ObList);
     }
-
-
-
     private String[] genderList = {"Male", "Female"};
 
     public void addStudentsGenderList() {
@@ -591,9 +551,7 @@ public class TeacherDashboardController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(genderL);
         addStudents_gender.setItems(ObList);
     }
-    //Koment
     private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
-
     public void addStudentsStatusList() {
         List<String> statusL = new ArrayList<>();
 
@@ -616,46 +574,19 @@ public class TeacherDashboardController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(reasonabilityL);
         addStudents_Absences.setItems(ObList);
     }
-
-
     public ObservableList<AbsenceData> addAbsencesListData() {
-
-        ObservableList<AbsenceData> listStudents = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM student_Abstence";
-
-        connect = ConnectionUtil.getConnection();
+        ObservableList<AbsenceData> listStudents = null;
 
         try {
-            AbsenceData studentD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new AbsenceData(
-                        result.getInt("a_id"),
-                        result.getInt("student_id"),
-                        result.getString("class_"),
-                        result.getString("course_name"),
-                        result.getInt("time"),
-                        result.getString("firstName"),
-                        result.getString("lastName"),
-                        result.getString("gender"),
-                        result.getDate("date_"),
-                        result.getString("status"),
-                        result.getString("reasonability"));
-
-                listStudents.add(studentD);
-            }
-
-        } catch (Exception e) {
+            listStudents = teacherDashboardService.AbsencesListData();
+        } catch (SQLException e) {
             e.printStackTrace();
+            // Handle the SQLException here (e.g., show an error message, log the exception, etc.)
         }
+
         return listStudents;
     }
-
     private ObservableList<AbsenceData> addStudentsListD;
-
     public void addAbsencesShowListData() {
         addStudentsListD = addAbsencesListData();
 
@@ -674,7 +605,6 @@ public class TeacherDashboardController implements Initializable {
         addStudents_tableView.setItems(addStudentsListD);
 
     }
-
     public void addStudentsSelect() {
 
         AbsenceData studentD = (AbsenceData) addStudents_tableView.getSelectionModel().getSelectedItem();
@@ -692,8 +622,6 @@ public class TeacherDashboardController implements Initializable {
         Absence_date.setValue(LocalDate.parse(String.valueOf(studentD.getDate_())));
 
     }
-
-    //Page 3
     public void addAbsenceSearch1() {
         FilteredList<AbsenceSummary> filter = new FilteredList<>(addStudentsListD1, e -> true);
 
@@ -729,55 +657,17 @@ public class TeacherDashboardController implements Initializable {
     }
 
     public ObservableList<AbsenceSummary> addAbsencesListData1() {
-        ObservableList<AbsenceSummary> listStudents = FXCollections.observableArrayList();
-
-        String sql = "SELECT *from  AbsenceSummary";
-
-        connect = ConnectionUtil.getConnection();
+        ObservableList<AbsenceSummary> listStudents = null;
 
         try {
-            AbsenceSummary studentD1;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD1 = new AbsenceSummary(
-                        result.getInt("student_id"),
-                        result.getString("class_"),
-                        result.getString("course_name"),
-                        result.getString("firstName"),
-                        result.getString("lastName"),
-                        result.getString("gender"),
-                        result.getInt("total_reasonable_absences"),
-                        result.getInt("total_unreasonable_absences"),
-                        result.getInt("total_absences"));
-
-                listStudents.add(studentD1);
-            }
-
-        } catch (Exception e) {
+            listStudents = teacherAbsenceSummary.addAbsencesList1();
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (result != null) {
-                    result.close();
-                }
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (connect != null) {
-                    connect.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
 
+        }
         return listStudents;
     }
-
     private ObservableList<AbsenceSummary> addStudentsListD1;
-
     public void addAbsencesShowListData1() {
         addStudentsListD1 = addAbsencesListData1();
 
@@ -793,12 +683,9 @@ public class TeacherDashboardController implements Initializable {
 
         addStudents_tableView1.setItems(addStudentsListD1);
     }
-
     private double x = 0;
     private double y = 0;
-
     public void logout() {
-
         try {
 
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -844,16 +731,13 @@ public class TeacherDashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
     public void displayUsername(){
         username.setText(getData.username);
     }
     public void defaultNav(){
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
     }
-
     @FXML
     public void openHelp(ActionEvent event){
         try {
@@ -922,26 +806,19 @@ public class TeacherDashboardController implements Initializable {
             addAbsenceSearch1();
         }
     }
-
-
     @FXML
     private void close() {
-
         System.exit(0);
     }
-
-
     public void minimize() {
         Stage stage = (Stage) main_form.getScene().getWindow();
         stage.setIconified(true);
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
         defaultNav();
-        repository = new TeacherRepository(); // or initialize it with appropriate values
-        setRepository(repository);
+
         homeDisplayTotalStudentsAbsence();
         homeDisplayTotalFemaleAbsences();
         homeDisplayTotalMaleAbsences();
@@ -1023,5 +900,4 @@ public class TeacherDashboardController implements Initializable {
         signout.setText(LanguageUtil.getMessage("signout"));
         helpButton.setText(LanguageUtil.getMessage("help.btn"));
     }
-
 }

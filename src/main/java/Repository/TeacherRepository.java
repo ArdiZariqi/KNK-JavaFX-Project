@@ -2,6 +2,8 @@ package Repository;
 
 import Models.AbsenceData;
 import Repository.Interfaces.TeacherUserInterface;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
@@ -251,6 +253,40 @@ public class TeacherRepository implements TeacherUserInterface {
             closeDatabaseResources();
         }
     }
+    public ObservableList<AbsenceData> addAbsencesListData() {
+        ObservableList<AbsenceData> listStudents = FXCollections.observableArrayList();
+
+        String absences = "SELECT * FROM student_Abstence";
+
+        try {
+            AbsenceData studentD;
+            connect=ConnectionUtil.getConnection();
+            prepare = connect.prepareStatement(absences);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD = new AbsenceData(
+                        result.getInt("a_id"),
+                        result.getInt("student_id"),
+                        result.getString("class_"),
+                        result.getString("course_name"),
+                        result.getInt("time"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("gender"),
+                        result.getDate("date_"),
+                        result.getString("status"),
+                        result.getString("reasonability"));
+
+                listStudents.add(studentD);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+
 }
 
 
