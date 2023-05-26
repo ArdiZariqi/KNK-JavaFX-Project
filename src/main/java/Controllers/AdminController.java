@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -20,27 +19,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.w3c.dom.Text;
 import service.ConnectionUtil;
 import service.LanguageUtil;
-
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
-import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
+import java.util.Date;
+
 
 
 public class AdminController implements Initializable {
@@ -50,6 +42,7 @@ public class AdminController implements Initializable {
 
     @FXML
     private Button addStudents_addBtn;
+
     @FXML
     private DatePicker addStudents_birth;
 
@@ -164,34 +157,7 @@ public class AdminController implements Initializable {
     private Button minimize;
 
     @FXML
-    private Button studentAbstence_btn;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_course;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_final;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_firstSem;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_secondSem;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_studentNum;
-
-    @FXML
-    private TableColumn<studentData, String> studentAbstence_col_year;
-
-    @FXML
-    private AnchorPane studentAbstence_form;
-
-    @FXML
-    private TextField studentAbstence_search;
-
-    @FXML
-    private TableView<studentData> studentAbstence_tableView;
+    private AnchorPane studentAbstence2_form;
 
     @FXML
     private Label username;
@@ -249,6 +215,30 @@ public class AdminController implements Initializable {
     private AnchorPane studentSchedule_form;
     @FXML
     private Button studentSchedule_btn;
+    @FXML
+    private TextField Absence_search2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_lastName2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_firstName2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_stid2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_class2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_firstsemester2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_secondsemester2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_reasonable2;
+    @FXML
+    private TableColumn <TotalAbsences, String> addAbsence_col_unreasonable2;
+    @FXML
+    private TableColumn<TotalAbsences, String> addAbsence_col_total2;
+    @FXML
+    private Button studentAbstence_btn2;
+    @FXML
+    private TableView<TotalAbsences> studentAbsence_tableView2;
 
 
 
@@ -407,13 +397,13 @@ public class AdminController implements Initializable {
         }
     }
 
-    private String[] yearList = {"First Year", "Second Year", "Third Year", "Fourth Year"};
+    private String[] classList = {"Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
 
     public void addStudentsYearList() {
 
         List<String> yearL = new ArrayList<>();
 
-        for (String data : yearList) {
+        for (String data : classList) {
             yearL.add(data);
         }
 
@@ -421,7 +411,7 @@ public class AdminController implements Initializable {
         addStudents_year.setItems(ObList);
     }
 
-    private String[] genderList = {"Male", "Female", "Others"};
+    private String[] genderList = {"Male", "Female"};
 
     public void addStudentsGenderList() {
         List<String> genderL = new ArrayList<>();
@@ -676,8 +666,8 @@ public class AdminController implements Initializable {
 
 
 
-                        statement = connect.createStatement();
-                        statement.executeUpdate(deleteData);
+                    statement = connect.createStatement();
+                    statement.executeUpdate(deleteData);
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
@@ -697,37 +687,6 @@ public class AdminController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    public ObservableList<studentData> studentAbstencesListData() {
-
-        ObservableList<studentData> listData = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM student_Abstence";
-
-        connect = ConnectionUtil.getConnection();
-        try {
-            studentData studentD;
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new studentData(result.getInt("studentNum"),
-                        result.getString("year"),
-                        result.getString("course"),
-                        result.getDouble("first_sem"),
-                        result.getDouble("second_sem"),
-                        result.getDouble("final"));
-
-                listData.add(studentD);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listData;
-    }
-
-    private ObservableList<studentData> studentAbstencesList;
 
     public ObservableList<studentData> addStudentsListData() {
 
@@ -808,6 +767,7 @@ public class AdminController implements Initializable {
 
     private ObservableList<studentData> addStudentsListD;
 
+
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
 
@@ -824,9 +784,139 @@ public class AdminController implements Initializable {
 
     }
 
+    public void addAbsenceSearch2() {
+        FilteredList<TotalAbsences> filter = new FilteredList<>(addStudentsListD2, e -> true);
+
+        Absence_search2.textProperty().addListener((Observable, oldValue, newValue) -> {
+            filter.setPredicate(predicateStudentData -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (predicateStudentData.getStudent_id().toString().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getClass_().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFirstName().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getLastName().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFirstSemester().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getSecondSemester().toLowerCase().startsWith(searchKey)) {
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        });
+
+        SortedList<TotalAbsences> sortList1 = new SortedList<>(filter);
+        sortList1.comparatorProperty().bind(studentAbsence_tableView2.comparatorProperty());
+        studentAbsence_tableView2.setItems(sortList1);
+    }
+
+    public ObservableList<TotalAbsences> addAbsencesListData2() {
+        ObservableList<TotalAbsences> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * from  student_Abstence";
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+            TotalAbsences studentD2;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD2 = new TotalAbsences(
+                        result.getInt("student_id"),
+                        result.getString("class_"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getString("firstSemester"),
+                        result.getString("secondSemester"),
+                        result.getInt("total_reasonable_absences"),
+                        result.getInt("total_unreasonable_absences"),
+                        result.getInt("total_absences"));
+
+                listStudents.add(studentD2);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+
+
+
+    private ObservableList<TotalAbsences> addStudentsListD2;
+
+    public void addAbsencesShowListData2() {
+        addStudentsListD2 = addAbsencesListData2();
+
+        addAbsence_col_stid2.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+        addAbsence_col_class2.setCellValueFactory(new PropertyValueFactory<>("class_"));
+        addAbsence_col_firstName2.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        addAbsence_col_lastName2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        addAbsence_col_firstsemester2.setCellValueFactory(new PropertyValueFactory<>("firstSemester"));
+        addAbsence_col_secondsemester2.setCellValueFactory(new PropertyValueFactory<>("secondSemester"));
+        addAbsence_col_reasonable2.setCellValueFactory(new PropertyValueFactory<>("total_reasonable_absences"));
+        addAbsence_col_unreasonable2.setCellValueFactory(new PropertyValueFactory<>("total_unreasonable_absences"));
+        addAbsence_col_total2.setCellValueFactory(new PropertyValueFactory<>("total_absences"));
+
+        studentAbsence_tableView2.setItems(addStudentsListD2);
+    }
+
+    public ObservableList<scheduleData> availableScheduleListData() {
+
+        ObservableList<scheduleData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM schedule";
+// Set values for other properties as well
+
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+            scheduleData scheduleD;
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                scheduleD = new scheduleData(result.getString("schedule_id"),
+                        result.getString("day"),
+                        result.getString("time"),
+                        result.getString("course"));
+
+                listData.add(scheduleD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private ObservableList<scheduleData> availableScheduleList;
+    public void availableScheduleShowListData() {
+        availableScheduleList = availableScheduleListData();
+
+        scheduleId.setCellValueFactory(new PropertyValueFactory<>("schedule_id"));
+        scheduleDay.setCellValueFactory(new PropertyValueFactory<>("day"));
+        scheduleTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        scheduleCourse1.setCellValueFactory(new PropertyValueFactory<>("course"));
+
+        scheduleTableView.setItems(availableScheduleList);
+
+    }
+
     public void studentScheduleAdd() {
 
-        String insertData = "INSERT INTO schedule (schedule_id, day, time, course) VALUES(?,?,?,?)";
+        String insertData = "INSERT INTO schedule" +"(schedule_id, day, time, course)" +"VALUES(?,?,?,?)";
 
         connect = ConnectionUtil.getConnection();
 
@@ -884,7 +974,7 @@ public class AdminController implements Initializable {
 
     public void studentScheduleUpdate() {
 
-        String updateData = "UPDATE schedule_id SET description = '"
+        String updateData = "UPDATE schedule_id SET schedule_id "
                 + scheduleLabel.getText() + "', degree = '"
                 + dayLabel.getText() + "' WHERE course = '"
                 + timeLabel.getText() + "'"
@@ -997,49 +1087,6 @@ public class AdminController implements Initializable {
         courseLabel1.setText("");
     }
 
-    public ObservableList<scheduleData> availableScheduleListData() {
-
-        ObservableList<scheduleData> listData = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM schedule";
-// Set values for other properties as well
-
-
-        connect = ConnectionUtil.getConnection();
-
-        try {
-            scheduleData scheduleD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                scheduleD = new scheduleData(result.getString("schedule_id"),
-                        result.getString("day"),
-                        result.getString("time"),
-                        result.getString("course"));
-
-                listData.add(scheduleD);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listData;
-    }
-
-    private ObservableList<scheduleData> availableScheduleList;
-
-    public void availableScheduleShowListData() {
-        availableScheduleList = availableScheduleListData();
-
-        scheduleId.setCellValueFactory(new PropertyValueFactory<>("schedule_id"));
-        scheduleDay.setCellValueFactory(new PropertyValueFactory<>("day"));
-        scheduleTime.setCellValueFactory(new PropertyValueFactory<>("time"));
-        scheduleCourse1.setCellValueFactory(new PropertyValueFactory<>("course"));
-
-        scheduleTableView.setItems(availableScheduleList);
-
-    }
 
     public void availableScheduleSelect() {
         scheduleData scheduleD = scheduleTableView.getSelectionModel().getSelectedItem();
@@ -1049,17 +1096,17 @@ public class AdminController implements Initializable {
             return;
         }
 
-        scheduleLabel.setText(scheduleD.getScheduleId());
-        dayLabel.setText(scheduleD.getScheduleDay());
-        timeLabel.setText(scheduleD.getScheduleTime());
-        courseLabel.setText(scheduleD.getScheduleCourse());
+        scheduleLabel.setText(scheduleD.getSchedule_id());
+        dayLabel.setText(scheduleD.getDay());
+        timeLabel.setText(scheduleD.getTime());
+        courseLabel.setText(scheduleD.getCourse());
 
     }
 
     public void displayUsername() {
         username.setText(Data.username);
     }
-//koment
+    //koment
     @FXML
     public void openHelp(ActionEvent event){
         try {
@@ -1087,12 +1134,14 @@ public class AdminController implements Initializable {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
-            studentAbstence_form.setVisible(false);
+            studentSchedule_form.setVisible(false);
+            studentAbstence2_form.setVisible(false);
 
 
             home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             studentSchedule_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn2.setStyle("-fx-background-color:transparent");
 
             homeDisplayTotalEnrolledStudents();
             homeDisplayMaleEnrolled();
@@ -1105,11 +1154,15 @@ public class AdminController implements Initializable {
         } else if (event.getSource() == addStudents_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(true);
-            studentAbstence_form.setVisible(false);
+            studentSchedule_form.setVisible(false);
+            studentAbstence2_form.setVisible(false);
 
             addStudents_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             home_btn.setStyle("-fx-background-color:transparent");
             studentSchedule_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn2.setStyle("-fx-background-color:transparent");
+
+
             addStudentsShowListData();
             addStudentsYearList();
             addStudentsGenderList();
@@ -1120,11 +1173,26 @@ public class AdminController implements Initializable {
         } else if (event.getSource() == studentSchedule_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
-            studentAbstence_form.setVisible(true);
+            studentSchedule_form.setVisible(true);
+            studentAbstence2_form.setVisible(false);
+
             studentSchedule_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
+            studentAbstence_btn2.setStyle("-fx-background-color:transparent");
+
             availableScheduleShowListData();
+
+        }else if (event.getSource() == studentAbstence_btn2) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            studentSchedule_form.setVisible(false);
+            studentAbstence2_form.setVisible(true);
+
+            studentAbstence_btn2.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
+            addStudents_btn.setStyle("-fx-background-color:transparent");
+            home_btn.setStyle("-fx-background-color:transparent");
+            studentSchedule_btn.setStyle("-fx-background-color:transparent");
         }
     }
     private double x=0;
@@ -1199,7 +1267,9 @@ public class AdminController implements Initializable {
 
         getData.path = studentD.getImage();
     }
-    public void close(){
+
+    @FXML
+    private void close() {
         System.exit(0);
     }
     public void minimize() {
@@ -1271,8 +1341,3 @@ public class AdminController implements Initializable {
         signout.setText(LanguageUtil.getMessage("signout"));
     }
 }
-
-//help button
-
-
-
