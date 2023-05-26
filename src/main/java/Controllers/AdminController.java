@@ -976,7 +976,7 @@ public class AdminController implements Initializable {
 
     public void studentScheduleUpdate() {
 
-        String updateData = "UPDATE schedule_id SET schedule_id "
+        String updateData = "UPDATE schedule SET schedule_id "
                 + scheduleLabel.getText() + "', degree = '"
                 + dayLabel.getText() + "' WHERE course = '"
                 + timeLabel.getText() + "'"
@@ -1032,7 +1032,7 @@ public class AdminController implements Initializable {
 
     public void studentScheduleDelete() {
 
-        String deleteData = "DELETE FROM schedule_id WHERE  schedule_id = '"
+        String deleteData = "DELETE FROM schedule WHERE  schedule_id = '"
                 + scheduleLabel.getText() + "'";
 
         connect = ConnectionUtil.getConnection();
