@@ -42,7 +42,8 @@ public class TeacherRepository implements TeacherUserInterface {
 
     @Override
     public int getTotalFemaleAbsenceCount() throws SQLException {
-        String sql = "SELECT COUNT(a_id) FROM student_Abstence WHERE gender = 'Female' and status = 'Enrolled'";
+        String sql = "SELECT COUNT(a_id) FROM student_Abstence sA INNER JOIN " +
+                "student s on sA.student_id = s.id WHERE gender = 'Female' and status = 'Enrolled'";
         connect = ConnectionUtil.getConnection();
         int countFemale = 0;
 
@@ -64,7 +65,8 @@ public class TeacherRepository implements TeacherUserInterface {
 
     @Override
     public int getTotalMaleAbsenceCount() throws SQLException {
-        String sql = "SELECT COUNT(a_id) FROM student_Abstence WHERE gender = 'Male' and status = 'Enrolled'";
+        String sql = "SELECT COUNT(a_id) FROM student_Abstence sA INNER JOIN " +
+                "student s on sA.student_id = s.id WHERE gender = 'Male' and status = 'Enrolled'";
         connect = ConnectionUtil.getConnection();
         int countMale = 0;
 
@@ -86,7 +88,9 @@ public class TeacherRepository implements TeacherUserInterface {
 
     @Override
     public XYChart.Series<String, Integer> getTotalAbsenceChartData() throws SQLException {
-        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
+        String sql = "SELECT sA.date_, COUNT(sA.a_id) FROM student_Abstence sA " +
+                "INNER JOIN student s on sA.student_id = s.id" +
+                " WHERE s.status = 'Enrolled' GROUP BY sA.date_ ORDER BY TIMESTAMP(sA.date_) ASC LIMIT 5";
         connect = ConnectionUtil.getConnection();
         XYChart.Series<String, Integer> chart = new XYChart.Series<>();
 
@@ -108,7 +112,10 @@ public class TeacherRepository implements TeacherUserInterface {
 
     @Override
     public XYChart.Series<String, Integer> getFemaleAbsenceChartData() throws SQLException {
-        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
+        String sql = "SELECT sA.date_, COUNT(sA.a_id) FROM student_Abstence sA " +
+                "INNER JOIN student s on sA.student_id = s.id " +
+                "WHERE s.status = 'Enrolled' and s.gender = 'Female' " +
+                "GROUP BY sA.date_ ORDER BY TIMESTAMP(sA.date_) ASC LIMIT 5";
         connect = ConnectionUtil.getConnection();
         XYChart.Series<String, Integer> chart = new XYChart.Series<>();
 
@@ -130,7 +137,10 @@ public class TeacherRepository implements TeacherUserInterface {
 
     @Override
     public XYChart.Series<String, Integer> getMaleAbsenceChartData() throws SQLException {
-        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
+        String sql = "SELECT sA.date_, COUNT(sA.a_id) FROM student_Abstence sA " +
+                "INNER JOIN student s on sA.student_id = s.id " +
+                "WHERE s.status = 'Enrolled' and s.gender = 'Male' " +
+                "GROUP BY sA.date_ ORDER BY TIMESTAMP(sA.date_) ASC LIMIT 5";
         connect = ConnectionUtil.getConnection();
         XYChart.Series<String, Integer> chart = new XYChart.Series<>();
 
@@ -168,27 +178,19 @@ public class TeacherRepository implements TeacherUserInterface {
 
     public void AbsencesAdd(AbsenceData absenceData) throws SQLException {
         String insertData = "INSERT INTO student_Abstence " +
-                "(student_id, class_, course_name, time, firstName, lastName, gender, date_, status, reasonability, date) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(student_id, schedule_id, date_, reasonability) " +
+                "VALUES (?, ?, ?, ?)";
 
         connect = ConnectionUtil.getConnection();
 
         try {
             prepare = connect.prepareStatement(insertData);
             prepare.setInt(1, absenceData.getStudent_id());
-            prepare.setString(2, absenceData.getClass_());
-            prepare.setString(3, absenceData.getCourse_name());
-            prepare.setInt(4, absenceData.getTime());
-            prepare.setString(5, absenceData.getFirstName());
-            prepare.setString(6, absenceData.getLastName());
-            prepare.setString(7, absenceData.getGender());
-            prepare.setDate(8, absenceData.getDate_());
-            prepare.setString(9, absenceData.getStatus());
-            prepare.setString(10, absenceData.getReasonability());
-
+            prepare.setInt(2, absenceData.getSchedule_id());
             java.util.Date currentDate = new java.util.Date();
             java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
-            prepare.setDate(11, sqlDate);
+            prepare.setDate(3, sqlDate);
+            prepare.setString(4, absenceData.getReasonability());
 
             prepare.executeUpdate();
         } catch (SQLException e) {
@@ -201,14 +203,8 @@ public class TeacherRepository implements TeacherUserInterface {
     public void addAbsencesUpdate(AbsenceData absenceData) {
         String updateData = "UPDATE student_Abstence SET "
                 + "student_id = ?"
-                + ", class_ = ?"
-                + ", course_name = ?"
-                + ", time = ?"
-                + ", firstName = ?"
-                + ", lastName = ?"
-                + ", gender = ?"
+                + ", schedule_id = ?"
                 + ", date_ = ?"
-                + ", status = ?"
                 + ", reasonability = ?"
                 + " where a_id = ?";
 
@@ -217,16 +213,10 @@ public class TeacherRepository implements TeacherUserInterface {
         try {
             prepare = connect.prepareStatement(updateData);
             prepare.setInt(1, absenceData.getStudent_id());
-            prepare.setString(2, absenceData.getClass_());
-            prepare.setString(3, absenceData.getCourse_name());
-            prepare.setInt(4, absenceData.getTime());
-            prepare.setString(5, absenceData.getFirstName());
-            prepare.setString(6, absenceData.getLastName());
-            prepare.setString(7, absenceData.getGender());
-            prepare.setDate(8, absenceData.getDate_());
-            prepare.setString(9, absenceData.getStatus());
-            prepare.setString(10, absenceData.getReasonability());
-            prepare.setInt(11, absenceData.getA_id());
+            prepare.setInt(2, absenceData.getSchedule_id());
+            prepare.setDate(3, absenceData.getDate_());
+            prepare.setString(4, absenceData.getReasonability());
+            prepare.setInt(5, absenceData.getA_id());
             prepare.executeUpdate();
 
         } catch (SQLException e) {
@@ -256,7 +246,11 @@ public class TeacherRepository implements TeacherUserInterface {
     public ObservableList<AbsenceData> addAbsencesListData() {
         ObservableList<AbsenceData> listStudents = FXCollections.observableArrayList();
 
-        String absences = "SELECT * FROM student_Abstence";
+        String absences = "SELECT sA.a_id, s.id, s.firstName, s.year, " +
+                "s.lastName, sc.course, sc.time, sc.day, sA.date_, sA.reasonability " +
+                "FROM student_Abstence sA " +
+                "INNER JOIN student s ON sA.student_id = s.id " +
+                "INNER JOIN schedule sc ON sA.schedule_id = sc.schedule_id";
 
         try {
             AbsenceData studentD;
@@ -267,15 +261,14 @@ public class TeacherRepository implements TeacherUserInterface {
             while (result.next()) {
                 studentD = new AbsenceData(
                         result.getInt("a_id"),
-                        result.getInt("student_id"),
-                        result.getString("class_"),
-                        result.getString("course_name"),
-                        result.getInt("time"),
+                        result.getInt("id"),
+                        result.getString("year"),
                         result.getString("firstName"),
                         result.getString("lastName"),
-                        result.getString("gender"),
+                        result.getString("course"),
+                        result.getString("time"),
+                        result.getString("day"),
                         result.getDate("date_"),
-                        result.getString("status"),
                         result.getString("reasonability"));
 
                 listStudents.add(studentD);

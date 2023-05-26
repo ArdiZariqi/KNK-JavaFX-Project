@@ -10,6 +10,15 @@ public class AbsenceSummary {  private Integer a_id;
     private String lastName;
     private String gender;
 
+    public AbsenceSummary(Integer student_id, String class_, String firstName, String lastName, Integer total_reasonable_absences, Integer total_unreasonable_absences) {
+        this.student_id = student_id;
+        this.class_ = class_;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.total_reasonable_absences = total_reasonable_absences;
+        this.total_unreasonable_absences = total_unreasonable_absences;
+    }
+
     private Integer total_reasonable_absences;
     private Integer total_unreasonable_absences;
     private Integer total_absences;
@@ -27,6 +36,7 @@ public class AbsenceSummary {  private Integer a_id;
         this.total_unreasonable_absences=total_unreasonable_absences;
         this.total_absences=total_absences;
     }
+
 
 
     public Integer getStudent_id() {

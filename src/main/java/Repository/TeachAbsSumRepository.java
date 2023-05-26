@@ -34,7 +34,7 @@ public class TeachAbsSumRepository implements TeachAbsSumInterface {
     public ObservableList<AbsenceSummary> addAbsencesListData1() {
         ObservableList<AbsenceSummary> listStudents = FXCollections.observableArrayList();
 
-        String sql = "SELECT *from   AbsenceSummary";
+        String sql = "SELECT * from   AbsenceSummary";
 
         try {
             AbsenceSummary studentD1;
@@ -44,9 +44,9 @@ public class TeachAbsSumRepository implements TeachAbsSumInterface {
 
             while (result.next()) {
                 studentD1 = new AbsenceSummary(
-                        result.getInt("student_id"),
-                        result.getString("class_"),
-                        result.getString("course_name"),
+                        result.getInt("id"),
+                        result.getString("year"),
+                        result.getString("course"),
                         result.getString("firstName"),
                         result.getString("lastName"),
                         result.getString("gender"),

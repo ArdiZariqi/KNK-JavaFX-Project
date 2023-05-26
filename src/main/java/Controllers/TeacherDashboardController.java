@@ -334,14 +334,7 @@ public class TeacherDashboardController implements Initializable {
         Alert alert;
 
         if (addAbsence_studentNum.getText().isEmpty()
-                || addAbsence_class.getSelectionModel().getSelectedItem() == null
-                || addAbsence_course.getSelectionModel().getSelectedItem() == null
                 || addAbsence_time.getText().isEmpty()
-                || addStudents_firstName.getText().isEmpty()
-                || addStudents_lastName.getText().isEmpty()
-                || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                || Absence_date.getValue() == null
-                || addStudents_status.getSelectionModel().getSelectedItem() == null
                 || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
                 alertService.errorAlert();
         } else {
@@ -349,14 +342,7 @@ public class TeacherDashboardController implements Initializable {
 
                 Integer a_id=1;
                 AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()),
-                        (String) addAbsence_class.getSelectionModel().getSelectedItem(),
-                        (String) addAbsence_course.getSelectionModel().getSelectedItem(),
                         Integer.parseInt(addAbsence_time.getText()),
-                        addStudents_firstName.getText(),
-                        addStudents_lastName.getText(),
-                        (String) addStudents_gender.getSelectionModel().getSelectedItem(),
-                        java.sql.Date.valueOf(Absence_date.getValue()),
-                        (String) addStudents_status.getSelectionModel().getSelectedItem(),
                         (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
                 teacherDashboardService.addAbsence(absenceData);
@@ -374,14 +360,8 @@ public class TeacherDashboardController implements Initializable {
     public void addAbsencesUpdate() {
         try {
             if (addAbsence_studentNum.getText().isEmpty()
-                    || addAbsence_class.getSelectionModel().getSelectedItem() == null
-                    || addAbsence_course.getSelectionModel().getSelectedItem() == null
                     || addAbsence_time.getText().isEmpty()
-                    || addStudents_firstName.getText().isEmpty()
-                    || addStudents_lastName.getText().isEmpty()
-                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
                     || Absence_date.getValue() == null
-                    || addStudents_status.getSelectionModel().getSelectedItem() == null
                     || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
                 alertService.errorAlert();
             } else {
@@ -394,13 +374,8 @@ public class TeacherDashboardController implements Initializable {
                 if (option.isPresent() && option.get() == ButtonType.OK) {
                     int a_id = Integer.parseInt(addAbsence_Id.getText());
                     AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()),
-                            (String) addAbsence_class.getSelectionModel().getSelectedItem(),
-                            (String) addAbsence_course.getSelectionModel().getSelectedItem(),
                             Integer.parseInt(addAbsence_time.getText()),
-                            addStudents_firstName.getText(), addStudents_lastName.getText(),
-                            (String) addStudents_gender.getSelectionModel().getSelectedItem(),
-                            java.sql.Date.valueOf(Absence_date.getValue()),
-                            (String) addStudents_status.getSelectionModel().getSelectedItem(),
+//                            java.sql.Date.valueOf(Absence_date.getValue()),
                             (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
                     teacherDashboardService.updateAbsence(absenceData);
@@ -417,16 +392,7 @@ public class TeacherDashboardController implements Initializable {
     public void addAbsencesDelete() {
         try {
             Alert alert;
-            if (addAbsence_studentNum.getText().isEmpty()
-                    || addAbsence_class.getSelectionModel().getSelectedItem() == null
-                    || addAbsence_course.getSelectionModel().getSelectedItem() == null
-                    || addAbsence_time.getText().isEmpty()
-                    || addStudents_firstName.getText().isEmpty()
-                    || addStudents_lastName.getText().isEmpty()
-                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || Absence_date.getValue() == null
-                    || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
+            if (addAbsence_Id.getText() == null) {
                 alertService.errorAlert();
             } else {
                 alert = new Alert(AlertType.CONFIRMATION);
@@ -439,15 +405,7 @@ public class TeacherDashboardController implements Initializable {
                 if (option.get().equals(ButtonType.OK)) {
 
                     int a_id = Integer.parseInt(addAbsence_Id.getText());
-                    AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()),
-                            (String) addAbsence_class.getSelectionModel().getSelectedItem(),
-                            (String)addAbsence_course.getSelectionModel().getSelectedItem(),
-                            Integer.parseInt(addAbsence_time.getText()),
-                            addStudents_firstName.getText(), addStudents_lastName.getText(),
-                            (String)addStudents_gender.getSelectionModel().getSelectedItem(),
-                            java.sql.Date.valueOf(Absence_date.getValue()),
-                            (String)addStudents_status.getSelectionModel().getSelectedItem(),
-                            (String) addStudents_Absences.getSelectionModel().getSelectedItem());
+                    AbsenceData absenceData = new AbsenceData(a_id);
 
                     teacherDashboardService.deleteAbsence(absenceData);
                     alertService.deleteAlert();
@@ -465,14 +423,7 @@ public class TeacherDashboardController implements Initializable {
     public void addAbsencesClear() {
         addAbsence_Id.setText("");
         addAbsence_studentNum.setText("");
-        addAbsence_class.getSelectionModel().clearSelection();
-        addAbsence_course.getSelectionModel().clearSelection();
         addAbsence_time.setText("");
-        addStudents_firstName.setText("");
-        addStudents_lastName.setText("");
-        addStudents_gender.getSelectionModel().clearSelection();
-        Absence_date.setValue(null);
-        addStudents_status.getSelectionModel().clearSelection();
         addStudents_Absences.getSelectionModel().clearSelection();
 
 
@@ -492,7 +443,7 @@ public class TeacherDashboardController implements Initializable {
                     return true;
                 } else if (predicateStudentData.getStudent_id().toString().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getClass_().toLowerCase().startsWith(searchKey)) {
+                } else if (predicateStudentData.getYear().toLowerCase().startsWith(searchKey)) {
                     return true;
                 } else if (predicateStudentData.getCourse_name().toLowerCase().startsWith(searchKey)) {
                     return true;
@@ -520,48 +471,48 @@ public class TeacherDashboardController implements Initializable {
         sortList1.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
         addStudents_tableView.setItems(sortList1);
     }
-    public void addAbsencesCourseList() {
-        try {
-            ObservableList<String> listC = teacherCourseService.ListOfCourses();
-            addAbsence_course.setItems(listC);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    private String[]  classList ={ "Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
-    public void addStudentsClassList() {
-        List<String> classL = new ArrayList<>();
+//    public void addAbsencesCourseList() {
+//        try {
+//            ObservableList<String> listC = teacherCourseService.ListOfCourses();
+//            addAbsence_course.setItems(listC);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    private String[]  classList ={ "Klasa 9","Klasa 10","Klasa 11","Klasa 12"};
+//    public void addStudentsClassList() {
+//        List<String> classL = new ArrayList<>();
+//
+//        for (String data : classList) {
+//            classL.add(data);
+//        }
+//
+//        ObservableList ObList = FXCollections.observableArrayList(classL);
+//        addAbsence_class.setItems(ObList);
+//    }
+//    private String[] genderList = {"Male", "Female"};
 
-        for (String data : classList) {
-            classL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(classL);
-        addAbsence_class.setItems(ObList);
-    }
-    private String[] genderList = {"Male", "Female"};
-
-    public void addStudentsGenderList() {
-        List<String> genderL = new ArrayList<>();
-
-        for (String data : genderList) {
-            genderL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(genderL);
-        addStudents_gender.setItems(ObList);
-    }
-    private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
-    public void addStudentsStatusList() {
-        List<String> statusL = new ArrayList<>();
-
-        for (String data : statusList) {
-            statusL.add(data);
-        }
-
-        ObservableList ObList = FXCollections.observableArrayList(statusL);
-        addStudents_status.setItems(ObList);
-    }
+//    public void addStudentsGenderList() {
+//        List<String> genderL = new ArrayList<>();
+//
+//        for (String data : genderList) {
+//            genderL.add(data);
+//        }
+//
+//        ObservableList ObList = FXCollections.observableArrayList(genderL);
+//        addStudents_gender.setItems(ObList);
+//    }
+//    private String[] statusList = {"Enrolled", "Not Enrolled", "Inactive"};
+//    public void addStudentsStatusList() {
+//        List<String> statusL = new ArrayList<>();
+//
+//        for (String data : statusList) {
+//            statusL.add(data);
+//        }
+//
+//        ObservableList ObList = FXCollections.observableArrayList(statusL);
+//        addStudents_status.setItems(ObList);
+//    }
     private String[] reasonabilityList = {"Reasonable", "Unreasonable"};
 
     public void AbsenceList() {
@@ -592,14 +543,13 @@ public class TeacherDashboardController implements Initializable {
 
         addAbsence_col_absence.setCellValueFactory(new PropertyValueFactory<>("a_id"));
         addAbsence_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("student_id"));
-        addAbsence_col_class.setCellValueFactory(new PropertyValueFactory<>("class_"));
+        addAbsence_col_class.setCellValueFactory(new PropertyValueFactory<>("year"));
         addAbsence_col_Course.setCellValueFactory(new PropertyValueFactory<>("course_name"));
         addAbsence_col_time.setCellValueFactory(new PropertyValueFactory<>("time"));
         addAbsence_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         addAbsence_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        addAbsence_col_gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        addAbsence_col_gender.setCellValueFactory(new PropertyValueFactory<>("day"));
         addAbsence_col_date.setCellValueFactory(new PropertyValueFactory<>("date_"));
-        addAbsence_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
         addAbsence_col_reasonability.setCellValueFactory(new PropertyValueFactory<>("reasonability"));
 
         addStudents_tableView.setItems(addStudentsListD);
@@ -617,9 +567,6 @@ public class TeacherDashboardController implements Initializable {
         addAbsence_Id.setText(String.valueOf(studentD.getA_id()));
         addAbsence_studentNum.setText(String.valueOf(studentD.getStudent_id()));
         addAbsence_time.setText(String.valueOf(studentD.getTime()));
-        addStudents_firstName.setText(studentD.getFirstName());
-        addStudents_lastName.setText(studentD.getLastName());
-        Absence_date.setValue(LocalDate.parse(String.valueOf(studentD.getDate_())));
 
     }
     public void addAbsenceSearch1() {
@@ -786,10 +733,10 @@ public class TeacherDashboardController implements Initializable {
             studentAbstence_btn.setStyle("-fx-background-color:transparent");
 
             addAbsencesShowListData();
-            addStudentsClassList();
-            addAbsencesCourseList();
-            addStudentsGenderList();
-            addStudentsStatusList();
+//            addStudentsClassList();
+//            addAbsencesCourseList();
+//            addStudentsGenderList();
+//            addStudentsStatusList();
             AbsenceList();
             addAbsenceSearch();
 
@@ -827,10 +774,10 @@ public class TeacherDashboardController implements Initializable {
         homeDisplayAbsenceMaleChart();
 
         addAbsencesShowListData();
-        addStudentsGenderList();
-        addStudentsStatusList();
-        addAbsencesCourseList();
-        addStudentsClassList();
+//        addStudentsGenderList();
+//        addStudentsStatusList();
+//        addAbsencesCourseList();
+//        addStudentsClassList();
         AbsenceList();
 
         languageId.setItems(FXCollections.observableArrayList("English", "Shqip"));
@@ -858,37 +805,37 @@ public class TeacherDashboardController implements Initializable {
         addAbsence_clearBtn.setText(LanguageUtil.getMessage("addStudents.clearBtn"));
         addAbsence_deleteBtn.setText(LanguageUtil.getMessage("addStudents.deleteBtn"));
         addAbsence_updateBtn.setText(LanguageUtil.getMessage("addStudents.updateBtn"));
-        addAbsence_col_firstName.setText(LanguageUtil.getMessage("student.first.name"));
+//        addAbsence_col_firstName.setText(LanguageUtil.getMessage("student.first.name"));
         addAbsence_col_firstName1.setText(LanguageUtil.getMessage("student.first.name"));
-        addAbsence_col_lastName.setText(LanguageUtil.getMessage("student.last.name"));
+//        addAbsence_col_lastName.setText(LanguageUtil.getMessage("student.last.name"));
         addAbsence_col_lastName1.setText(LanguageUtil.getMessage("student.last.name"));
-        addAbsence_col_gender.setText(LanguageUtil.getMessage("student.gender"));
+//        addAbsence_col_gender.setText(LanguageUtil.getMessage("student.gender"));
         addAbsence_col_gender1.setText(LanguageUtil.getMessage("student.gender"));
-        addAbsence_col_date.setText(LanguageUtil.getMessage("student.birth.date"));
-        addAbsence_col_status.setText(LanguageUtil.getMessage("student.status"));
+        addAbsence_col_date.setText(LanguageUtil.getMessage("student.date"));
+//        addAbsence_col_status.setText(LanguageUtil.getMessage("student.status"));
         addAbsence_col_reasonability.setText(LanguageUtil.getMessage("add.absence.reasonability"));
         addAbsence_col_reasonable.setText(LanguageUtil.getMessage("total.reasonable"));
         addAbsence_col_unreasonable.setText(LanguageUtil.getMessage("total.unreasonable"));
         addAbsence_col_total.setText(LanguageUtil.getMessage("total.absences"));
         studentLabel.setText(LanguageUtil.getMessage("student.id"));
-        classLabel.setText(LanguageUtil.getMessage("class.label"));
+//        classLabel.setText(LanguageUtil.getMessage("class.label"));
         timeLabel.setText(LanguageUtil.getMessage("time.label"));
         label.setText(LanguageUtil.getMessage("label."));
         reasonabilityLabel.setText(LanguageUtil.getMessage("add.absence.reasonability"));
         addAbsence_col_Course1.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
         addAbsence_col_class1.setText(LanguageUtil.getMessage("class.col"));
         addAbsence_col_stid.setText(LanguageUtil.getMessage("student.id"));
-        addAbsence_class.setPromptText(LanguageUtil.getMessage("select.class"));
-        addAbsence_course.setPromptText(LanguageUtil.getMessage("select.course"));
-        addStudents_gender.setPromptText(LanguageUtil.getMessage("select.gender"));
-        addStudents_status.setPromptText(LanguageUtil.getMessage("select.status"));
+//        addAbsence_class.setPromptText(LanguageUtil.getMessage("select.class"));
+//        addAbsence_course.setPromptText(LanguageUtil.getMessage("select.course"));
+//        addStudents_gender.setPromptText(LanguageUtil.getMessage("select.gender"));
+//        addStudents_status.setPromptText(LanguageUtil.getMessage("select.status"));
         addStudents_Absences.setPromptText(LanguageUtil.getMessage("select.reasonability"));
-        courseLabel.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
-        fNameLabel.setText(LanguageUtil.getMessage("student.first.name"));
-        lNameLabel.setText(LanguageUtil.getMessage("student.last.name"));
-        genderLabel.setText(LanguageUtil.getMessage("student.gender"));
-        birthDateLabel.setText(LanguageUtil.getMessage("student.birth.date"));
-        statusLabel.setText(LanguageUtil.getMessage("student.status"));
+//        courseLabel.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+//        fNameLabel.setText(LanguageUtil.getMessage("student.first.name"));
+//        lNameLabel.setText(LanguageUtil.getMessage("student.last.name"));
+//        genderLabel.setText(LanguageUtil.getMessage("student.gender"));
+//        birthDateLabel.setText(LanguageUtil.getMessage("student.birth.date"));
+//        statusLabel.setText(LanguageUtil.getMessage("student.status"));
         Absence_search1.setPromptText(LanguageUtil.getMessage("search.student"));
         addAbsence_search.setPromptText(LanguageUtil.getMessage("search.student"));
         studentAbstence_btn.setText(LanguageUtil.getMessage("student.absences"));
