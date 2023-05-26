@@ -21,7 +21,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AdminController">
     <children>
         <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
@@ -329,7 +328,7 @@
                                     </children>
                                 </AnchorPane>
 
-                                <AnchorPane fx:id="studentSchedule_form" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="studentSchedule_form" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="12.0" layoutY="11.0" prefHeight="527.0" prefWidth="873.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -365,15 +364,15 @@
                                                                 </Label>
                                                                 <TextField fx:id="timeLabel" layoutX="103.0" layoutY="121.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                                 <Button fx:id="scheduleAdd" layoutX="42.0" layoutY="225.0" mnemonicParsing="false" onAction="#studentScheduleAdd" prefHeight="41.0" prefWidth="85.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Add" />
-                                                                <Button fx:id="scheduleUpdate" layoutX="151.0" layoutY="225.0" mnemonicParsing="false" onAction="#studentScheduleUpdate" prefHeight="41.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
+                                                                <Button fx:id="scheduleUpdate" layoutX="151.0" layoutY="225.0" mnemonicParsing="false" onAction="#studentScheduleUpdate" onMouseClicked="#studentScheduleUpdate" prefHeight="41.0" prefWidth="85.0" styleClass="update-btn" stylesheets="@Design/dashboardDesign.css" text="Update" />
                                                                 <Button fx:id="scheduleClear" layoutX="42.0" layoutY="279.0" mnemonicParsing="false" onAction="#studentScheduleClear" prefHeight="41.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@Design/dashboardDesign.css" text="Clear" />
                                                                 <Button fx:id="scheduleDelete" layoutX="151.0" layoutY="279.0" mnemonicParsing="false" onAction="#studentScheduleDelete" prefHeight="41.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@Design/dashboardDesign.css" text="Delete" />
-                                                                <TextField fx:id="courseLabel1" layoutX="102.0" layoutY="161.0" prefHeight="25.0" prefWidth="155.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                                 <Label layoutX="45.0" layoutY="164.0" text="Course:">
                                                                     <font>
                                                                         <Font name="Tahoma" size="15.0" />
                                                                     </font>
                                                                 </Label>
+                                                <ComboBox fx:id="courseLabel1" layoutX="104.0" layoutY="161.0" onAction="#addStudentsScheduleCourseList" prefHeight="25.0" prefWidth="156.0" promptText="Choose" />
                                                             </children>
                                                         </AnchorPane>
                                                     </children></AnchorPane>
@@ -393,23 +392,20 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="studentAbstence2_form" layoutX="14.0" layoutY="13.0" prefHeight="530.0" prefWidth="862.0">
+                                <AnchorPane fx:id="studentAbstence2_form" layoutX="18.0" layoutY="12.0" prefHeight="531.0" prefWidth="871.0" visible="false">
                                     <children>
-                                        <TableView fx:id="studentAbsence_tableView2" layoutX="-2.0" layoutY="40.0" onMouseClicked="#addStudentsSelect" prefHeight="483.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
+                                        <TableView fx:id="studentAbsence_tableView2" layoutX="5.0" layoutY="47.0" onMouseClicked="#addStudentsSelect" prefHeight="476.0" prefWidth="861.0" stylesheets="@Design/dashboardDesign.css">
                                             <columns>
-                                                <TableColumn fx:id="addAbsence_col_stid2" prefWidth="65.60000610351562" text="Student#" />
-                                                <TableColumn fx:id="addAbsence_col_class2" prefWidth="66.39999389648438" text="Class" />
-                                                <TableColumn fx:id="addAbsence_col_firstName2" prefWidth="100.80001831054688" text="First Name" />
-                                                <TableColumn fx:id="addAbsence_col_lastName2" prefWidth="95.99998474121094" text="Last Name" />
-                                                <TableColumn fx:id="addAbsence_col_firstsemester2" prefWidth="93.60003662109375" text="First Semester" />
-                                                <TableColumn fx:id="addAbsence_col_secondsemester2" prefWidth="120.7999267578125" text="Second Semester" />
-                                                <TableColumn fx:id="addAbsence_col_reasonable2" prefWidth="120.79998779296875" text="Total Reasonable Absences" />
-                                                <TableColumn fx:id="addAbsence_col_unreasonable2" minWidth="0.0" prefWidth="130.4000244140625" text="Total Unreasonable Absences" />
-                                                <TableColumn fx:id="addAbsence_col_total2" prefWidth="68.800048828125" text="Total " />
+                                                <TableColumn fx:id="addAbsence_col_stid2" prefWidth="137.3333339691162" text="Student#" />
+                                                <TableColumn fx:id="addAbsence_col_class2" prefWidth="132.66664123535156" text="Class" />
+                                                <TableColumn fx:id="addAbsence_col_firstName2" prefWidth="134.6666259765625" text="First Name" />
+                                                <TableColumn fx:id="addAbsence_col_lastName2" prefWidth="136.66671752929688" text="Last Name" />
+                                                <TableColumn fx:id="addAbsence_col_reasonable2" prefWidth="160.0" text="Total Reasonable For Semester" />
+                                                <TableColumn fx:id="addAbsence_col_unreasonable2" minWidth="0.0" prefWidth="178.0" text="Total Unreasonable For Semester" />
                                             </columns>
                                         </TableView>
-                                        <TextField fx:id="Absence_search2" layoutX="1.0" onKeyTyped="#addAbsenceSearch2" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
-                                        <FontAwesomeIcon glyphName="SEARCH" layoutX="14.0" layoutY="19.0" />
+                                        <TextField fx:id="Absence_search2" layoutX="5.0" layoutY="6.0" onKeyTyped="#addAbsenceSearch2" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
+                              <FontAwesomeIcon glyphName="SEARCH" layoutX="14.0" layoutY="25.0" />
                                     </children>
                                 </AnchorPane>
                             </children>

@@ -193,7 +193,7 @@ public class AdminController implements Initializable {
     @FXML
     private TextField timeLabel;
     @FXML
-    private TextField courseLabel1;
+    private ComboBox<?> courseLabel1;
     @FXML
     private Button scheduleAdd;
     @FXML
@@ -226,16 +226,11 @@ public class AdminController implements Initializable {
     private TableColumn<TotalAbsences, String> addAbsence_col_stid2;
     @FXML
     private TableColumn<TotalAbsences, String> addAbsence_col_class2;
-    @FXML
-    private TableColumn<TotalAbsences, String> addAbsence_col_firstsemester2;
-    @FXML
-    private TableColumn<TotalAbsences, String> addAbsence_col_secondsemester2;
+
     @FXML
     private TableColumn<TotalAbsences, String> addAbsence_col_reasonable2;
     @FXML
     private TableColumn <TotalAbsences, String> addAbsence_col_unreasonable2;
-    @FXML
-    private TableColumn<TotalAbsences, String> addAbsence_col_total2;
     @FXML
     private Button studentAbstence_btn2;
     @FXML
@@ -804,10 +799,6 @@ public class AdminController implements Initializable {
                     return true;
                 } else if (predicateStudentData.getLastName().toLowerCase().startsWith(searchKey)) {
                     return true;
-                } else if (predicateStudentData.getFirstSemester().toLowerCase().startsWith(searchKey)) {
-                    return true;
-                } else if (predicateStudentData.getSecondSemester().toLowerCase().startsWith(searchKey)) {
-                    return true;
                 }else{
                     return false;
                 }
@@ -837,11 +828,8 @@ public class AdminController implements Initializable {
                         result.getString("class_"),
                         result.getString("firstName"),
                         result.getString("lastName"),
-                        result.getString("firstSemester"),
-                        result.getString("secondSemester"),
                         result.getInt("total_reasonable_absences"),
-                        result.getInt("total_unreasonable_absences"),
-                        result.getInt("total_absences"));
+                        result.getInt("total_unreasonable_absences"));
 
                 listStudents.add(studentD2);
             }
@@ -863,11 +851,8 @@ public class AdminController implements Initializable {
         addAbsence_col_class2.setCellValueFactory(new PropertyValueFactory<>("class_"));
         addAbsence_col_firstName2.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         addAbsence_col_lastName2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        addAbsence_col_firstsemester2.setCellValueFactory(new PropertyValueFactory<>("firstSemester"));
-        addAbsence_col_secondsemester2.setCellValueFactory(new PropertyValueFactory<>("secondSemester"));
         addAbsence_col_reasonable2.setCellValueFactory(new PropertyValueFactory<>("total_reasonable_absences"));
         addAbsence_col_unreasonable2.setCellValueFactory(new PropertyValueFactory<>("total_unreasonable_absences"));
-        addAbsence_col_total2.setCellValueFactory(new PropertyValueFactory<>("total_absences"));
 
         studentAbsence_tableView2.setItems(addStudentsListD2);
     }
@@ -877,8 +862,6 @@ public class AdminController implements Initializable {
         ObservableList<scheduleData> listData = FXCollections.observableArrayList();
 
         String sql = "SELECT * FROM schedule";
-// Set values for other properties as well
-
 
         connect = ConnectionUtil.getConnection();
 
@@ -927,7 +910,7 @@ public class AdminController implements Initializable {
             if (scheduleLabel.getText().isEmpty()
                     || dayLabel.getText().isEmpty()
                     || timeLabel.getText().isEmpty()
-                    || courseLabel1.getText().isEmpty()) {
+                    || courseLabel1.getSelectionModel().getSelectedItem() == null){
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -952,7 +935,7 @@ public class AdminController implements Initializable {
                     prepare.setString(1, scheduleLabel.getText());
                     prepare.setString(2, dayLabel.getText());
                     prepare.setString(3, timeLabel.getText());
-                    prepare.setString(4, courseLabel1.getText());
+                    prepare.setString(4, (String) courseLabel1.getSelectionModel().getSelectedItem());
 
                     prepare.executeUpdate();
 
@@ -972,14 +955,36 @@ public class AdminController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void addStudentsScheduleCourseList() {
+
+        String listCourse = "SELECT * FROM course";
+
+        connect = ConnectionUtil.getConnection();
+
+        try {
+
+            ObservableList listC = FXCollections.observableArrayList();
+
+            prepare = connect.prepareStatement(listCourse);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                listC.add(result.getString("course"));
+            }
+            courseLabel1.setItems(listC);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void studentScheduleUpdate() {
 
-        String updateData = "UPDATE schedule SET schedule_id "
-                + scheduleLabel.getText() + "', degree = '"
-                + dayLabel.getText() + "' WHERE course = '"
-                + timeLabel.getText() + "'"
-                + courseLabel1.getText();
+        String updateData = "UPDATE schedule SET day = '"
+                +dayLabel.getText() + "', time = '"
+                +timeLabel.getText() + "', course = '"
+                +courseLabel1.getSelectionModel().getSelectedItem() + "' WHERE course = '"
+                +scheduleLabel.getText()+ "'";
 
         connect = ConnectionUtil.getConnection();
 
@@ -989,7 +994,7 @@ public class AdminController implements Initializable {
             if (scheduleLabel.getText().isEmpty()
                     || dayLabel.getText().isEmpty()
                     || timeLabel.getText().isEmpty()
-                    || courseLabel1.getText().isEmpty()) {
+                    || courseLabel1.getSelectionModel().getSelectedItem() == null) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -1028,6 +1033,12 @@ public class AdminController implements Initializable {
         }
 
     }
+    public void studentScheduleClear() {
+        scheduleLabel.setText("");
+        dayLabel.setText("");
+        timeLabel.setText("");
+        courseLabel1.getSelectionModel().clearSelection();
+    }
 
     public void studentScheduleDelete() {
 
@@ -1042,7 +1053,7 @@ public class AdminController implements Initializable {
             if (scheduleLabel.getText().isEmpty()
                     || dayLabel.getText().isEmpty()
                     || timeLabel.getText().isEmpty()
-                    || courseLabel1.getText().isEmpty()) {
+                    || courseLabel1.getSelectionModel().getSelectedItem() == null) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -1081,12 +1092,6 @@ public class AdminController implements Initializable {
 
     }
 
-    public void studentScheduleClear() {
-        scheduleLabel.setText("");
-        dayLabel.setText("");
-        timeLabel.setText("");
-        courseLabel1.setText("");
-    }
 
 
     public void availableScheduleSelect() {
@@ -1107,7 +1112,7 @@ public class AdminController implements Initializable {
     public void displayUsername() {
         username.setText(Data.username);
     }
-    //koment
+
     @FXML
     public void openHelp(ActionEvent event){
         try {
@@ -1170,7 +1175,7 @@ public class AdminController implements Initializable {
             addStudentsStatusList();
             addStudentsCourseList();
             addStudentsSearch();
-//koment
+
         } else if (event.getSource() == studentSchedule_btn) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
@@ -1183,12 +1188,15 @@ public class AdminController implements Initializable {
             studentAbstence_btn2.setStyle("-fx-background-color:transparent");
 
             availableScheduleShowListData();
+            addStudentsScheduleCourseList();
 
         }else if (event.getSource() == studentAbstence_btn2) {
             home_form.setVisible(false);
             addStudents_form.setVisible(false);
             studentSchedule_form.setVisible(false);
             studentAbstence2_form.setVisible(true);
+
+
 
             studentAbstence_btn2.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
             addStudents_btn.setStyle("-fx-background-color:transparent");
@@ -1293,6 +1301,7 @@ public class AdminController implements Initializable {
         addStudentsStatusList();
         addStudentsCourseList();
         availableScheduleShowListData();
+        addStudentsScheduleCourseList();
 
         languageID.setItems(FXCollections.observableArrayList("English", "Shqip"));
         languageID.setValue("English");
