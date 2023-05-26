@@ -408,7 +408,7 @@
                                             </columns>
                                         </TableView>
                                         <TextField fx:id="Absence_search2" layoutX="1.0" onKeyTyped="#addAbsenceSearch2" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
-                              <FontAwesomeIcon glyphName="SEARCH" layoutX="14.0" layoutY="19.0" />
+                                        <FontAwesomeIcon glyphName="SEARCH" layoutX="14.0" layoutY="19.0" />
                                     </children>
                                 </AnchorPane>
                             </children>
