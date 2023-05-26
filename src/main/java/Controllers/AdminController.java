@@ -235,6 +235,10 @@ public class AdminController implements Initializable {
     private Button studentAbstence_btn2;
     @FXML
     private TableView<TotalAbsences> studentAbsence_tableView2;
+    @FXML
+    private DatePicker start_date;
+    @FXML
+    private DatePicker end_date;
 
 
 
@@ -813,27 +817,41 @@ public class AdminController implements Initializable {
     public ObservableList<TotalAbsences> addAbsencesListData2() {
         ObservableList<TotalAbsences> listStudents = FXCollections.observableArrayList();
 
-        String sql = "SELECT * from  student_Abstence";
+        String sql = "CALL GetAbsenceSummary1(?, ?)";
 
         connect = ConnectionUtil.getConnection();
 
         try {
             TotalAbsences studentD2;
             prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
 
-            while (result.next()) {
-                studentD2 = new TotalAbsences(
-                        result.getInt("student_id"),
-                        result.getString("class_"),
-                        result.getString("firstName"),
-                        result.getString("lastName"),
-                        result.getInt("total_reasonable_absences"),
-                        result.getInt("total_unreasonable_absences"));
+            // Check if start_date and end_date have valid values
+            LocalDate startDate = start_date.getValue();
+            LocalDate endDate = end_date.getValue();
 
-                listStudents.add(studentD2);
+            if (startDate != null && endDate != null) {
+                java.sql.Date sqlStartDate = java.sql.Date.valueOf(startDate);
+                java.sql.Date sqlEndDate = java.sql.Date.valueOf(endDate);
+
+                prepare.setDate(1, sqlStartDate);
+                prepare.setDate(2, sqlEndDate);
+
+                result = prepare.executeQuery();
+
+                while (result.next()) {
+                    studentD2 = new TotalAbsences(
+                            result.getInt("id"),
+                            result.getString("year"),
+                            result.getString("firstName"),
+                            result.getString("lastName"),
+                            result.getInt("total_reasonable_absences_forSemester"),
+                            result.getInt("total_unreasonable_absences_forSemester"));
+
+                    listStudents.add(studentD2);
+                }
+            } else {
+
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -851,8 +869,8 @@ public class AdminController implements Initializable {
         addAbsence_col_class2.setCellValueFactory(new PropertyValueFactory<>("class_"));
         addAbsence_col_firstName2.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         addAbsence_col_lastName2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        addAbsence_col_reasonable2.setCellValueFactory(new PropertyValueFactory<>("total_reasonable_absences"));
-        addAbsence_col_unreasonable2.setCellValueFactory(new PropertyValueFactory<>("total_unreasonable_absences"));
+        addAbsence_col_reasonable2.setCellValueFactory(new PropertyValueFactory<>("total_reasonable_absences_forSemester"));
+        addAbsence_col_unreasonable2.setCellValueFactory(new PropertyValueFactory<>("total_unreasonable_absences_forSemester"));
 
         studentAbsence_tableView2.setItems(addStudentsListD2);
     }
@@ -983,7 +1001,7 @@ public class AdminController implements Initializable {
         String updateData = "UPDATE schedule SET day = '"
                 +dayLabel.getText() + "', time = '"
                 +timeLabel.getText() + "', course = '"
-                +courseLabel1.getSelectionModel().getSelectedItem() + "' WHERE course = '"
+                +courseLabel1.getSelectionModel().getSelectedItem() + "' WHERE schedule_id = '"
                 +scheduleLabel.getText()+ "'";
 
         connect = ConnectionUtil.getConnection();
@@ -1202,6 +1220,7 @@ public class AdminController implements Initializable {
             addStudents_btn.setStyle("-fx-background-color:transparent");
             home_btn.setStyle("-fx-background-color:transparent");
             studentSchedule_btn.setStyle("-fx-background-color:transparent");
+            addAbsencesShowListData2();
         }
     }
     private double x=0;
@@ -1294,6 +1313,8 @@ public class AdminController implements Initializable {
         homeDisplayEnrolledMaleChart();
         homeDisplayFemaleEnrolledChart();
         homeDisplayTotalEnrolledChart();
+
+
 
         addStudentsShowListData();
         addStudentsYearList();

@@ -118,7 +118,7 @@
                     <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane fx:id="home_form" layoutX="5.0" layoutY="138.0" prefHeight="554.0" prefWidth="892.0" stylesheets="@Design/dashboardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="home_form" layoutX="5.0" layoutY="138.0" prefHeight="554.0" prefWidth="892.0" stylesheets="@Design/dashboardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="13.0" layoutY="12.0" prefHeight="532.0" prefWidth="872.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -328,7 +328,7 @@
                                     </children>
                                 </AnchorPane>
 
-                                <AnchorPane fx:id="studentSchedule_form" prefHeight="555.0" prefWidth="897.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="studentSchedule_form" prefHeight="555.0" prefWidth="897.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane layoutX="12.0" layoutY="11.0" prefHeight="527.0" prefWidth="873.0" stylesheets="@Design/dashboardDesign.css">
                                             <styleClass>
@@ -394,18 +394,23 @@
                                 </AnchorPane>
                                 <AnchorPane fx:id="studentAbstence2_form" layoutX="18.0" layoutY="12.0" prefHeight="531.0" prefWidth="871.0" visible="false">
                                     <children>
-                                        <TableView fx:id="studentAbsence_tableView2" layoutX="5.0" layoutY="47.0" onMouseClicked="#addStudentsSelect" prefHeight="476.0" prefWidth="861.0" stylesheets="@Design/dashboardDesign.css">
+                                        <TableView fx:id="studentAbsence_tableView2" layoutX="5.0" layoutY="47.0" onMouseClicked="#addStudentsSelect" prefHeight="407.0" prefWidth="862.0" stylesheets="@Design/dashboardDesign.css">
                                             <columns>
-                                                <TableColumn fx:id="addAbsence_col_stid2" prefWidth="137.3333339691162" text="Student#" />
-                                                <TableColumn fx:id="addAbsence_col_class2" prefWidth="132.66664123535156" text="Class" />
-                                                <TableColumn fx:id="addAbsence_col_firstName2" prefWidth="134.6666259765625" text="First Name" />
-                                                <TableColumn fx:id="addAbsence_col_lastName2" prefWidth="136.66671752929688" text="Last Name" />
-                                                <TableColumn fx:id="addAbsence_col_reasonable2" prefWidth="160.0" text="Total Reasonable For Semester" />
-                                                <TableColumn fx:id="addAbsence_col_unreasonable2" minWidth="0.0" prefWidth="178.0" text="Total Unreasonable For Semester" />
+                                                <TableColumn fx:id="addAbsence_col_stid2" prefWidth="101.59999465942383" text="Student#" />
+                                                <TableColumn fx:id="addAbsence_col_class2" prefWidth="106.39999389648438" text="Year" />
+                                                <TableColumn fx:id="addAbsence_col_firstName2" prefWidth="132.80003356933594" text="First Name" />
+                                                <TableColumn fx:id="addAbsence_col_lastName2" prefWidth="120.79998779296875" text="Last Name" />
+                                                <TableColumn fx:id="addAbsence_col_reasonable2" prefWidth="185.5999755859375" text="Total Reasonable For Semester" />
+                                                <TableColumn fx:id="addAbsence_col_unreasonable2" minWidth="0.0" prefWidth="211.20003662109377" text="Total Unreasonable For Semester" />
                                             </columns>
                                         </TableView>
                                         <TextField fx:id="Absence_search2" layoutX="5.0" layoutY="6.0" onKeyTyped="#addAbsenceSearch2" prefHeight="30.0" prefWidth="367.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                               <FontAwesomeIcon glyphName="SEARCH" layoutX="14.0" layoutY="25.0" />
+                              <DatePicker fx:id="start_date" layoutX="348.0" layoutY="471.0" prefHeight="20.0" prefWidth="175.0" />
+                              <DatePicker fx:id="end_date" layoutX="658.0" layoutY="471.0" prefHeight="20.0" prefWidth="175.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="282.0" layoutY="474.0" prefHeight="20.0" prefWidth="44.0" text="From:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="604.0" layoutY="474.0" prefHeight="20.0" prefWidth="44.0" text="To:" />
+                              <Button fx:id="scheduleAdd1" layoutX="96.0" layoutY="462.0" mnemonicParsing="false" onAction="#addAbsencesShowListData2" prefHeight="42.0" prefWidth="148.0" styleClass="add-btn" stylesheets="@Design/dashboardDesign.css" text="Find total absences" />
                                     </children>
                                 </AnchorPane>
                             </children>
