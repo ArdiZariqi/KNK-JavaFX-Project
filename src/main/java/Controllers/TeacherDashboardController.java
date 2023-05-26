@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import Models.AbsenceSummary;
+import Models.Users;
 import Models.getData;
+import Repository.Interfaces.TeacherUserInterface;
+import Repository.TeacherRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -42,8 +45,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import service.ConnectionUtil;
 import service.LanguageUtil;
+import service.TeacherService;
+import service.UserService;
+import service.interfaces.TeacherDashboardInterface;
 
 public class TeacherDashboardController implements Initializable {
+
+    private TeacherRepository repository;
 
     @FXML
     private DatePicker Absence_date;
@@ -155,6 +163,8 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private TextField addStudents_firstName;
     @FXML
+    private TextField addStudents_lastName;
+    @FXML
     private Label signout;
 
     @FXML
@@ -163,8 +173,6 @@ public class TeacherDashboardController implements Initializable {
     @FXML
     private ComboBox<?> addStudents_gender;
 
-    @FXML
-    private TextField addStudents_lastName;
 
     @FXML
     private ComboBox<?> addStudents_status;
@@ -198,7 +206,7 @@ public class TeacherDashboardController implements Initializable {
     private Label home_totalEnrolled;
 
     @FXML
-    private BarChart<?, ?> home_totalEnrolledChart;
+    private BarChart<String,Integer > home_totalEnrolledChart;
     @FXML
     private Label fNameLabel;
     @FXML
@@ -208,7 +216,7 @@ public class TeacherDashboardController implements Initializable {
     private Label home_totalFemale;
 
     @FXML
-    private AreaChart<?, ?> home_totalFemaleChart;
+    private AreaChart<String,Integer > home_totalFemaleChart;
 
     @FXML
     private Label home_totalMale;
@@ -216,7 +224,7 @@ public class TeacherDashboardController implements Initializable {
     private Label courseLabel;
 
     @FXML
-    private LineChart<?, ?> home_totalMaleChart;
+    private LineChart<String,Integer> home_totalMaleChart;
 
     @FXML
     private Button logout;
@@ -257,251 +265,112 @@ public class TeacherDashboardController implements Initializable {
     private Statement statement;
     private ResultSet result;
 
+    TeacherService teacherService = new TeacherService();
 
+    public void setRepository(TeacherRepository repository) {
+        this.repository = repository;
+    }
 
     public void homeDisplayTotalStudentsAbsence() {
-
-        String sql = "SELECT COUNT(a_id) FROM student_Abstence";
-
-        connect = ConnectionUtil.getConnection();
-
-        int countEnrolled = 0;
-
         try {
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            if (result.next()) {
-                countEnrolled = result.getInt("COUNT(a_id)");
-            }
-
+            int countEnrolled = repository.getTotalStudentsAbsenceCount();
             home_totalEnrolled.setText(String.valueOf(countEnrolled));
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayTotalFemaleAbsences() {
-
-        String sql = "SELECT COUNT(a_id) FROM student_Abstence WHERE gender = 'Female' and status = 'Enrolled'";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            int countFemale = 0;
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            if (result.next()) {
-                countFemale = result.getInt("COUNT(a_id)");
-            }
-
+            int countFemale = repository.getTotalFemaleAbsenceCount();
             home_totalFemale.setText(String.valueOf(countFemale));
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayTotalMaleAbsences() {
-
-        String sql = "SELECT COUNT(a_id) FROM student_Abstence WHERE gender = 'Male' and status = 'Enrolled'";
-
-        connect = ConnectionUtil.getConnection();
         try {
-            int countMale = 0;
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            if (result.next()) {
-                countMale = result.getInt("COUNT(a_id)");
-            }
+            int countMale = repository.getTotalMaleAbsenceCount();
             home_totalMale.setText(String.valueOf(countMale));
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayTotalAbsenceChart() {
-
         home_totalEnrolledChart.getData().clear();
 
-        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            XYChart.Series chart = new XYChart.Series();
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            home_totalEnrolledChart.getData().add(chart);
-
-        } catch (Exception e) {
+            XYChart.Series<String, Integer> chartData = repository.getTotalAbsenceChartData();
+            home_totalEnrolledChart.getData().add(chartData);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayFemaleAbsenceChart() {
-
         home_totalFemaleChart.getData().clear();
 
-        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            XYChart.Series chart = new XYChart.Series();
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            home_totalFemaleChart.getData().add(chart);
-
-        } catch (Exception e) {
+            XYChart.Series<String, Integer> chartData = repository.getFemaleAbsenceChartData();
+            home_totalFemaleChart.getData().add(chartData);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayAbsenceMaleChart() {
-
         home_totalMaleChart.getData().clear();
 
-        String sql = "SELECT date_, COUNT(a_id) FROM student_Abstence WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date_ ORDER BY TIMESTAMP(date_) ASC LIMIT 5";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            XYChart.Series chart = new XYChart.Series();
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            home_totalMaleChart.getData().add(chart);
-
-        } catch (Exception e) {
+            XYChart.Series<String, Integer> chartData = repository.getMaleAbsenceChartData();
+            home_totalMaleChart.getData().add(chartData);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
 
     public void AbsencesAdd() {
+        Alert alert;
 
-        String insertData = "INSERT INTO student_Abstence " +
-                "(student_id, class_, course_name, time, firstName, lastName, gender, date_, status, reasonability,date) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        if (addAbsence_studentNum.getText().isEmpty()
+                || addAbsence_class.getSelectionModel().getSelectedItem() == null
+                || addAbsence_course.getSelectionModel().getSelectedItem() == null
+                || addAbsence_time.getText().isEmpty()
+                || addStudents_firstName.getText().isEmpty()
+                || addStudents_lastName.getText().isEmpty()
+                || addStudents_gender.getSelectionModel().getSelectedItem() == null
+                || Absence_date.getValue() == null
+                || addStudents_status.getSelectionModel().getSelectedItem() == null
+                || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
+                teacherService.ErrorAlert();
+        } else {
+            try {
 
-        connect = ConnectionUtil.getConnection();
-
-        try {
-            Alert alert;
-
-            if (addAbsence_studentNum.getText().isEmpty()
-                    || addAbsence_class.getSelectionModel().getSelectedItem() == null
-                    || addAbsence_course.getSelectionModel().getSelectedItem() == null
-                    || addAbsence_time.getText().isEmpty()
-                    || addStudents_firstName.getText().isEmpty()
-                    || addStudents_lastName.getText().isEmpty()
-                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || Absence_date.getValue() == null
-                    || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null ){
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
-            } else {
-
-                statement = connect.createStatement();
+                Integer a_id=1;
+                AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()), (String) addAbsence_class.getSelectionModel().getSelectedItem(), (String) addAbsence_course.getSelectionModel().getSelectedItem(), Integer.parseInt(addAbsence_time.getText()), addStudents_firstName.getText(), addStudents_lastName.getText(), (String) addStudents_gender.getSelectionModel().getSelectedItem(), java.sql.Date.valueOf(Absence_date.getValue()), (String) addStudents_status.getSelectionModel().getSelectedItem(), (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
 
-                if (result.next()) {
-                    alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.showAndWait();
-                } else {
-                    prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, addAbsence_studentNum.getText());
-                    prepare.setString(2, (String) addAbsence_class.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, (String) addAbsence_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(4, addAbsence_time.getText());
-                    prepare.setString(5, addStudents_firstName.getText());
-                    prepare.setString(6, addStudents_lastName.getText());
-                    prepare.setString(7, (String) addStudents_gender.getSelectionModel().getSelectedItem());
-                    prepare.setString(8, String.valueOf(Absence_date.getValue()));
-                    prepare.setString(9, (String) addStudents_status.getSelectionModel().getSelectedItem());
+                repository.AbsencesAdd(absenceData);
 
-                    prepare.setString(10, (String) addStudents_Absences.getSelectionModel().getSelectedItem());
+                teacherService.InformationAlert();
+                addAbsencesShowListData();
 
-                    Date date = new Date();
-                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                    prepare.setString(11, String.valueOf(sqlDate));
+                addAbsencesClear();
 
-                    prepare.executeUpdate();
-
-                    alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Added!");
-                    alert.showAndWait();
-
-                    addAbsencesShowListData();
-
-                    addAbsencesClear();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
+
+
+
     public void addAbsencesUpdate() {
-
-
-        String updateData = "UPDATE student_Abstence SET "
-                + "student_id = '" + addAbsence_studentNum.getText()
-                + "', class_ = '" + addAbsence_class.getSelectionModel().getSelectedItem()
-                + "', course_name = '" + addAbsence_course.getSelectionModel().getSelectedItem()
-                + "', time = '" + addAbsence_time.getText()
-                + "', firstName = '" + addStudents_firstName.getText()
-                + "', lastName = '" + addStudents_firstName.getText()
-                + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
-                + "', date_ = '" + Absence_date.getValue()
-                + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
-                + "', reasonability = '" + addStudents_Absences.getSelectionModel().getSelectedItem()
-                + "' where a_id = '"
-                + addAbsence_Id.getText() + "'";
-
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            Alert alert;
             if (addAbsence_studentNum.getText().isEmpty()
                     || addAbsence_class.getSelectionModel().getSelectedItem() == null
                     || addAbsence_course.getSelectionModel().getSelectedItem() == null
@@ -511,37 +380,38 @@ public class TeacherDashboardController implements Initializable {
                     || addStudents_gender.getSelectionModel().getSelectedItem() == null
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null
-                    ) {
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+                    || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
+                teacherService.ErrorAlert();
             } else {
-
-                alert = new Alert(AlertType.CONFIRMATION);
+                Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Are you sure you want to UPDATE Student Absences #" + addAbsence_studentNum.getText() + "?");
                 Optional<ButtonType> option = alert.showAndWait();
 
-                if (option.get().equals(ButtonType.OK)) {
-                    statement = connect.createStatement();
-                    statement.executeUpdate(updateData);
+                if (option.isPresent() && option.get() == ButtonType.OK) {
+                    int a_id = Integer.parseInt(addAbsence_Id.getText());
+                    AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()),
+                            (String) addAbsence_class.getSelectionModel().getSelectedItem(),
+                            (String) addAbsence_course.getSelectionModel().getSelectedItem(),
+                            Integer.parseInt(addAbsence_time.getText()),
+                            addStudents_firstName.getText(), addStudents_lastName.getText(),
+                            (String) addStudents_gender.getSelectionModel().getSelectedItem(),
+                            java.sql.Date.valueOf(Absence_date.getValue()),
+                            (String) addStudents_status.getSelectionModel().getSelectedItem(),
+                            (String) addStudents_Absences.getSelectionModel().getSelectedItem());
 
-                    alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Updated!");
-                    alert.showAndWait();
+                    repository.addAbsencesUpdate(absenceData);
+
+                    Alert successAlert = new Alert(AlertType.INFORMATION);
+                    successAlert.setTitle("Information Message");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Successfully Updated!");
+                    successAlert.showAndWait();
 
                     addAbsencesShowListData();
 
                     addAbsencesClear();
-
-                } else {
-                    return;
                 }
             }
         } catch (Exception e) {
@@ -549,10 +419,9 @@ public class TeacherDashboardController implements Initializable {
         }
     }
 
+
     public void addAbsencesDelete() {
 
-        String deleteData = "DELETE FROM student_Abstence WHERE a_id = '"
-                + addAbsence_Id.getText() + "'";
 
         connect = ConnectionUtil.getConnection();
 
@@ -568,11 +437,7 @@ public class TeacherDashboardController implements Initializable {
                     || Absence_date.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
                     || addStudents_Absences.getSelectionModel().getSelectedItem() == null) {
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+                teacherService.ErrorAlert();
             } else {
                 alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -583,8 +448,18 @@ public class TeacherDashboardController implements Initializable {
 
                 if (option.get().equals(ButtonType.OK)) {
 
-                    statement = connect.createStatement();
-                    statement.executeUpdate(deleteData);
+                    int a_id = Integer.parseInt(addAbsence_Id.getText());
+                    AbsenceData absenceData = new AbsenceData(a_id, Integer.parseInt(addAbsence_studentNum.getText()),
+                            (String) addAbsence_class.getSelectionModel().getSelectedItem(),
+                            (String)addAbsence_course.getSelectionModel().getSelectedItem(),
+                            Integer.parseInt(addAbsence_time.getText()),
+                            addStudents_firstName.getText(), addStudents_lastName.getText(),
+                            (String)addStudents_gender.getSelectionModel().getSelectedItem(),
+                            java.sql.Date.valueOf(Absence_date.getValue()),
+                            (String)addStudents_status.getSelectionModel().getSelectedItem(),
+                            (String) addStudents_Absences.getSelectionModel().getSelectedItem());
+
+                    repository.addAbsencesDelete(absenceData);
 
                     alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information Message");
@@ -1065,7 +940,8 @@ public class TeacherDashboardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
         defaultNav();
-
+        repository = new TeacherRepository(); // or initialize it with appropriate values
+        setRepository(repository);
         homeDisplayTotalStudentsAbsence();
         homeDisplayTotalFemaleAbsences();
         homeDisplayTotalMaleAbsences();
