@@ -24,8 +24,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import service.ConnectionUtil;
-import service.LanguageUtil;
+import service.*;
+
 import java.io.File;
 import java.net.URL;
 import java.sql.*;
@@ -37,6 +37,12 @@ import java.util.Date;
 
 public class AdminController implements Initializable {
 
+    private final AdminUserService adminUserService;
+    private final TeacherCourseService teacherCourseService;
+    private final AdminAbsSumService adminAbsSumService;
+
+    private final ScheduleService scheduleService;
+    private final AlertService alertService;
     @FXML
     private Button helpButton;
 
@@ -77,7 +83,7 @@ public class AdminController implements Initializable {
     private TableColumn<studentData, String> addStudents_col_year;
 
     @FXML
-    private ComboBox<?> addStudents_course;
+    private ComboBox<String> addStudents_course;
 
     @FXML
     private Button addStudents_deleteBtn;
@@ -134,19 +140,19 @@ public class AdminController implements Initializable {
     private Label home_totalEnrolled;
 
     @FXML
-    private BarChart<?, ?> home_totalEnrolledChart;
+    private BarChart<String,Integer > home_totalEnrolledChart;
 
     @FXML
     private Label home_totalFemale;
 
     @FXML
-    private AreaChart<?, ?> home_totalFemaleChart;
+    private AreaChart<String, Integer> home_totalFemaleChart;
 
     @FXML
     private Label home_totalMale;
 
     @FXML
-    private LineChart<?, ?> home_totalMaleChart;
+    private LineChart<String, Integer> home_totalMaleChart;
 
     @FXML
     private Button logout;
@@ -193,7 +199,7 @@ public class AdminController implements Initializable {
     @FXML
     private TextField timeLabel;
     @FXML
-    private ComboBox<?> courseLabel1;
+    private ComboBox<String> courseLabel1;
     @FXML
     private Button scheduleAdd;
     @FXML
@@ -249,150 +255,71 @@ public class AdminController implements Initializable {
 
     private Image image;
 
+    public AdminController() {
+        adminUserService = new AdminUserService();
+        teacherCourseService = new TeacherCourseService();
+        adminAbsSumService = new AdminAbsSumService();
+        scheduleService= new ScheduleService();
+        alertService = new AlertService();
+
+    }
 
     public void homeDisplayTotalEnrolledStudents() {
-
-        String sql = "SELECT COUNT(id) FROM student";
-
-        connect = ConnectionUtil.getConnection();
-
-        int countEnrolled = 0;
-
         try {
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            if (result.next()) {
-                countEnrolled = result.getInt("COUNT(id)");
-            }
-
+            int countEnrolled = adminUserService.getTotalStudentCount();
             home_totalEnrolled.setText(String.valueOf(countEnrolled));
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayFemaleEnrolled() {
-
-        String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            int countFemale = 0;
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            if (result.next()) {
-                countFemale = result.getInt("COUNT(id)");
-            }
-
+            int countFemale = adminUserService.getTotalFemaleStudent();
             home_totalFemale.setText(String.valueOf(countFemale));
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayMaleEnrolled() {
-
-        String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
-
-        connect = ConnectionUtil.getConnection();
         try {
-            int countMale = 0;
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            if (result.next()) {
-                countMale = result.getInt("COUNT(id)");
-            }
+            int countMale = adminUserService.getTotalMaleStudent();
             home_totalMale.setText(String.valueOf(countMale));
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayTotalEnrolledChart() {
-
         home_totalEnrolledChart.getData().clear();
 
-        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            XYChart.Series chart = new XYChart.Series();
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            home_totalEnrolledChart.getData().add(chart);
-
-        } catch (Exception e) {
+            XYChart.Series<String, Integer> chartData = adminUserService.getTotalStudentChart();
+            home_totalEnrolledChart.getData().add(chartData);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayFemaleEnrolledChart() {
-
         home_totalFemaleChart.getData().clear();
 
-        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            XYChart.Series chart = new XYChart.Series();
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            home_totalFemaleChart.getData().add(chart);
-
-        } catch (Exception e) {
+            XYChart.Series<String, Integer> chartData = adminUserService.getFemaleStudentChart();
+            home_totalFemaleChart.getData().add(chartData);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void homeDisplayEnrolledMaleChart() {
-
         home_totalMaleChart.getData().clear();
 
-        String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-            XYChart.Series chart = new XYChart.Series();
-
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                chart.getData().add(new XYChart.Data(result.getString(1), result.getInt(2)));
-            }
-
-            home_totalMaleChart.getData().add(chart);
-
-        } catch (Exception e) {
+            XYChart.Series<String, Integer> chartData = adminUserService.getMaleStudentChart();
+            home_totalMaleChart.getData().add(chartData);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -436,29 +363,14 @@ public class AdminController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(statusL);
         addStudents_status.setItems(ObList);
     }
-
     public void addStudentsCourseList() {
-
-        String listCourse = "SELECT * FROM course";
-
-        connect = ConnectionUtil.getConnection();
-
-        try {
-
-            ObservableList listC = FXCollections.observableArrayList();
-
-            prepare = connect.prepareStatement(listCourse);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                listC.add(result.getString("course"));
-            }
-            addStudents_course.setItems(listC);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    try {
+        ObservableList<String> listC = teacherCourseService.ListOfCourses();
+        addStudents_course.setItems(listC);
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
     public void addStudentsInsertImage() {
 
@@ -478,79 +390,50 @@ public class AdminController implements Initializable {
         }
     }
 
+//    String uri = getData.path;
+//    uri = uri.replace("\\", "\\\\");
+//                    prepare.setString(8, uri);
     public void addStudentsAdd() {
 
-        String insertData = "INSERT INTO student "
-                + "(year,course,firstName,lastName,gender,birth,status,image,date) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
+        Alert alert;
 
-        connect = ConnectionUtil.getConnection();
+        if (addStudents_studentNum.getText().isEmpty()
+                || addStudents_year.getSelectionModel().getSelectedItem()==null
+                || addStudents_course.getSelectionModel().getSelectedItem() == null
+                || addStudents_firstName.getText().isEmpty()
+                || addStudents_lastName.getText().isEmpty()
+                || addStudents_gender.getSelectionModel().getSelectedItem() == null
+                || addStudents_birth.getValue() == null
+                || addStudents_status.getSelectionModel().getSelectedItem() == null
+                || getData.path == null || getData.path == "") {
+            alertService.errorAlert();
+        } else {
+            try {
+                int id = Integer.parseInt(addStudents_studentNum.getText());
+                String uri = getData.path;
+                uri = uri.replace("\\", "\\\\");
 
-        try {
-            Alert alert;
+                studentData sData = new studentData(
+                        id,
+                        (String) addStudents_year.getSelectionModel().getSelectedItem(),
+                        (String) addStudents_course.getSelectionModel().getSelectedItem(),
+                        addStudents_firstName.getText(),
+                        addStudents_lastName.getText(),
+                        (String) addStudents_gender.getSelectionModel().getSelectedItem(),
+                        java.sql.Date.valueOf(addStudents_birth.getValue()),
+                        (String) addStudents_status.getSelectionModel().getSelectedItem(),
+                        uri
+                );
 
-            if (addStudents_year.getSelectionModel().getSelectedItem() == null
-                    || addStudents_course.getSelectionModel().getSelectedItem() == null
-                    || addStudents_firstName.getText().isEmpty()
-                    || addStudents_lastName.getText().isEmpty()
-                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || addStudents_birth.getValue() == null
-                    || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || getData.path == null || getData.path == "") {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
-            } else {
-                // CHECK IF THE STUDENTNUMBER IS ALREADY EXIST
-                String checkData = "SELECT id FROM student WHERE id = '"
-                        + addStudents_studentNum.getText() + "'";
+                adminUserService.addStd(sData);
+                alertService.informationAlert();
+                addStudentsShowListData();
 
-                statement = connect.createStatement();
-                result = statement.executeQuery(checkData);
+                addStudentsClear();
 
-                if (result.next()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Student #" + addStudents_studentNum.getText() + " already exist!");
-                    alert.showAndWait();
-                } else {
-                    prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, (String) addStudents_year.getSelectionModel().getSelectedItem());
-                    prepare.setString(2, (String) addStudents_course.getSelectionModel().getSelectedItem());
-                    prepare.setString(3, addStudents_firstName.getText());
-                    prepare.setString(4, addStudents_lastName.getText());
-                    prepare.setString(5, (String) addStudents_gender.getSelectionModel().getSelectedItem());
-                    prepare.setString(6, String.valueOf(addStudents_birth.getValue()));
-                    prepare.setString(7, (String) addStudents_status.getSelectionModel().getSelectedItem());
-
-                    String uri = getData.path;
-                    uri = uri.replace("\\", "\\\\");
-                    prepare.setString(8, uri);
-
-                    Date date = new Date();
-                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                    prepare.setString(9, String.valueOf(sqlDate));
-
-                    prepare.executeUpdate();
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Added!");
-                    alert.showAndWait();
-
-                    // TO UPDATE THE TABLEVIEW
-                    addStudentsShowListData();
-                    // TO CLEAR THE FIELDS
-                    addStudentsClear();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -566,81 +449,61 @@ public class AdminController implements Initializable {
 
         getData.path = "";
     }
-
     public void addStudentsUpdate() {
+    try {
+        Alert alert;
+        if (    addStudents_year.getSelectionModel().getSelectedItem() == null
+                || addStudents_course.getSelectionModel().getSelectedItem() == null
+                || addStudents_firstName.getText().isEmpty()
+                || addStudents_lastName.getText().isEmpty()
+                || addStudents_gender.getSelectionModel().getSelectedItem() == null
+                || addStudents_birth.getValue() == null
+                || addStudents_status.getSelectionModel().getSelectedItem() == null
+                || getData.path == null || getData.path == "") {
+            alertService.errorAlert();
+        } else {
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to DELETE Student #" + addStudents_studentNum.getText() + "?");
 
-        String uri = getData.path;
-        uri = uri.replace("\\", "\\\\");
+            Optional<ButtonType> option = alert.showAndWait();
 
-        String updateData = "UPDATE student SET "
-                + "year = '" + addStudents_year.getSelectionModel().getSelectedItem()
-                + "', course = '" + addStudents_course.getSelectionModel().getSelectedItem()
-                + "', firstName = '" + addStudents_firstName.getText()
-                + "', lastName = '" + addStudents_lastName.getText()
-                + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
-                + "', birth = '" + addStudents_birth.getValue()
-                + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
-                + "', image = '" + uri + "' WHERE id = '"
-                + addStudents_studentNum.getText() + "'";
+            if (option.get().equals(ButtonType.OK)) {
 
-        connect = ConnectionUtil.getConnection();
+                int id = Integer.parseInt(addStudents_studentNum.getText());
+                String uri = getData.path;
+                uri = uri.replace("\\", "\\\\");
 
-        try {
-            Alert alert;
-            if (addStudents_year.getSelectionModel().getSelectedItem() == null
-                    || addStudents_course.getSelectionModel().getSelectedItem() == null
-                    || addStudents_firstName.getText().isEmpty()
-                    || addStudents_lastName.getText().isEmpty()
-                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || addStudents_birth.getValue() == null
-                    || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || getData.path == null || getData.path == "") {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+                studentData sData = new studentData(
+                        id,
+                        (String) addStudents_year.getSelectionModel().getSelectedItem(),
+                        (String) addStudents_course.getSelectionModel().getSelectedItem(),
+                        addStudents_firstName.getText(),
+                        addStudents_lastName.getText(),
+                        (String) addStudents_gender.getSelectionModel().getSelectedItem(),
+                        java.sql.Date.valueOf(addStudents_birth.getValue()),
+                        (String) addStudents_status.getSelectionModel().getSelectedItem(),
+                        uri
+                );
+                adminUserService.updateStd(sData);
+                alertService.deleteAlert();
+                addStudentsShowListData();
+                addStudentsClear();
+
             } else {
-
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to UPDATE Student #" + addStudents_studentNum.getText() + "?");
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if (option.get().equals(ButtonType.OK)) {
-                    statement = connect.createStatement();
-                    statement.executeUpdate(updateData);
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Updated!");
-                    alert.showAndWait();
-
-                    addStudentsShowListData();
-                    addStudentsClear();
-
-                } else {
-                    return;
-                }
+                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 
     public void addStudentsDelete() {
-
-        String deleteData = "DELETE FROM student WHERE studentNum = '"
-                + addStudents_studentNum.getText() + "'";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
             Alert alert;
-            if (addStudents_studentNum.getText().isEmpty()
-                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+            if (    addStudents_year.getSelectionModel().getSelectedItem() == null
                     || addStudents_course.getSelectionModel().getSelectedItem() == null
                     || addStudents_firstName.getText().isEmpty()
                     || addStudents_lastName.getText().isEmpty()
@@ -648,11 +511,7 @@ public class AdminController implements Initializable {
                     || addStudents_birth.getValue() == null
                     || addStudents_status.getSelectionModel().getSelectedItem() == null
                     || getData.path == null || getData.path == "") {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+                alertService.errorAlert();
             } else {
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Message");
@@ -663,25 +522,29 @@ public class AdminController implements Initializable {
 
                 if (option.get().equals(ButtonType.OK)) {
 
+                    int id = Integer.parseInt(addStudents_studentNum.getText());
+                    String uri = getData.path;
+                    uri = uri.replace("\\", "\\\\");
+                    studentData sData = new studentData(
+                            id,
+                            (String) addStudents_year.getSelectionModel().getSelectedItem(),
+                            (String) addStudents_course.getSelectionModel().getSelectedItem(),
+                            addStudents_firstName.getText(),
+                            addStudents_lastName.getText(),
+                            (String) addStudents_gender.getSelectionModel().getSelectedItem(),
+                            java.sql.Date.valueOf(addStudents_birth.getValue()),
+                            (String) addStudents_status.getSelectionModel().getSelectedItem(),
+                            uri
+                    );
 
-
-
-                    statement = connect.createStatement();
-                    statement.executeUpdate(deleteData);
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Deleted!");
-                    alert.showAndWait();
-
+                    adminUserService.deleteStd(sData);
+                    alertService.deleteAlert();
                     addStudentsShowListData();
                     addStudentsClear();
 
                 } else {
                     return;
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -689,39 +552,17 @@ public class AdminController implements Initializable {
     }
 
     public ObservableList<studentData> addStudentsListData() {
-
-        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM student";
-
-        connect = ConnectionUtil.getConnection();
+        ObservableList<studentData> listStudents = null;
 
         try {
-            studentData studentD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                studentD = new studentData(result.getInt("id"),
-                        result.getString("year"),
-                        result.getString("course"),
-                        result.getString("firstName"),
-                        result.getString("lastName"),
-                        result.getString("gender"),
-                        result.getDate("birth"),
-                        result.getString("status"),
-                        result.getString("image"));
-
-                listStudents.add(studentD);
-            }
-
-        } catch (Exception e) {
+            listStudents = adminUserService.StdListData();
+        } catch (SQLException e) {
             e.printStackTrace();
+            // Handle the SQLException here (e.g., show an error message, log the exception, etc.)
         }
+
         return listStudents;
     }
-
-
 
     public void addStudentsSearch() {
 
@@ -737,7 +578,7 @@ public class AdminController implements Initializable {
 
                 String searchKey = newValue.toLowerCase();
 
-                if (predicateStudentData.getStudentNum().toString().contains(searchKey)) {
+                if (predicateStudentData.getId().toString().contains(searchKey)) {
                     return true;
                 } else if (predicateStudentData.getYear().toLowerCase().contains(searchKey)) {
                     return true;
@@ -771,7 +612,7 @@ public class AdminController implements Initializable {
     public void addStudentsShowListData() {
         addStudentsListD = addStudentsListData();
 
-        addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("id"));
         addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
         addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
         addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -814,55 +655,18 @@ public class AdminController implements Initializable {
         studentAbsence_tableView2.setItems(sortList1);
     }
 
-    public ObservableList<TotalAbsences> addAbsencesListData2() {
-        ObservableList<TotalAbsences> listStudents = FXCollections.observableArrayList();
+    public ObservableList<TotalAbsences> addAbsencesListData2() throws SQLException {
 
-        String sql = "CALL GetAbsenceSummary1(?, ?)";
+        LocalDate startDate = start_date.getValue();
+        LocalDate endDate = end_date.getValue();
 
-        connect = ConnectionUtil.getConnection();
-
-        try {
-            TotalAbsences studentD2;
-            prepare = connect.prepareStatement(sql);
-
-            // Check if start_date and end_date have valid values
-            LocalDate startDate = start_date.getValue();
-            LocalDate endDate = end_date.getValue();
-
-            if (startDate != null && endDate != null) {
-                java.sql.Date sqlStartDate = java.sql.Date.valueOf(startDate);
-                java.sql.Date sqlEndDate = java.sql.Date.valueOf(endDate);
-
-                prepare.setDate(1, sqlStartDate);
-                prepare.setDate(2, sqlEndDate);
-
-                result = prepare.executeQuery();
-
-                while (result.next()) {
-                    studentD2 = new TotalAbsences(
-                            result.getInt("id"),
-                            result.getString("year"),
-                            result.getString("firstName"),
-                            result.getString("lastName"),
-                            result.getInt("total_reasonable_absences_forSemester"),
-                            result.getInt("total_unreasonable_absences_forSemester"));
-
-                    listStudents.add(studentD2);
-                }
-            } else {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listStudents;
+        return adminAbsSumService.StdListData2(startDate, endDate);
     }
-
 
 
     private ObservableList<TotalAbsences> addStudentsListD2;
 
-    public void addAbsencesShowListData2() {
+    public void addAbsencesShowListData2() throws SQLException {
         addStudentsListD2 = addAbsencesListData2();
 
         addAbsence_col_stid2.setCellValueFactory(new PropertyValueFactory<>("student_id"));
@@ -876,31 +680,15 @@ public class AdminController implements Initializable {
     }
 
     public ObservableList<scheduleData> availableScheduleListData() {
-
-        ObservableList<scheduleData> listData = FXCollections.observableArrayList();
-
-        String sql = "SELECT * FROM schedule";
-
-        connect = ConnectionUtil.getConnection();
+        ObservableList<scheduleData> listStudents = null;
 
         try {
-            scheduleData scheduleD;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                scheduleD = new scheduleData(result.getString("schedule_id"),
-                        result.getString("day"),
-                        result.getString("time"),
-                        result.getString("course"));
-
-                listData.add(scheduleD);
-            }
-
-        } catch (Exception e) {
+            listStudents = scheduleService.schList();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listData;
+
+        return listStudents;
     }
 
     private ObservableList<scheduleData> availableScheduleList;
@@ -918,9 +706,6 @@ public class AdminController implements Initializable {
 
     public void studentScheduleAdd() {
 
-        String insertData = "INSERT INTO schedule" +"(schedule_id, day, time, course)" +"VALUES(?,?,?,?)";
-
-        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -929,41 +714,24 @@ public class AdminController implements Initializable {
                     || dayLabel.getText().isEmpty()
                     || timeLabel.getText().isEmpty()
                     || courseLabel1.getSelectionModel().getSelectedItem() == null){
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+                alertService.errorAlert();
             } else {
 
-                String checkData = "SELECT schedule_id FROM schedule WHERE schedule_id = '"
-                        + scheduleLabel.getText() + "'";
-
-                statement = connect.createStatement();
-                result = statement.executeQuery(checkData);
-
-                if (result.next()) {
+               if(scheduleService.checkSch( scheduleLabel.getText())==true){
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Schedule: " + scheduleLabel.getText() + " was already exist!");
                     alert.showAndWait();
                 } else {
-                    prepare = connect.prepareStatement(insertData);
-                    prepare.setString(1, scheduleLabel.getText());
-                    prepare.setString(2, dayLabel.getText());
-                    prepare.setString(3, timeLabel.getText());
-                    prepare.setString(4, (String) courseLabel1.getSelectionModel().getSelectedItem());
+                    scheduleData schData = new scheduleData(
+                             scheduleLabel.getText(),
+                             dayLabel.getText(),
+                             timeLabel.getText(),
+                            (String) courseLabel1.getSelectionModel().getSelectedItem());
+                    scheduleService.addSchedule(schData);
 
-                    prepare.executeUpdate();
-
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Added!");
-                    alert.showAndWait();
-
-
+                    alertService.informationAlert();
                     availableScheduleShowListData();
                     studentScheduleClear();
 
@@ -975,36 +743,16 @@ public class AdminController implements Initializable {
     }
     public void addStudentsScheduleCourseList() {
 
-        String listCourse = "SELECT * FROM course";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
-
-            ObservableList listC = FXCollections.observableArrayList();
-
-            prepare = connect.prepareStatement(listCourse);
-            result = prepare.executeQuery();
-
-            while (result.next()) {
-                listC.add(result.getString("course"));
-            }
+            ObservableList<String> listC = teacherCourseService.ListOfCourses();
             courseLabel1.setItems(listC);
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void studentScheduleUpdate() {
 
-        String updateData = "UPDATE schedule SET day = '"
-                +dayLabel.getText() + "', time = '"
-                +timeLabel.getText() + "', course = '"
-                +courseLabel1.getSelectionModel().getSelectedItem() + "' WHERE schedule_id = '"
-                +scheduleLabel.getText()+ "'";
-
-        connect = ConnectionUtil.getConnection();
 
         try {
             Alert alert;
@@ -1013,11 +761,7 @@ public class AdminController implements Initializable {
                     || dayLabel.getText().isEmpty()
                     || timeLabel.getText().isEmpty()
                     || courseLabel1.getSelectionModel().getSelectedItem() == null) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+                alertService.errorAlert();
             } else {
 
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1026,17 +770,15 @@ public class AdminController implements Initializable {
                 alert.setContentText("Are you sure you want to UPDATE Schedule: " + scheduleLabel.getText() + "?");
                 Optional<ButtonType> option = alert.showAndWait();
 
-                if (option.get().equals(ButtonType.OK)) {
-                    statement = connect.createStatement();
-                    statement.executeUpdate(updateData);
+                if (option.isPresent() && option.get() == ButtonType.OK) {
+                    scheduleData schData = new scheduleData(
+                            scheduleLabel.getText(),
+                            dayLabel.getText(),
+                            timeLabel.getText(),
+                            courseLabel1.getSelectionModel().getSelectedItem());
+                    scheduleService.updateSch(schData);
 
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Updated!");
-                    alert.showAndWait();
-
-
+                    alertService.updateAlert();
                     availableScheduleShowListData();
                     studentScheduleClear();
 
@@ -1059,12 +801,6 @@ public class AdminController implements Initializable {
     }
 
     public void studentScheduleDelete() {
-
-        String deleteData = "DELETE FROM schedule WHERE  schedule_id = '"
-                + scheduleLabel.getText() + "'";
-
-        connect = ConnectionUtil.getConnection();
-
         try {
             Alert alert;
 
@@ -1072,11 +808,7 @@ public class AdminController implements Initializable {
                     || dayLabel.getText().isEmpty()
                     || timeLabel.getText().isEmpty()
                     || courseLabel1.getSelectionModel().getSelectedItem() == null) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields");
-                alert.showAndWait();
+              alertService.errorAlert();
             } else {
 
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1086,16 +818,12 @@ public class AdminController implements Initializable {
                 Optional<ButtonType> option = alert.showAndWait();
 
                 if (option.get().equals(ButtonType.OK)) {
-                    statement = connect.createStatement();
-                    statement.executeUpdate(deleteData);
 
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Deleted!");
-                    alert.showAndWait();
+                    String scheduleId=scheduleLabel.getText();
+                    scheduleData schData=new scheduleData(scheduleId);
+                    scheduleService.deleteSch(schData);
 
-
+                    alertService.deleteAlert();
                     availableScheduleShowListData();
                     studentScheduleClear();
 
@@ -1154,7 +882,7 @@ public class AdminController implements Initializable {
 
 
     @FXML
-    void switchForm(ActionEvent event) {
+    void switchForm(ActionEvent event) throws SQLException {
         if (event.getSource() == home_btn) {
             home_form.setVisible(true);
             addStudents_form.setVisible(false);
@@ -1283,7 +1011,7 @@ public class AdminController implements Initializable {
             return;
         }
 
-        addStudents_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        addStudents_studentNum.setText(String.valueOf(studentD.getId()));
         addStudents_firstName.setText(studentD.getFirstName());
         addStudents_lastName.setText(studentD.getLastName());
         addStudents_birth.setValue(LocalDate.parse(String.valueOf(studentD.getBirth())));

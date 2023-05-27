@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class studentData {
 
-    private Integer studentNum;
+    private Integer id;
     private String year;
     private String course;
     private String firstName;
@@ -14,13 +14,10 @@ public class studentData {
     private Date birth;
     private String status;
     private String image;
-    private Double firstSem;
-    private Double secondSem;
-    private Double finals;
 
 
-    public studentData(Integer studentNum, String year, String course, String firstName, String lastName, String gender, Date birth, String status, String image) {
-        this.studentNum = studentNum;
+    public studentData(Integer id, String year, String course, String firstName, String lastName, String gender, Date birth, String status, String image) {
+        this.id = id;
         this.year = year;
         this.course = course;
         this.firstName = firstName;
@@ -31,17 +28,8 @@ public class studentData {
         this.image = image;
     }
 
-    public studentData(Integer studentNum, String year, String course, Double firstSem, Double secondSem, Double finals) {
-        this.studentNum = studentNum;
-        this.year = year;
-        this.course = course;
-        this.firstSem = firstSem;
-        this.secondSem = secondSem;
-        this.finals = finals;
-    }
-
-    public Integer getStudentNum() {
-        return studentNum;
+    public Integer getId() {
+        return id;
     }
 
     public String getYear() {
@@ -75,18 +63,10 @@ public class studentData {
     public String getImage() {
         return image;
     }
-
-    public Double getFirstSem() {
-        return firstSem;
+    public void setImage(String image) {
+      this.image=image;
     }
 
-    public Double getSecondSem() {
-        return secondSem;
-    }
-
-    public Double getFinals() {
-        return finals;
-    }
 
 
 }
