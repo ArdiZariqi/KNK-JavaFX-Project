@@ -16,16 +16,19 @@ public class studentData {
     private String image;
 
 
-    public studentData(Integer id, String year, String course, String firstName, String lastName, String gender, Date birth, String status, String image) {
+    public studentData(Integer id, String year, String firstName, String lastName, String gender, Date birth, String status, String image) {
         this.id = id;
         this.year = year;
-        this.course = course;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.birth = birth;
         this.status = status;
         this.image = image;
+    }
+
+    public studentData(int id) {
+        this.id = id;
     }
 
     public Integer getId() {

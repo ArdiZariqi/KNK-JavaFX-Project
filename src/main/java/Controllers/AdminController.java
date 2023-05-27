@@ -363,14 +363,14 @@ public class AdminController implements Initializable {
         ObservableList ObList = FXCollections.observableArrayList(statusL);
         addStudents_status.setItems(ObList);
     }
-    public void addStudentsCourseList() {
-    try {
-        ObservableList<String> listC = teacherCourseService.ListOfCourses();
-        addStudents_course.setItems(listC);
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
+//    public void addStudentsCourseList() {
+//    try {
+//        ObservableList<String> listC = teacherCourseService.ListOfCourses();
+//        addStudents_course.setItems(listC);
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//    }
+//}
 
     public void addStudentsInsertImage() {
 
@@ -399,7 +399,6 @@ public class AdminController implements Initializable {
 
         if (addStudents_studentNum.getText().isEmpty()
                 || addStudents_year.getSelectionModel().getSelectedItem()==null
-                || addStudents_course.getSelectionModel().getSelectedItem() == null
                 || addStudents_firstName.getText().isEmpty()
                 || addStudents_lastName.getText().isEmpty()
                 || addStudents_gender.getSelectionModel().getSelectedItem() == null
@@ -416,7 +415,6 @@ public class AdminController implements Initializable {
                 studentData sData = new studentData(
                         id,
                         (String) addStudents_year.getSelectionModel().getSelectedItem(),
-                        (String) addStudents_course.getSelectionModel().getSelectedItem(),
                         addStudents_firstName.getText(),
                         addStudents_lastName.getText(),
                         (String) addStudents_gender.getSelectionModel().getSelectedItem(),
@@ -439,7 +437,7 @@ public class AdminController implements Initializable {
 
     public void addStudentsClear() {
         addStudents_year.getSelectionModel().clearSelection();
-        addStudents_course.getSelectionModel().clearSelection();
+//        addStudents_course.getSelectionModel().clearSelection();
         addStudents_firstName.setText("");
         addStudents_lastName.setText("");
         addStudents_gender.getSelectionModel().clearSelection();
@@ -453,7 +451,6 @@ public class AdminController implements Initializable {
     try {
         Alert alert;
         if (    addStudents_year.getSelectionModel().getSelectedItem() == null
-                || addStudents_course.getSelectionModel().getSelectedItem() == null
                 || addStudents_firstName.getText().isEmpty()
                 || addStudents_lastName.getText().isEmpty()
                 || addStudents_gender.getSelectionModel().getSelectedItem() == null
@@ -478,7 +475,6 @@ public class AdminController implements Initializable {
                 studentData sData = new studentData(
                         id,
                         (String) addStudents_year.getSelectionModel().getSelectedItem(),
-                        (String) addStudents_course.getSelectionModel().getSelectedItem(),
                         addStudents_firstName.getText(),
                         addStudents_lastName.getText(),
                         (String) addStudents_gender.getSelectionModel().getSelectedItem(),
@@ -503,14 +499,7 @@ public class AdminController implements Initializable {
     public void addStudentsDelete() {
         try {
             Alert alert;
-            if (    addStudents_year.getSelectionModel().getSelectedItem() == null
-                    || addStudents_course.getSelectionModel().getSelectedItem() == null
-                    || addStudents_firstName.getText().isEmpty()
-                    || addStudents_lastName.getText().isEmpty()
-                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
-                    || addStudents_birth.getValue() == null
-                    || addStudents_status.getSelectionModel().getSelectedItem() == null
-                    || getData.path == null || getData.path == "") {
+            if (addStudents_studentNum.getText() == null) {
                 alertService.errorAlert();
             } else {
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -523,19 +512,7 @@ public class AdminController implements Initializable {
                 if (option.get().equals(ButtonType.OK)) {
 
                     int id = Integer.parseInt(addStudents_studentNum.getText());
-                    String uri = getData.path;
-                    uri = uri.replace("\\", "\\\\");
-                    studentData sData = new studentData(
-                            id,
-                            (String) addStudents_year.getSelectionModel().getSelectedItem(),
-                            (String) addStudents_course.getSelectionModel().getSelectedItem(),
-                            addStudents_firstName.getText(),
-                            addStudents_lastName.getText(),
-                            (String) addStudents_gender.getSelectionModel().getSelectedItem(),
-                            java.sql.Date.valueOf(addStudents_birth.getValue()),
-                            (String) addStudents_status.getSelectionModel().getSelectedItem(),
-                            uri
-                    );
+                    studentData sData = new studentData(id);
 
                     adminUserService.deleteStd(sData);
                     alertService.deleteAlert();
@@ -558,7 +535,6 @@ public class AdminController implements Initializable {
             listStudents = adminUserService.StdListData();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the SQLException here (e.g., show an error message, log the exception, etc.)
         }
 
         return listStudents;
@@ -614,7 +590,6 @@ public class AdminController implements Initializable {
 
         addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("id"));
         addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
-        addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
         addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         addStudents_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         addStudents_col_gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -804,10 +779,7 @@ public class AdminController implements Initializable {
         try {
             Alert alert;
 
-            if (scheduleLabel.getText().isEmpty()
-                    || dayLabel.getText().isEmpty()
-                    || timeLabel.getText().isEmpty()
-                    || courseLabel1.getSelectionModel().getSelectedItem() == null) {
+            if (scheduleLabel.getText().isEmpty()) {
               alertService.errorAlert();
             } else {
 
@@ -946,7 +918,7 @@ public class AdminController implements Initializable {
             addStudentsYearList();
             addStudentsGenderList();
             addStudentsStatusList();
-            addStudentsCourseList();
+//            addStudentsCourseList();
             addStudentsSearch();
 
         } else if (event.getSource() == studentSchedule_btn) {
@@ -1077,7 +1049,7 @@ public class AdminController implements Initializable {
         addStudentsYearList();
         addStudentsGenderList();
         addStudentsStatusList();
-        addStudentsCourseList();
+//        addStudentsCourseList();
         availableScheduleShowListData();
         addStudentsScheduleCourseList();
         addAbsencesShowListData1();
@@ -1110,7 +1082,7 @@ public class AdminController implements Initializable {
         addStudents_updateBtn.setText(LanguageUtil.getMessage("addStudents.updateBtn"));
         addStudents_col_studentNum.setText(LanguageUtil.getMessage("student.id"));
         addStudents_col_year.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
-        addStudents_col_course.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+//        addStudents_col_course.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
         addStudents_col_firstName.setText(LanguageUtil.getMessage("student.first.name"));
         addStudents_col_lastName.setText(LanguageUtil.getMessage("student.last.name"));
         addStudents_col_gender.setText(LanguageUtil.getMessage("student.gender"));
@@ -1118,7 +1090,7 @@ public class AdminController implements Initializable {
         addStudents_col_status.setText(LanguageUtil.getMessage("student.status"));
         studentLabel.setText(LanguageUtil.getMessage("student.id"));
         yearLabel.setText(LanguageUtil.getMessage("studentAbstence.col_year"));
-        courseLabel.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
+//        courseLabel.setText(LanguageUtil.getMessage("studentAbstence.col_course"));
         fNameLabel.setText(LanguageUtil.getMessage("student.first.name"));
         lNameLabel.setText(LanguageUtil.getMessage("student.last.name"));
         genderLabel.setText(LanguageUtil.getMessage("student.gender"));

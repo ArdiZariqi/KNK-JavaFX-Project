@@ -239,7 +239,7 @@
                                                 <String fx:value="shadow" />
                                             </styleClass>
                                             <children>
-                                                <AnchorPane prefHeight="262.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
+                                                <AnchorPane prefHeight="270.0" prefWidth="870.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
@@ -247,75 +247,68 @@
                                                     <children>
                                                         <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="14.0" onKeyPressed="#addStudentsSearch" prefHeight="30.0" prefWidth="274.0" promptText="Search" styleClass="search" stylesheets="@Design/dashboardDesign.css" />
                                                         <FontAwesomeIcon fill="#727272" glyphName="SEARCH" layoutX="21.0" layoutY="35.0" size="1.5em" />
-                                                        <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="192.0" prefWidth="845.0" stylesheets="@Design/dashboardDesign.css">
+                                                        <TableView fx:id="addStudents_tableView" layoutX="13.0" layoutY="56.0" onMouseClicked="#addStudentsSelect" prefHeight="207.0" prefWidth="846.0" stylesheets="@Design/dashboardDesign.css">
                                                             <columns>
-                                                                <TableColumn fx:id="addStudents_col_studentNum" prefWidth="75.0" text="Student #" />
-                                                                <TableColumn fx:id="addStudents_col_year" prefWidth="87.0" text="Year" />
-                                                                <TableColumn fx:id="addStudents_col_course" text="Course" />
-                                                                <TableColumn fx:id="addStudents_col_firstName" prefWidth="153.0" text="First Name" />
-                                                                <TableColumn fx:id="addStudents_col_lastName" prefWidth="128.0" text="Last Name" />
-                                                                <TableColumn fx:id="addStudents_col_gender" prefWidth="102.0" text="Gender" />
-                                                                <TableColumn fx:id="addStudents_col_birth" prefWidth="114.0" text="Birth Date" />
-                                                                <TableColumn fx:id="addStudents_col_status" prefWidth="102.0" text="status" />
+                                                                <TableColumn fx:id="addStudents_col_studentNum" prefWidth="125.59999465942383" text="Student #" />
+                                                                <TableColumn fx:id="addStudents_col_firstName" prefWidth="141.59999084472656" text="First Name" />
+                                                                <TableColumn fx:id="addStudents_col_lastName" prefWidth="131.99993896484375" text="Last Name" />
+                                                                <TableColumn fx:id="addStudents_col_gender" prefWidth="116.0" text="Gender" />
+                                                                <TableColumn fx:id="addStudents_col_birth" prefWidth="116.79998779296875" text="Birth Date" />
+                                                                <TableColumn fx:id="addStudents_col_year" prefWidth="114.40008544921875" text="Year" />
+                                                                <TableColumn fx:id="addStudents_col_status" prefWidth="96.00002441406252" text="status" />
                                                             </columns>
                                                         </TableView>
                                                     </children>
                                                 </AnchorPane>
-                                                <Label fx:id="studentLabel" layoutX="32.0" layoutY="279.0" text="Student #:">
+                                                <Label fx:id="studentLabel" layoutX="32.0" layoutY="302.0" text="Student #:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_studentNum" layoutX="109.0" layoutY="276.0" prefHeight="25.0" prefWidth="116.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="yearLabel" layoutX="66.0" layoutY="316.0" text="Year:">
+                                                <TextField fx:id="addStudents_studentNum" layoutX="109.0" layoutY="299.0" prefHeight="26.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label fx:id="yearLabel" layoutX="66.0" layoutY="424.0" text="Year:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="313.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="courseLabel" layoutX="51.0" layoutY="355.0" text="Course:">
+                                                <ComboBox fx:id="addStudents_year" layoutX="109.0" layoutY="421.0" onAction="#addStudentsYearList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label fx:id="fNameLabel" layoutX="32.0" layoutY="345.0" text="First Name:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_course" layoutX="109.0" layoutY="351.0" onAction="#addStudentsCourseList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="fNameLabel" layoutX="313.0" layoutY="279.0" text="First Name:">
+                                                <TextField fx:id="addStudents_firstName" layoutX="109.0" layoutY="342.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label fx:id="lNameLabel" layoutX="32.0" layoutY="382.0" text="Last Name:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_firstName" layoutX="390.0" layoutY="276.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="lNameLabel" layoutX="313.0" layoutY="316.0" text="Last Name:">
+                                                <TextField fx:id="addStudents_lastName" layoutX="109.0" layoutY="379.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label fx:id="genderLabel" layoutX="333.0" layoutY="301.0" text="Gender:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="addStudents_lastName" layoutX="390.0" layoutY="313.0" prefHeight="25.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="genderLabel" layoutX="334.0" layoutY="355.0" text="Gender:">
+                                                <ComboBox fx:id="addStudents_gender" layoutX="389.0" layoutY="297.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label fx:id="birthDateLabel" layoutX="314.0" layoutY="337.0" text="Birth Date:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox fx:id="addStudents_gender" layoutX="390.0" layoutY="351.0" onAction="#addStudentsGenderList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="birthDateLabel" layoutX="315.0" layoutY="391.0" text="Birth Date:">
+                                                <DatePicker fx:id="addStudents_birth" layoutX="389.0" layoutY="334.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <Label fx:id="statusLabel" layoutX="336.0" layoutY="371.0" text="Status:">
                                                     <font>
                                                         <Font name="Tahoma" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <DatePicker fx:id="addStudents_birth" layoutX="390.0" layoutY="388.0" prefWidth="166.0" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
-                                                <Label fx:id="statusLabel" layoutX="337.0" layoutY="425.0" text="Status:">
-                                                    <font>
-                                                        <Font name="Tahoma" size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <ComboBox fx:id="addStudents_status" layoutX="390.0" layoutY="421.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
+                                                <ComboBox fx:id="addStudents_status" layoutX="389.0" layoutY="367.0" onAction="#addStudentsStatusList" prefHeight="25.0" prefWidth="166.0" promptText="Choose" styleClass="textfield" stylesheets="@Design/dashboardDesign.css" />
                                                 <AnchorPane layoutX="705.0" layoutY="281.0" prefHeight="149.0" prefWidth="120.0" stylesheets="@Design/dashboardDesign.css">
                                                     <styleClass>
                                                         <String fx:value="white-bg" />
                                                         <String fx:value="shadow" />
                                                     </styleClass>
                                                     <children>
-                                                        <ImageView fx:id="addStudents_imageView" fitHeight="149.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                                        <ImageView fx:id="addStudents_imageView" fitHeight="149.0" fitWidth="120.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
                                                         <Button fx:id="addStudents_insertBtn" layoutY="109.0" mnemonicParsing="false" onAction="#addStudentsInsertImage" prefHeight="40.0" prefWidth="120.0" styleClass="insert-btn" stylesheets="@Design/dashboardDesign.css" text="Insert" />
                                                     </children>
                                                 </AnchorPane>

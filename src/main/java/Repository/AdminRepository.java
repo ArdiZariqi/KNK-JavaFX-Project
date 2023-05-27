@@ -169,24 +169,23 @@ public class AdminRepository implements AdminInterface {
 
     public void StudentsAdd(studentData sData) throws SQLException {
         String insertData = "INSERT INTO student "
-                + "(year,course,firstName,lastName,gender,birth,status,image,date) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
+                + "(year,firstName,lastName,gender,birth,status,image,date) "
+                + "VALUES(?,?,?,?,?,?,?,?)";
 
         connect = ConnectionUtil.getConnection();
 
         try {
             prepare = connect.prepareStatement(insertData);
             prepare.setString(1, sData.getYear());
-            prepare.setString(2, sData.getCourse());
-            prepare.setString(3, sData.getFirstName());
-            prepare.setString(4, sData.getLastName());
-            prepare.setString(5, sData.getGender());
-            prepare.setDate(6, sData.getBirth());
-            prepare.setString(7, sData.getStatus());
-            prepare.setString(8, sData.getImage());
+            prepare.setString(2, sData.getFirstName());
+            prepare.setString(3, sData.getLastName());
+            prepare.setString(4, sData.getGender());
+            prepare.setDate(5, sData.getBirth());
+            prepare.setString(6, sData.getStatus());
+            prepare.setString(7, sData.getImage());
             java.util.Date currentDate = new java.util.Date();
             java.sql.Date sqlDate = new java.sql.Date(currentDate.getTime());
-            prepare.setDate(9, sqlDate);
+            prepare.setDate(8, sqlDate);
 
             prepare.executeUpdate();
         } catch (SQLException e) {
@@ -199,7 +198,6 @@ public class AdminRepository implements AdminInterface {
     public void addStudentsUpdate(studentData sData) {
         String updateData = "UPDATE student SET "
                 + "year = ?, "
-                + "course = ?, "
                 + "firstName = ?, "
                 + "lastName = ?, "
                 + "gender = ?, "
@@ -213,14 +211,13 @@ public class AdminRepository implements AdminInterface {
         try {
             prepare = connect.prepareStatement(updateData);
             prepare.setString(1, sData.getYear());
-            prepare.setString(2, sData.getCourse());
-            prepare.setString(3, sData.getFirstName());
-            prepare.setString(4, sData.getLastName());
-            prepare.setString(5, sData.getGender());
-            prepare.setDate(6, sData.getBirth());
-            prepare.setString(7, sData.getStatus());
-            prepare.setString(8, sData.getImage());
-            prepare.setInt(9, sData.getId());
+            prepare.setString(2, sData.getFirstName());
+            prepare.setString(3, sData.getLastName());
+            prepare.setString(4, sData.getGender());
+            prepare.setDate(5, sData.getBirth());
+            prepare.setString(6, sData.getStatus());
+            prepare.setString(7, sData.getImage());
+            prepare.setInt(8, sData.getId());
             prepare.executeUpdate();
 
         } catch (SQLException e) {
@@ -263,7 +260,6 @@ public class AdminRepository implements AdminInterface {
             while (result.next()) {
                 studentD = new studentData(result.getInt("id"),
                         result.getString("year"),
-                        result.getString("course"),
                         result.getString("firstName"),
                         result.getString("lastName"),
                         result.getString("gender"),
