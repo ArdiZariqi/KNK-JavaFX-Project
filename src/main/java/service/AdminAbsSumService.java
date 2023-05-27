@@ -22,4 +22,9 @@ public class AdminAbsSumService implements AdminAbsSumInterface {
         ObservableList<TotalAbsences> listStudents = adminGetSumRepository.addStudentsListData2(startDate,endDate);
         return listStudents;
     }
+
+    public ObservableList<TotalAbsences> showStdList() throws SQLException {
+        ObservableList<TotalAbsences> listStudents = adminGetSumRepository.showStudentList();
+        return listStudents;
+    }
 }

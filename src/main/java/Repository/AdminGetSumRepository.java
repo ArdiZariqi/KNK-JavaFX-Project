@@ -71,4 +71,35 @@ public class AdminGetSumRepository implements AdminGetAbsSumInterface {
         }
         return listStudents;
     }
+    public ObservableList<TotalAbsences> showStudentList() {
+        ObservableList<TotalAbsences> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * from   AbsenceSummary1";
+
+        try {
+            TotalAbsences studentD1;
+            connect= ConnectionUtil.getConnection();
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                studentD1 = new TotalAbsences(
+                        result.getInt("id"),
+                        result.getString("year"),
+                        result.getString("firstName"),
+                        result.getString("lastName"),
+                        result.getInt("total_reasonable_absences"),
+                        result.getInt("total_unreasonable_absences"));
+
+                listStudents.add(studentD1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabaseResources();
+        }
+
+        return listStudents;
+    }
 }

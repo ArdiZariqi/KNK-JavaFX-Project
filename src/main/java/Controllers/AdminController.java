@@ -838,6 +838,33 @@ public class AdminController implements Initializable {
 
     }
 
+    public ObservableList<TotalAbsences> addAbsencesListData1() {
+        ObservableList<TotalAbsences> listStudents = null;
+
+        try {
+            listStudents = adminAbsSumService.showStdList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the SQLException here (e.g., show an error message, log the exception, etc.)
+        }
+
+        return listStudents;
+    }
+    private ObservableList<TotalAbsences> addStudentsListD1;
+    public void addAbsencesShowListData1() {
+        addStudentsListD1 = addAbsencesListData1();
+
+        addAbsence_col_stid2.setCellValueFactory(new PropertyValueFactory<>("student_id"));
+        addAbsence_col_class2.setCellValueFactory(new PropertyValueFactory<>("class_"));
+        addAbsence_col_firstName2.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        addAbsence_col_lastName2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        addAbsence_col_reasonable2.setCellValueFactory(new PropertyValueFactory<>("total_reasonable_absences_forSemester"));
+        addAbsence_col_unreasonable2.setCellValueFactory(new PropertyValueFactory<>("total_unreasonable_absences_forSemester"));
+
+        studentAbsence_tableView2.setItems(addStudentsListD1);
+    }
+
+
 
 
     public void availableScheduleSelect() {
@@ -933,6 +960,7 @@ public class AdminController implements Initializable {
             home_btn.setStyle("-fx-background-color:transparent");
             studentAbstence_btn2.setStyle("-fx-background-color:transparent");
 
+
             availableScheduleShowListData();
             addStudentsScheduleCourseList();
 
@@ -949,6 +977,7 @@ public class AdminController implements Initializable {
             home_btn.setStyle("-fx-background-color:transparent");
             studentSchedule_btn.setStyle("-fx-background-color:transparent");
             addAbsencesShowListData2();
+            addAbsencesShowListData1();
         }
     }
     private double x=0;
@@ -1051,7 +1080,7 @@ public class AdminController implements Initializable {
         addStudentsCourseList();
         availableScheduleShowListData();
         addStudentsScheduleCourseList();
-
+        addAbsencesShowListData1();
         languageID.setItems(FXCollections.observableArrayList("English", "Shqip"));
         languageID.setValue("English");
         languageID.setOnAction(e -> {
