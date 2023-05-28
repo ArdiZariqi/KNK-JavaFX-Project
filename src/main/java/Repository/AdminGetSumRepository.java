@@ -1,13 +1,10 @@
 package Repository;
 
 import Models.TotalAbsences;
-import Models.getAbsenceSummary1;
-import Models.studentData;
 import Repository.Interfaces.AdminGetAbsSumInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import service.ConnectionUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

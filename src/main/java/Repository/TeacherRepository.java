@@ -1,17 +1,12 @@
 package Repository;
 
 import Models.AbsenceData;
-import Models.scheduleData;
 import Repository.Interfaces.TeacherUserInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
 import service.ConnectionUtil;
-
 import java.sql.*;
-import java.util.Optional;
 
 public class TeacherRepository implements TeacherUserInterface {
 
@@ -20,7 +15,7 @@ public class TeacherRepository implements TeacherUserInterface {
     private ResultSet result;
 
     @Override
-    public int getTotalStudentsAbsenceCount() throws SQLException {
+    public int getTotalStudentsAbsenceCount() {
         String sql = "SELECT COUNT(a_id) FROM student_Abstence";
         connect = ConnectionUtil.getConnection();
         int countEnrolled = 0;
@@ -42,7 +37,7 @@ public class TeacherRepository implements TeacherUserInterface {
     }
 
     @Override
-    public int getTotalFemaleAbsenceCount() throws SQLException {
+    public int getTotalFemaleAbsenceCount() {
         String sql = "SELECT COUNT(a_id) FROM student_Abstence sA INNER JOIN " +
                 "student s on sA.student_id = s.id WHERE gender = 'Female' and status = 'Enrolled'";
         connect = ConnectionUtil.getConnection();
@@ -65,7 +60,7 @@ public class TeacherRepository implements TeacherUserInterface {
     }
 
     @Override
-    public int getTotalMaleAbsenceCount() throws SQLException {
+    public int getTotalMaleAbsenceCount() {
         String sql = "SELECT COUNT(a_id) FROM student_Abstence sA INNER JOIN " +
                 "student s on sA.student_id = s.id WHERE gender = 'Male' and status = 'Enrolled'";
         connect = ConnectionUtil.getConnection();
@@ -88,7 +83,7 @@ public class TeacherRepository implements TeacherUserInterface {
     }
 
     @Override
-    public XYChart.Series<String, Integer> getTotalAbsenceChartData() throws SQLException {
+    public XYChart.Series<String, Integer> getTotalAbsenceChartData() {
         String sql = "SELECT sA.date_, COUNT(sA.a_id) FROM student_Abstence sA " +
                 "INNER JOIN student s on sA.student_id = s.id" +
                 " WHERE s.status = 'Enrolled' GROUP BY sA.date_ ORDER BY TIMESTAMP(sA.date_) ASC LIMIT 5";
@@ -112,7 +107,7 @@ public class TeacherRepository implements TeacherUserInterface {
     }
 
     @Override
-    public XYChart.Series<String, Integer> getFemaleAbsenceChartData() throws SQLException {
+    public XYChart.Series<String, Integer> getFemaleAbsenceChartData() {
         String sql = "SELECT sA.date_, COUNT(sA.a_id) FROM student_Abstence sA " +
                 "INNER JOIN student s on sA.student_id = s.id " +
                 "WHERE s.status = 'Enrolled' and s.gender = 'Female' " +
@@ -137,7 +132,7 @@ public class TeacherRepository implements TeacherUserInterface {
     }
 
     @Override
-    public XYChart.Series<String, Integer> getMaleAbsenceChartData() throws SQLException {
+    public XYChart.Series<String, Integer> getMaleAbsenceChartData() {
         String sql = "SELECT sA.date_, COUNT(sA.a_id) FROM student_Abstence sA " +
                 "INNER JOIN student s on sA.student_id = s.id " +
                 "WHERE s.status = 'Enrolled' and s.gender = 'Male' " +
@@ -177,7 +172,7 @@ public class TeacherRepository implements TeacherUserInterface {
         }
     }
 
-    public void AbsencesAdd(AbsenceData absenceData) throws SQLException {
+    public void AbsencesAdd(AbsenceData absenceData) {
         String insertData = "INSERT INTO student_Abstence " +
                 "(student_id, schedule_id, date_, reasonability) " +
                 "VALUES (?, ?, ?, ?)";
@@ -234,7 +229,7 @@ public class TeacherRepository implements TeacherUserInterface {
 
         try {
             PreparedStatement statement = connect.prepareStatement(deleteData);
-            statement.setInt(1, absenceData.getA_id()); // Set the value of a_id parameter
+            statement.setInt(1, absenceData.getA_id());
             statement.executeUpdate();
 
 
@@ -244,6 +239,7 @@ public class TeacherRepository implements TeacherUserInterface {
             closeDatabaseResources();
         }
     }
+
     public ObservableList<AbsenceData> addAbsencesListData() {
         ObservableList<AbsenceData> listStudents = FXCollections.observableArrayList();
 

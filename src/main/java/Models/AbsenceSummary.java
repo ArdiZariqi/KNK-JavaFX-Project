@@ -1,9 +1,7 @@
 package Models;
 
-import java.sql.Date;
 
 public class AbsenceSummary {
-    private Integer a_id;
     private Integer student_id;
     private String class_;
     private String course_name;
@@ -26,8 +24,6 @@ public class AbsenceSummary {
         this.total_unreasonable_absences=total_unreasonable_absences;
         this.total_absences=total_absences;
     }
-
-
 
     public Integer getStudent_id() {
         return student_id;

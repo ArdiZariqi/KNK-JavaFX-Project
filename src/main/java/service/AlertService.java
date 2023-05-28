@@ -1,10 +1,7 @@
 package service;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import service.interfaces.AlertInterface;
-
-import java.util.Optional;
 
 public class AlertService implements AlertInterface {
     public void errorAlert(){

@@ -4,7 +4,6 @@ import Models.dto.CreateUserDto;
 import Models.User;
 import Repository.Interfaces.UserRepositoryInterface;
 import service.ConnectionUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

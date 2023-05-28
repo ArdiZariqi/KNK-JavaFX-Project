@@ -2,9 +2,7 @@ package service;
 
 import Models.AbsenceSummary;
 import Repository.Interfaces.TeachAbsSumInterface;
-import Repository.Interfaces.TeacherCourseInterface;
 import Repository.TeachAbsSumRepository;
-import Repository.TeacherCourseRepository;
 import javafx.collections.ObservableList;
 import service.interfaces.TeacherAbsenceSummaryInterface;
 

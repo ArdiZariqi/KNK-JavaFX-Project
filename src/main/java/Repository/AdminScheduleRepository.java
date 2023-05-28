@@ -1,6 +1,5 @@
 package Repository;
 
-import Models.AbsenceData;
 import Models.scheduleData;
 import Repository.Interfaces.AdminScheduleInterface;
 import javafx.collections.FXCollections;

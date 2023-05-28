@@ -63,9 +63,9 @@ public class HelpController1 {
     public void setLanguage() {
         String selectedLanguage = languageID.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
-        helpn11.setText(LanguageUtil.getMessage("helpn1"));
-        helpn12.setText(LanguageUtil.getMessage("helpn2"));
-        helpn13.setText(LanguageUtil.getMessage("helpn3"));
+        helpn11.setText(LanguageUtil.getMessage("helpn11"));
+        helpn12.setText(LanguageUtil.getMessage("helpn12"));
+        helpn13.setText(LanguageUtil.getMessage("helpn13"));
         closeButton.setText(LanguageUtil.getMessage("closeButton2"));
     }
 

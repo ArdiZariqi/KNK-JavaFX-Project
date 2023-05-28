@@ -1,7 +1,6 @@
 package Controllers;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +9,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import service.LanguageUtil;
-import service.UserService;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HelpLoginController {
     @FXML

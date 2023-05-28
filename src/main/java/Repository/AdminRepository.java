@@ -6,12 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import service.ConnectionUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class AdminRepository implements AdminInterface {
     private Connection connect;
@@ -34,7 +32,7 @@ public class AdminRepository implements AdminInterface {
         }
     }
     @Override
-    public int homeDisplayTotalEnrolledStudents() throws SQLException {
+    public int homeDisplayTotalEnrolledStudents() {
         String sql = "SELECT COUNT(id) FROM student";
         connect = ConnectionUtil.getConnection();
         int countEnrolled = 0;
@@ -56,7 +54,7 @@ public class AdminRepository implements AdminInterface {
     }
 
     @Override
-    public int homeDisplayFemaleEnrolled() throws SQLException {
+    public int homeDisplayFemaleEnrolled() {
         String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Female' and status = 'Enrolled'";
         connect = ConnectionUtil.getConnection();
         int countFemale = 0;
@@ -78,7 +76,7 @@ public class AdminRepository implements AdminInterface {
     }
 
     @Override
-    public int homeDisplayMaleEnrolled() throws SQLException {
+    public int homeDisplayMaleEnrolled() {
         String sql = "SELECT COUNT(id) FROM student WHERE gender = 'Male' and status = 'Enrolled'";
         connect = ConnectionUtil.getConnection();
         int countMale = 0;
@@ -100,7 +98,7 @@ public class AdminRepository implements AdminInterface {
     }
 
     @Override
-    public XYChart.Series<String, Integer> homeDisplayTotalEnrolledChart() throws SQLException {
+    public XYChart.Series<String, Integer> homeDisplayTotalEnrolledChart() {
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
         connect = ConnectionUtil.getConnection();
         XYChart.Series<String, Integer> chart = new XYChart.Series<>();
@@ -122,7 +120,7 @@ public class AdminRepository implements AdminInterface {
     }
 
     @Override
-    public XYChart.Series<String, Integer> homeDisplayFemaleEnrolledChart() throws SQLException {
+    public XYChart.Series<String, Integer> homeDisplayFemaleEnrolledChart() {
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Female' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
         connect = ConnectionUtil.getConnection();
         XYChart.Series<String, Integer> chart = new XYChart.Series<>();
@@ -144,7 +142,7 @@ public class AdminRepository implements AdminInterface {
     }
 
     @Override
-    public XYChart.Series<String, Integer> homeDisplayEnrolledMaleChart() throws SQLException {
+    public XYChart.Series<String, Integer> homeDisplayEnrolledMaleChart(){
         String sql = "SELECT date, COUNT(id) FROM student WHERE status = 'Enrolled' and gender = 'Male' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
         connect = ConnectionUtil.getConnection();
         XYChart.Series<String, Integer> chart = new XYChart.Series<>();
@@ -165,7 +163,7 @@ public class AdminRepository implements AdminInterface {
         return chart;
     }
 
-    public void StudentsAdd(studentData sData) throws SQLException {
+    public void StudentsAdd(studentData sData) {
         String insertData = "INSERT INTO student "
                 + "(year,firstName,lastName,gender,birth,status,image,date) "
                 + "VALUES(?,?,?,?,?,?,?,?)";

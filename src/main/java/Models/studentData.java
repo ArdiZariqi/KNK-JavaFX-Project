@@ -7,7 +7,6 @@ public class studentData {
 
     private Integer id;
     private String year;
-    private String course;
     private String firstName;
     private String lastName;
     private String gender;
@@ -16,7 +15,8 @@ public class studentData {
     private String image;
 
 
-    public studentData(Integer id, String year, String firstName, String lastName, String gender, Date birth, String status, String image) {
+    public studentData(Integer id, String year, String firstName, String lastName,
+                       String gender, Date birth, String status, String image) {
         this.id = id;
         this.year = year;
         this.firstName = firstName;
@@ -37,10 +37,6 @@ public class studentData {
 
     public String getYear() {
         return year;
-    }
-
-    public String getCourse() {
-        return course;
     }
 
     public String getFirstName() {

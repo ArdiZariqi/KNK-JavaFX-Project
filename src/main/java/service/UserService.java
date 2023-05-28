@@ -5,13 +5,11 @@ import Models.dto.CreateUserDto;
 import Repository.UserRepository;
 import Repository.Interfaces.UserRepositoryInterface;
 import service.interfaces.UserServiceInterface;
-
 import java.sql.SQLException;
 import java.util.Date;
 
 public class UserService implements UserServiceInterface {
-    // Repositories
-    private UserRepositoryInterface userRepository;
+    private final UserRepositoryInterface userRepository;
 
     public UserService() {
         this.userRepository = new UserRepository();

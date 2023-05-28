@@ -1,13 +1,9 @@
 package service;
 
-import Models.AbsenceData;
-import Models.User;
 import Models.scheduleData;
 import Models.studentData;
 import Repository.AdminRepository;
 import Repository.Interfaces.AdminInterface;
-import Repository.Interfaces.TeacherUserInterface;
-import Repository.TeacherRepository;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import service.interfaces.AdminUserInterface;

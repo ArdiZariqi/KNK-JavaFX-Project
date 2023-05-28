@@ -1,7 +1,5 @@
 package Models;
 
-import java.sql.Date;
-
 public class TotalAbsences{
     private int student_id;
     private String class_;
@@ -9,9 +7,6 @@ public class TotalAbsences{
     private String lastName;
     private int total_reasonable_absences_forSemester;
     private int total_unreasonable_absences_forSemester;
-
-// Getters and setters for the above attributes
-
 
     public TotalAbsences(Integer student_id, String class_, String firstName, String lastName, Integer total_reasonable_absences_forSemester,Integer total_unreasonable_absences_forSemester) {
 
@@ -21,7 +16,6 @@ public class TotalAbsences{
         this.lastName = lastName;
         this.total_reasonable_absences_forSemester=total_reasonable_absences_forSemester;
         this.total_unreasonable_absences_forSemester=total_unreasonable_absences_forSemester;
-
     }
 
 

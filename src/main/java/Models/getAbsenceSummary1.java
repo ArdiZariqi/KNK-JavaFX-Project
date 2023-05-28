@@ -10,7 +10,9 @@ public class getAbsenceSummary1 {
     private Integer total_absences;
 
 
-    public getAbsenceSummary1(Integer id, String year, String firstName, String lastName, Integer total_reasonable_absences_forSemester, Integer total_unreasonable_absences_forSemester, Integer total_absences) {
+    public getAbsenceSummary1(Integer id, String year, String firstName, String lastName,
+                              Integer total_reasonable_absences_forSemester,
+                              Integer total_unreasonable_absences_forSemester, Integer total_absences) {
         this.id = id;
         this.year = year;
         this.firstName = firstName;
