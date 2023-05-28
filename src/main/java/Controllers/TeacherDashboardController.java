@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -59,9 +58,6 @@ public class TeacherDashboardController implements Initializable {
     private Button addAbsence_addBtn;
 
     @FXML
-    private ComboBox<?> addAbsence_class;
-
-    @FXML
     private Button addAbsence_clearBtn;
 
     @FXML
@@ -69,9 +65,6 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_Course1;
-
-    @FXML
-    private TableColumn<AbsenceData, Integer> addAbsence_col_absenceNum;
 
     @FXML
     private TableColumn<AbsenceData, Integer> addAbsence_col_absence;
@@ -111,9 +104,6 @@ public class TeacherDashboardController implements Initializable {
     private TableColumn<?, ?> addAbsence_col_reasonable;
 
     @FXML
-    private TableColumn<AbsenceData, String> addAbsence_col_status;
-
-    @FXML
     private TableColumn<?, ?> addAbsence_col_stid;
 
     @FXML
@@ -127,9 +117,6 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> addAbsence_col_unreasonable;
-
-    @FXML
-    private ComboBox<String> addAbsence_course;
 
     @FXML
     private Button addAbsence_deleteBtn;
@@ -157,21 +144,11 @@ public class TeacherDashboardController implements Initializable {
     private Button addStudents_btn;
 
     @FXML
-    private TextField addStudents_firstName;
-    @FXML
-    private TextField addStudents_lastName;
-    @FXML
     private Label signout;
 
     @FXML
     private AnchorPane addStudents_form;
 
-    @FXML
-    private ComboBox<?> addStudents_gender;
-
-
-    @FXML
-    private ComboBox<?> addStudents_status;
     @FXML
     private ComboBox<String> languageId;
 
@@ -187,9 +164,6 @@ public class TeacherDashboardController implements Initializable {
     private Label timeLabel;
 
     @FXML
-    private Button maximize;
-
-    @FXML
     private Button home_btn;
 
     @FXML
@@ -203,10 +177,6 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private BarChart<String,Integer > home_totalEnrolledChart;
-    @FXML
-    private Label fNameLabel;
-    @FXML
-    private Label lNameLabel;
 
     @FXML
     private Label home_totalFemale;
@@ -216,8 +186,6 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private Label home_totalMale;
-    @FXML
-    private Label courseLabel;
 
     @FXML
     private LineChart<String,Integer> home_totalMaleChart;
@@ -227,13 +195,9 @@ public class TeacherDashboardController implements Initializable {
 
     @FXML
     private AnchorPane main_form;
-    @FXML
-    private Label statusLabel;
 
     @FXML
     private Button minimize;
-    @FXML
-    private Label classLabel;
 
     @FXML
     private Button studentAbstence_btn;
@@ -251,10 +215,6 @@ public class TeacherDashboardController implements Initializable {
     private Label home_totalMaleAbsences;
     @FXML
     private Label studentLabel;
-    @FXML
-    private Label genderLabel;
-    @FXML
-    private Label birthDateLabel;
 
     private AdminUserService adminUserService;
 
