@@ -27,7 +27,7 @@ public class studentData {
         this.image = image;
     }
 
-    public studentData(int id) {
+    public studentData(Integer id) {
         this.id = id;
     }
 

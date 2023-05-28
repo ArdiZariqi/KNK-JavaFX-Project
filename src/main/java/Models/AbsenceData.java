@@ -6,8 +6,6 @@ public class AbsenceData {
 
     private Integer a_id;
     private Integer schedule_id;
-
-
     private Integer student_id;
     private String year;
     private String course_name;

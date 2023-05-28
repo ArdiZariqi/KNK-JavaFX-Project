@@ -499,34 +499,35 @@ public class AdminController implements Initializable {
     public void addStudentsDelete() {
         try {
             Alert alert;
+            alertMessage alertMessage = new alertMessage();
             if (addStudents_studentNum.getText() == null) {
                 alertService.errorAlert();
             } else {
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to DELETE Student #" + addStudents_studentNum.getText() + "?");
+                studentData student = adminUserService.getById(Integer.valueOf(addStudents_studentNum.getText()));
+                if (student != null) {
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to DELETE Student #" + addStudents_studentNum.getText() + "?");
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if (option.get().equals(ButtonType.OK)) {
+                        int id = Integer.parseInt(addStudents_studentNum.getText());
+                        studentData sData = new studentData(id);
 
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if (option.get().equals(ButtonType.OK)) {
-
-                    int id = Integer.parseInt(addStudents_studentNum.getText());
-                    studentData sData = new studentData(id);
-
-                    adminUserService.deleteStd(sData);
-                    alertService.deleteAlert();
-                    addStudentsShowListData();
-                    addStudentsClear();
-
+                        adminUserService.deleteStd(sData);
+                        alertService.deleteAlert();
+                        addStudentsShowListData();
+                        addStudentsClear();
+                    }
                 } else {
-                    return;
+                    alertMessage.errorMessage("Error, the student does not exist!");
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public ObservableList<studentData> addStudentsListData() {
         ObservableList<studentData> listStudents = null;
@@ -778,37 +779,38 @@ public class AdminController implements Initializable {
     public void studentScheduleDelete() {
         try {
             Alert alert;
+            alertMessage alertMessage = new alertMessage();
 
             if (scheduleLabel.getText().isEmpty()) {
-              alertService.errorAlert();
+                alertService.errorAlert();
             } else {
+                String scheduleId = scheduleLabel.getText();
 
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to DELETE Schedule: " + scheduleLabel.getText() + "?");
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if (option.get().equals(ButtonType.OK)) {
-
-                    String scheduleId=scheduleLabel.getText();
-                    scheduleData schData=new scheduleData(scheduleId);
-                    scheduleService.deleteSch(schData);
-
-                    alertService.deleteAlert();
-                    availableScheduleShowListData();
-                    studentScheduleClear();
-
+                // Retrieve the schedule data using the schedule ID
+                scheduleData scheduleD = adminUserService.getScheduleById(scheduleId);
+                if (scheduleD != null) {
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to DELETE Schedule #" + scheduleId + "?");
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if (option.get().equals(ButtonType.OK)) {
+                        scheduleD = new scheduleData(scheduleId);
+                        scheduleService.deleteSch(scheduleD);
+                        alertService.deleteAlert();
+                        availableScheduleShowListData();
+                        studentScheduleClear();
+                    }
                 } else {
-                    return;
+                    alertMessage.errorMessage("Schedule #" + scheduleId + " doesn't exist!");
                 }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
-
     }
+
+
 
     public ObservableList<TotalAbsences> addAbsencesListData1() {
         ObservableList<TotalAbsences> listStudents = null;

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import Models.AbsenceSummary;
 import Models.getData;
+import Models.scheduleData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -392,34 +393,35 @@ public class TeacherDashboardController implements Initializable {
     public void addAbsencesDelete() {
         try {
             Alert alert;
-            if (addAbsence_Id.getText() == null) {
+            alertMessage alertMessage = new alertMessage();
+
+            if (addAbsence_Id.getText().isEmpty()) {
                 alertService.errorAlert();
             } else {
-                alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to DELETE Student #" + addAbsence_studentNum.getText() + "?");
-
-                Optional<ButtonType> option = alert.showAndWait();
-
-                if (option.get().equals(ButtonType.OK)) {
-
-                    int a_id = Integer.parseInt(addAbsence_Id.getText());
-                    AbsenceData absenceData = new AbsenceData(a_id);
-
-                    teacherDashboardService.deleteAbsence(absenceData);
-                    alertService.deleteAlert();
-                    addAbsencesShowListData();
-                    addAbsencesClear();
-
+                AbsenceData absenceData = teacherDashboardService.getAbsenceById(Integer.valueOf(addAbsence_Id.getText()));
+                if (absenceData != null) {
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to DELETE Absence #" + addAbsence_Id.getText() + "?");
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if (option.get().equals(ButtonType.OK)) {
+                        absenceData = new AbsenceData(Integer.valueOf(addAbsence_Id.getText()));
+                        teacherDashboardService.deleteAbsence(absenceData);
+                        alertService.deleteAlert();
+                        addAbsencesShowListData();
+                        addAbsencesClear();
+                    }
                 } else {
-                    return;
+                    alertMessage.errorMessage("Absence #" + addAbsence_Id.getText() + " doesn't exist!");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
+
+
     public void addAbsencesClear() {
         addAbsence_Id.setText("");
         addAbsence_studentNum.setText("");

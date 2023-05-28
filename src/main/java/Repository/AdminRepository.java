@@ -1,8 +1,6 @@
 package Repository;
 
-import Models.AbsenceData;
-import Models.getData;
-import Models.studentData;
+import Models.*;
 import Repository.Interfaces.AdminInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -227,7 +225,6 @@ public class AdminRepository implements AdminInterface {
         }
     }
 
-
     public void addStudentsDelete(studentData sData) {
         String deleteData = "DELETE FROM student WHERE id = ?";
 
@@ -275,7 +272,36 @@ public class AdminRepository implements AdminInterface {
         }
         return listStudents;
     }
+    @Override
+    public studentData getById(Integer id) throws SQLException {
+        String sql = "SELECT * FROM student WHERE id=?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
 
+            if (resultSet.next()) {
 
+                return new studentData(id);
+            } else {
+                return null;
+            }
+        }
+    }
+    @Override
+    public scheduleData getScheduleById(String schedule_id) throws SQLException {
+        String sql = "SELECT * FROM schedule WHERE schedule_id=?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, schedule_id);
+            ResultSet resultSet = statement.executeQuery();
 
+            if (resultSet.next()) {
+
+                return new scheduleData(schedule_id);
+            } else {
+                return null;
+            }
+        }
+    }
 }

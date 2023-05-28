@@ -1,6 +1,8 @@
 package service.interfaces;
 
 import Models.AbsenceData;
+import Models.User;
+import Models.scheduleData;
 import Models.studentData;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
@@ -18,4 +20,6 @@ public interface AdminUserInterface {
     void updateStd(studentData sData) throws SQLException;
     void deleteStd(studentData sData) throws SQLException;
     ObservableList<studentData> StdListData() throws SQLException;
+    studentData getById(Integer id) throws SQLException;
+    scheduleData getScheduleById(String id) throws SQLException;
 }

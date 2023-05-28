@@ -2,28 +2,18 @@ package Models;
 
 import java.sql.Date;
 
-public class AbsenceSummary {  private Integer a_id;
+public class AbsenceSummary {
+    private Integer a_id;
     private Integer student_id;
     private String class_;
     private String course_name;
     private String firstName;
     private String lastName;
     private String gender;
-
-    public AbsenceSummary(Integer student_id, String class_, String firstName, String lastName, Integer total_reasonable_absences, Integer total_unreasonable_absences) {
-        this.student_id = student_id;
-        this.class_ = class_;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.total_reasonable_absences = total_reasonable_absences;
-        this.total_unreasonable_absences = total_unreasonable_absences;
-    }
-
     private Integer total_reasonable_absences;
     private Integer total_unreasonable_absences;
     private Integer total_absences;
 
-    // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE
     public AbsenceSummary(Integer student_id, String class_, String course_name, String firstName, String lastName, String gender,Integer total_reasonable_absences,Integer total_unreasonable_absences,Integer total_absences) {
 
         this.student_id= student_id;

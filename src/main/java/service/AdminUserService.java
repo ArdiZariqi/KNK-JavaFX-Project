@@ -1,6 +1,8 @@
 package service;
 
 import Models.AbsenceData;
+import Models.User;
+import Models.scheduleData;
 import Models.studentData;
 import Repository.AdminRepository;
 import Repository.Interfaces.AdminInterface;
@@ -52,5 +54,13 @@ public class AdminUserService implements AdminUserInterface {
     public ObservableList<studentData> StdListData() throws SQLException {
         ObservableList<studentData> listStudents = adminRepository.addStudentsListData();
         return listStudents;
+    }
+
+    public studentData getById(Integer id) throws SQLException {
+        return adminRepository.getById(id);
+    }
+
+    public scheduleData getScheduleById(String schedule_id) throws SQLException {
+        return adminRepository.getScheduleById(schedule_id);
     }
 }

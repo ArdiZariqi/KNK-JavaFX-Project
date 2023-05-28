@@ -1,6 +1,7 @@
 package Repository;
 
 import Models.AbsenceData;
+import Models.scheduleData;
 import Repository.Interfaces.TeacherUserInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -278,6 +279,23 @@ public class TeacherRepository implements TeacherUserInterface {
             e.printStackTrace();
         }
         return listStudents;
+    }
+
+    @Override
+    public AbsenceData getAbsenceById(Integer absence_id) throws SQLException {
+        String sql = "SELECT * FROM student_Abstence WHERE a_id=?";
+        try (Connection connection = ConnectionUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, absence_id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+
+                return new AbsenceData(absence_id);
+            } else {
+                return null;
+            }
+        }
     }
 
 }

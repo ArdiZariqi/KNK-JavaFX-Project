@@ -54,4 +54,7 @@ public class TeacherDashboardService implements TeacherDashboardInterface {
         return listStudents;
     }
 
+    public AbsenceData getAbsenceById(Integer absence_id) throws SQLException {
+        return teacherRepository.getAbsenceById(absence_id);
+    }
 }

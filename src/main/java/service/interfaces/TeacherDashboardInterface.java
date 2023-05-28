@@ -3,9 +3,7 @@ package service.interfaces;
 import Models.AbsenceData;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
-
 import java.sql.SQLException;
-import java.util.Date;
 
 
 public interface TeacherDashboardInterface {
@@ -22,4 +20,5 @@ public interface TeacherDashboardInterface {
 
         void deleteAbsence(AbsenceData absenceData) throws SQLException;
         ObservableList<AbsenceData> AbsencesListData() throws SQLException;
+        AbsenceData getAbsenceById(Integer absence_id) throws SQLException;
 }
