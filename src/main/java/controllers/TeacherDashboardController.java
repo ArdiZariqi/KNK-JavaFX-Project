@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import Models.*;
 
@@ -296,8 +296,8 @@ public class TeacherDashboardController implements Initializable {
                 alertService.errorAlert();
         } else {
             try {
-                scheduleData scheduleD = adminUserService.getScheduleById(addAbsence_time.getText());
-                studentData studentD = adminUserService.getById(Integer.valueOf(addAbsence_studentNum.getText()));
+                ScheduleData scheduleD = adminUserService.getScheduleById(addAbsence_time.getText());
+                StudentData studentD = adminUserService.getById(Integer.valueOf(addAbsence_studentNum.getText()));
                 if (studentD != null && scheduleD != null) {
 
                     Integer a_id = 1;
@@ -602,7 +602,7 @@ public class TeacherDashboardController implements Initializable {
         }
     }
     public void displayUsername(){
-        username.setText(getData.username);
+        username.setText(GetData.username);
     }
     public void defaultNav(){
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
