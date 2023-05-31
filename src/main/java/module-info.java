@@ -10,6 +10,7 @@ module KNK.Projekti {
 //    requires fontawesomefx;
     requires java.desktop;
 
-    opens Controllers;
-    opens KNK_Projekti;
+    opens controllers;
+    opens Main;
+    opens service;
 }

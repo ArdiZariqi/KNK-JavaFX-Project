@@ -1,6 +1,5 @@
 package Repository.Interfaces;
 
-import Models.courseData;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;

@@ -1,9 +1,6 @@
 package Repository.Interfaces;
 
 import Models.TotalAbsences;
-import Models.getAbsenceSummary1;
-import Models.scheduleData;
-import Models.studentData;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +29,7 @@ import javafx.stage.StageStyle;
 import service.LanguageUtil;
 import service.PasswordHasher;
 import service.UserService;
+import service.alertMessage;
 import service.interfaces.UserServiceInterface;
 
 
@@ -111,7 +112,7 @@ public class LoginController implements Initializable {
                     if (accountType.equals("Teacher")){
                         alert.successMessage(LanguageUtil.getMessage("login.success"));
                         admin_loginBtn.getScene().getWindow().hide();
-                        Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/Main/teacherdashboard.fxml"));
 
                         Stage stage = new Stage();
                         stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
@@ -149,7 +150,7 @@ public class LoginController implements Initializable {
 
                         alert.successMessage(LanguageUtil.getMessage("login.success"));
                         admin_loginBtn.getScene().getWindow().hide();
-                        Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/adminDashboard.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/Main/adminDashboard.fxml"));
 
                         Stage stage = new Stage();
                         stage.setTitle(LanguageUtil.getMessage("login.admin.title"));
@@ -201,7 +202,7 @@ public class LoginController implements Initializable {
     public void openHelp(ActionEvent event){
         try {
             if (event.getSource() == helpButton ){
-                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpLogin.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Main/helpLogin.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
@@ -332,7 +333,7 @@ public class LoginController implements Initializable {
                 forgotPw_form.setVisible(true);
                 changePw_form.setVisible(false);
             }else if (event.getSource() == admin_signUpBtn) {
-                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/sign-up.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Main/sign-up.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.initStyle(StageStyle.TRANSPARENT);

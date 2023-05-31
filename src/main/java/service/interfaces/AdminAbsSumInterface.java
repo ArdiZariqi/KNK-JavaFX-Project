@@ -1,7 +1,6 @@
 package service.interfaces;
 
 import Models.TotalAbsences;
-import Models.studentData;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;

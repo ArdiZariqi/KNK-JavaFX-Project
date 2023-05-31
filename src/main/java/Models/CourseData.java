@@ -1,12 +1,12 @@
 package Models;
 
-public class courseData {
+public class CourseData {
 
     private String course;
     private String description;
     private String degree;
 
-    public courseData(String course, String description, String degree){
+    public CourseData(String course, String description, String degree){
         this.course = course;
         this.description = description;
         this.degree = degree;

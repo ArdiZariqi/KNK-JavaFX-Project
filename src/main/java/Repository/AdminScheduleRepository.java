@@ -1,6 +1,6 @@
 package Repository;
 
-import Models.scheduleData;
+import Models.ScheduleData;
 import Repository.Interfaces.AdminScheduleInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,19 +29,19 @@ public class AdminScheduleRepository implements AdminScheduleInterface {
         }
     }
 
-    public ObservableList<scheduleData> scheduleList() throws SQLException {
-        ObservableList<scheduleData> listStudents = FXCollections.observableArrayList();
+    public ObservableList<ScheduleData> scheduleList() throws SQLException {
+        ObservableList<ScheduleData> listStudents = FXCollections.observableArrayList();
 
         String absences = "SELECT *from schedule";
 
         try {
-            scheduleData studentD;
+            ScheduleData studentD;
             connect=ConnectionUtil.getConnection();
             prepare = connect.prepareStatement(absences);
             result = prepare.executeQuery();
 
             while (result.next()) {
-                studentD = new scheduleData(
+                studentD = new ScheduleData(
                         result.getString("schedule_id"),
                         result.getString("day"),
                         result.getString("time"),
@@ -55,7 +55,7 @@ public class AdminScheduleRepository implements AdminScheduleInterface {
         }
         return listStudents;
     }
-    public void ScheduleAdd(scheduleData schData) throws SQLException {
+    public void ScheduleAdd(ScheduleData schData) throws SQLException {
         String insertData = "INSERT INTO schedule" +"(schedule_id, day, time, course)" +"VALUES(?,?,?,?)";
 
         connect = ConnectionUtil.getConnection();
@@ -86,7 +86,7 @@ public class AdminScheduleRepository implements AdminScheduleInterface {
         return scheduleExists;
     }
 
-    public void ScheduleUpdate(scheduleData schData){
+    public void ScheduleUpdate(ScheduleData schData){
         String updateData = "UPDATE schedule SET "
                 + "day = ?"
                 + ",time = ?"
@@ -109,7 +109,7 @@ public class AdminScheduleRepository implements AdminScheduleInterface {
             closeDatabaseResources();
         }
     }
-    public void ScheduleDelete(scheduleData schData) {
+    public void ScheduleDelete(ScheduleData schData) {
         String deleteData = "DELETE FROM schedule WHERE schedule_id = ?";
 
         connect = ConnectionUtil.getConnection();

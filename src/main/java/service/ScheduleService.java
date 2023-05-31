@@ -1,6 +1,6 @@
 package service;
 
-import Models.scheduleData;
+import Models.ScheduleData;
 import Repository.AdminScheduleRepository;
 import Repository.Interfaces.AdminScheduleInterface;
 import javafx.collections.ObservableList;
@@ -15,22 +15,22 @@ public class ScheduleService implements ScheduleInterface{
         this.adminScheduleRepository = new AdminScheduleRepository();
     }
 
-    public ObservableList<scheduleData> schList() throws SQLException {
-        ObservableList<scheduleData> listStudents =adminScheduleRepository.scheduleList();
+    public ObservableList<ScheduleData> schList() throws SQLException {
+        ObservableList<ScheduleData> listStudents =adminScheduleRepository.scheduleList();
         return listStudents;
     }
 
-    public void addSchedule(scheduleData schData) throws SQLException {
+    public void addSchedule(ScheduleData schData) throws SQLException {
         adminScheduleRepository.ScheduleAdd(schData);
     }
     public boolean checkSch(String scheduleId) throws SQLException {
             return adminScheduleRepository.checkSchedule(scheduleId);
 
     }
-    public void updateSch(scheduleData schData) throws SQLException {
+    public void updateSch(ScheduleData schData) throws SQLException {
         adminScheduleRepository.ScheduleUpdate(schData);
     }
-    public void deleteSch(scheduleData schData) throws SQLException {
+    public void deleteSch(ScheduleData schData) throws SQLException {
         adminScheduleRepository.ScheduleDelete(schData);
     }
 

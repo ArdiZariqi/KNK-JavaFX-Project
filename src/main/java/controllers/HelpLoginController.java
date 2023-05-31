@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -38,7 +38,7 @@ public class HelpLoginController {
 
     private void closeHelpWindow() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Main/login.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initStyle(StageStyle.TRANSPARENT);

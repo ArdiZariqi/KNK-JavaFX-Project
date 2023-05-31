@@ -1,4 +1,4 @@
-package KNK_Projekti;
+package Main;
 
 
 import javafx.application.Application;

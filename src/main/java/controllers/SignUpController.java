@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import Models.User;
 import javafx.collections.FXCollections;
@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import service.LanguageUtil;
 import service.UserService;
+import service.alertMessage;
 import service.interfaces.UserServiceInterface;
 import java.io.IOException;
 import java.net.URL;
@@ -88,14 +89,17 @@ public class SignUpController implements Initializable {
                 String answer = adminSignUp_answer.getText();
                 Date date = new Date();
 
-                User user = userService.signUp(email, accountType, username, password, question, answer, date, null);
+                User user = userService.getUserByUsername(adminSignUp_username.getText());
 
-                if (user != null) {
+                if (user == null) {
+
+                    userService.signUp(email, accountType, username, password, question, answer, date, null);
+
                     alert.successMessage(LanguageUtil.getMessage("signup.success.registered"));
 
                     registerClearFields();
 
-                    Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/Main/login.fxml"));
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
 
@@ -125,7 +129,7 @@ public class SignUpController implements Initializable {
     public void switchFormSignUp(ActionEvent event) {
         try {
             if (event.getSource() == adminSignUp_loginBtn || event.getSource() == admin_SignUpBtn) {
-                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Main/login.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 

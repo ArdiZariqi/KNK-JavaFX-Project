@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import Models.*;
 
@@ -255,6 +255,8 @@ public class TeacherDashboardController implements Initializable {
     private Label genderLabel;
     @FXML
     private Label birthDateLabel;
+    @FXML
+    private Label welcomeLabel;
 
     private AdminUserService adminUserService;
 
@@ -336,8 +338,8 @@ public class TeacherDashboardController implements Initializable {
                 alertService.errorAlert();
         } else {
             try {
-                scheduleData scheduleD = adminUserService.getScheduleById(addAbsence_time.getText());
-                studentData studentD = adminUserService.getById(Integer.valueOf(addAbsence_studentNum.getText()));
+                ScheduleData scheduleD = adminUserService.getScheduleById(addAbsence_time.getText());
+                StudentData studentD = adminUserService.getById(Integer.valueOf(addAbsence_studentNum.getText()));
                 if (studentD != null && scheduleD != null) {
 
                     Integer a_id = 1;
@@ -608,7 +610,7 @@ public class TeacherDashboardController implements Initializable {
 
                 logout.getScene().getWindow().hide();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Main/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
@@ -642,7 +644,7 @@ public class TeacherDashboardController implements Initializable {
         }
     }
     public void displayUsername(){
-        username.setText(getData.username);
+        username.setText(GetData.username);
     }
     public void defaultNav(){
         home_btn.setStyle("-fx-background-color:linear-gradient(to bottom right, #3f82ae, #26bf7d);");
@@ -652,7 +654,7 @@ public class TeacherDashboardController implements Initializable {
         try {
             if (event.getSource() == helpButton ){
                 Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpn.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/Main/helpn.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
@@ -759,12 +761,15 @@ public class TeacherDashboardController implements Initializable {
         addAbsence_clearBtn.setText(LanguageUtil.getMessage("addStudents.clearBtn"));
         addAbsence_deleteBtn.setText(LanguageUtil.getMessage("addStudents.deleteBtn"));
         addAbsence_updateBtn.setText(LanguageUtil.getMessage("addStudents.updateBtn"));
+        addAbsence_col_firstName.setText(LanguageUtil.getMessage("student.first.name"));
+        addAbsence_col_lastName.setText(LanguageUtil.getMessage("student.last.name"));
         addAbsence_col_firstName1.setText(LanguageUtil.getMessage("student.first.name"));
         addAbsence_col_lastName1.setText(LanguageUtil.getMessage("student.last.name"));
         addAbsence_col_gender1.setText(LanguageUtil.getMessage("student.gender"));
         addAbsence_col_date.setText(LanguageUtil.getMessage("student.date"));
         addAbsence_col_reasonability.setText(LanguageUtil.getMessage("add.absence.reasonability"));
         addAbsence_col_reasonable.setText(LanguageUtil.getMessage("total.reasonable"));
+        addAbsence_col_gender.setText(LanguageUtil.getMessage("table.absences.day"));
         addAbsence_col_unreasonable.setText(LanguageUtil.getMessage("total.unreasonable"));
         addAbsence_col_total.setText(LanguageUtil.getMessage("total.absences"));
         studentLabel.setText(LanguageUtil.getMessage("student.id"));

@@ -1,18 +1,14 @@
 package Repository.Interfaces;
 
-import Models.AbsenceData;
-import Models.TotalAbsences;
-import Models.scheduleData;
-import Models.studentData;
+import Models.ScheduleData;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public interface AdminScheduleInterface {
-    ObservableList<scheduleData> scheduleList() throws SQLException;
-    void ScheduleAdd(scheduleData schData) throws SQLException;
+    ObservableList<ScheduleData> scheduleList() throws SQLException;
+    void ScheduleAdd(ScheduleData schData) throws SQLException;
     boolean checkSchedule(String scheduleId) throws SQLException;
-    void ScheduleUpdate(scheduleData schData) throws SQLException;
-    void ScheduleDelete(scheduleData schData) throws SQLException;
+    void ScheduleUpdate(ScheduleData schData) throws SQLException;
+    void ScheduleDelete(ScheduleData schData) throws SQLException;
 }

@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -43,7 +43,7 @@ public class HelpController {
         try {
 
             Parent root = null;
-            root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/teacherdashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/Main/teacherdashboard.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
 

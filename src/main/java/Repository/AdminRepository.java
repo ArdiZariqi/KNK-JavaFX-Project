@@ -163,7 +163,7 @@ public class AdminRepository implements AdminInterface {
         return chart;
     }
 
-    public void StudentsAdd(studentData sData) {
+    public void StudentsAdd(StudentData sData) {
         String insertData = "INSERT INTO student "
                 + "(year,firstName,lastName,gender,birth,status,image,date) "
                 + "VALUES(?,?,?,?,?,?,?,?)";
@@ -191,7 +191,7 @@ public class AdminRepository implements AdminInterface {
         }
     }
 
-    public void addStudentsUpdate(studentData sData) {
+    public void addStudentsUpdate(StudentData sData) {
         String updateData = "UPDATE student SET "
                 + "year = ?, "
                 + "firstName = ?, "
@@ -223,7 +223,7 @@ public class AdminRepository implements AdminInterface {
         }
     }
 
-    public void addStudentsDelete(studentData sData) {
+    public void addStudentsDelete(StudentData sData) {
         String deleteData = "DELETE FROM student WHERE id = ?";
 
         connect = ConnectionUtil.getConnection();
@@ -241,19 +241,19 @@ public class AdminRepository implements AdminInterface {
         }
     }
 
-    public ObservableList<studentData> addStudentsListData() {
-        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
+    public ObservableList<StudentData> addStudentsListData() {
+        ObservableList<StudentData> listStudents = FXCollections.observableArrayList();
 
         String students = "SELECT * FROM student";
 
         try {
-            studentData studentD;
+            StudentData studentD;
             connect=ConnectionUtil.getConnection();
             prepare = connect.prepareStatement(students);
             result = prepare.executeQuery();
 
             while (result.next()) {
-                studentD = new studentData(result.getInt("id"),
+                studentD = new StudentData(result.getInt("id"),
                         result.getString("year"),
                         result.getString("firstName"),
                         result.getString("lastName"),
@@ -271,7 +271,7 @@ public class AdminRepository implements AdminInterface {
         return listStudents;
     }
     @Override
-    public studentData getById(Integer id) throws SQLException {
+    public StudentData getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM student WHERE id=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -280,14 +280,14 @@ public class AdminRepository implements AdminInterface {
 
             if (resultSet.next()) {
 
-                return new studentData(id);
+                return new StudentData(id);
             } else {
                 return null;
             }
         }
     }
     @Override
-    public scheduleData getScheduleById(String schedule_id) throws SQLException {
+    public ScheduleData getScheduleById(String schedule_id) throws SQLException {
         String sql = "SELECT * FROM schedule WHERE schedule_id=?";
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -296,7 +296,7 @@ public class AdminRepository implements AdminInterface {
 
             if (resultSet.next()) {
 
-                return new scheduleData(schedule_id);
+                return new ScheduleData(schedule_id);
             } else {
                 return null;
             }

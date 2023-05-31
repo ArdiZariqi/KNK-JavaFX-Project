@@ -1,8 +1,7 @@
 package Repository.Interfaces;
 
-import Models.AbsenceData;
-import Models.scheduleData;
-import Models.studentData;
+import Models.ScheduleData;
+import Models.StudentData;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 
@@ -15,10 +14,10 @@ public interface AdminInterface {
     XYChart.Series<String, Integer> homeDisplayTotalEnrolledChart() throws SQLException;
     XYChart.Series<String, Integer> homeDisplayFemaleEnrolledChart() throws SQLException;
     XYChart.Series<String, Integer> homeDisplayEnrolledMaleChart() throws SQLException;
-    void StudentsAdd(studentData sData) throws SQLException;
-    void addStudentsUpdate(studentData sData) throws SQLException;
-    void addStudentsDelete(studentData sData) throws SQLException;
-    ObservableList<studentData> addStudentsListData() throws SQLException;
-    studentData getById(Integer id) throws SQLException;
-    scheduleData getScheduleById(String schedule_id) throws SQLException;
+    void StudentsAdd(StudentData sData) throws SQLException;
+    void addStudentsUpdate(StudentData sData) throws SQLException;
+    void addStudentsDelete(StudentData sData) throws SQLException;
+    ObservableList<StudentData> addStudentsListData() throws SQLException;
+    StudentData getById(Integer id) throws SQLException;
+    ScheduleData getScheduleById(String schedule_id) throws SQLException;
 }

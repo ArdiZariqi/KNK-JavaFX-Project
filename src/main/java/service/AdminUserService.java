@@ -1,7 +1,7 @@
 package service;
 
-import Models.scheduleData;
-import Models.studentData;
+import Models.ScheduleData;
+import Models.StudentData;
 import Repository.AdminRepository;
 import Repository.Interfaces.AdminInterface;
 import javafx.collections.ObservableList;
@@ -38,25 +38,25 @@ public class AdminUserService implements AdminUserInterface {
         return adminRepository.homeDisplayEnrolledMaleChart();
     }
 
-    public void addStd(studentData sData) throws SQLException {
+    public void addStd(StudentData sData) throws SQLException {
         adminRepository.StudentsAdd(sData);
     }
-    public void updateStd(studentData sData) throws SQLException{
+    public void updateStd(StudentData sData) throws SQLException{
         adminRepository.addStudentsUpdate(sData);
     }
-    public void deleteStd(studentData sData) throws SQLException{
+    public void deleteStd(StudentData sData) throws SQLException{
         adminRepository.addStudentsDelete(sData);
     }
-    public ObservableList<studentData> StdListData() throws SQLException {
-        ObservableList<studentData> listStudents = adminRepository.addStudentsListData();
+    public ObservableList<StudentData> StdListData() throws SQLException {
+        ObservableList<StudentData> listStudents = adminRepository.addStudentsListData();
         return listStudents;
     }
 
-    public studentData getById(Integer id) throws SQLException {
+    public StudentData getById(Integer id) throws SQLException {
         return adminRepository.getById(id);
     }
 
-    public scheduleData getScheduleById(String schedule_id) throws SQLException {
+    public ScheduleData getScheduleById(String schedule_id) throws SQLException {
         return adminRepository.getScheduleById(schedule_id);
     }
 }

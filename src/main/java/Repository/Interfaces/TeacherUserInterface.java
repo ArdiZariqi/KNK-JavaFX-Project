@@ -1,6 +1,5 @@
 package Repository.Interfaces;
 import Models.AbsenceData;
-import Models.scheduleData;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 

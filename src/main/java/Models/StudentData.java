@@ -3,7 +3,7 @@ package Models;
 import java.sql.Date;
 
 
-public class studentData {
+public class StudentData {
 
     private Integer id;
     private String year;
@@ -15,7 +15,7 @@ public class studentData {
     private String image;
 
 
-    public studentData(Integer id, String year, String firstName, String lastName,
+    public StudentData(Integer id, String year, String firstName, String lastName,
                        String gender, Date birth, String status, String image) {
         this.id = id;
         this.year = year;
@@ -27,7 +27,7 @@ public class studentData {
         this.image = image;
     }
 
-    public studentData(Integer id) {
+    public StudentData(Integer id) {
         this.id = id;
     }
 

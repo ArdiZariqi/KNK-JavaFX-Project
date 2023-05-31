@@ -1,20 +1,20 @@
 package Models;
 
-public class scheduleData {
+public class ScheduleData {
 
     private String schedule_id;
     private String day;
     private String time;
     private String course;
 
-    public scheduleData(String schedule_id, String day, String time, String course) {
+    public ScheduleData(String schedule_id, String day, String time, String course) {
         this.schedule_id = schedule_id;
         this.day = day;
         this.time = time;
         this.course = course;
     }
 
-    public scheduleData(String schedule_id){
+    public ScheduleData(String schedule_id){
         this.schedule_id = schedule_id;
     }
 
