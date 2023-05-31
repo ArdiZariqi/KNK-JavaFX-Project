@@ -305,9 +305,7 @@ public class AdminController implements Initializable {
 
         List<String> yearL = new ArrayList<>();
 
-        for (String data : classList) {
-            yearL.add(data);
-        }
+        Collections.addAll(yearL, classList);
 
         ObservableList ObList = FXCollections.observableArrayList(yearL);
         addStudents_year.setItems(ObList);
@@ -318,9 +316,7 @@ public class AdminController implements Initializable {
     public void addStudentsGenderList() {
         List<String> genderL = new ArrayList<>();
 
-        for (String data : genderList) {
-            genderL.add(data);
-        }
+        Collections.addAll(genderL, genderList);
 
         ObservableList ObList = FXCollections.observableArrayList(genderL);
         addStudents_gender.setItems(ObList);
@@ -331,9 +327,7 @@ public class AdminController implements Initializable {
     public void addStudentsStatusList() {
         List<String> statusL = new ArrayList<>();
 
-        for (String data : statusList) {
-            statusL.add(data);
-        }
+        Collections.addAll(statusL, statusList);
 
         ObservableList ObList = FXCollections.observableArrayList(statusL);
         addStudents_status.setItems(ObList);
@@ -664,7 +658,7 @@ public class AdminController implements Initializable {
                              scheduleLabel.getText(),
                              dayLabel.getText(),
                              timeLabel.getText(),
-                            (String) courseLabel1.getSelectionModel().getSelectedItem());
+                            courseLabel1.getSelectionModel().getSelectedItem());
                     scheduleService.addSchedule(schData);
 
                     alertService.informationAlert();
@@ -811,8 +805,7 @@ public class AdminController implements Initializable {
     public void openHelp(ActionEvent event){
         try {
             if (event.getSource() == helpButton ){
-                Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/Main/helpn1.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Main/helpn1.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 
@@ -1000,9 +993,7 @@ public class AdminController implements Initializable {
         addAbsencesShowListData1();
         languageID.setItems(FXCollections.observableArrayList("English", "Shqip"));
         languageID.setValue("English");
-        languageID.setOnAction(e -> {
-            setLanguage();
-        });
+        languageID.setOnAction(e -> setLanguage());
 
         setLanguage();
     }
@@ -1039,7 +1030,7 @@ public class AdminController implements Initializable {
         genderLabel.setText(LanguageUtil.getMessage("student.gender"));
         birthDateLabel.setText(LanguageUtil.getMessage("student.birth.date"));
         statusLabel.setText(LanguageUtil.getMessage("student.status"));
-        addStudents_search.setText(LanguageUtil.getMessage("search.student"));
+        addStudents_search.setPromptText(LanguageUtil.getMessage("search.student"));
         studentAbstence_btn2.setText(LanguageUtil.getMessage("home.totalAbsence"));
         studentSchedule_btn.setText(LanguageUtil.getMessage("schedule.admin.dashboard"));
         addAbsence_col_stid2.setText(LanguageUtil.getMessage("student.id"));
