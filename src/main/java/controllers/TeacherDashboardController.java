@@ -612,7 +612,7 @@ public class TeacherDashboardController implements Initializable {
         try {
             if (event.getSource() == helpButton ){
                 Parent root = null;
-                root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/helpn.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/Main/helpn.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
 

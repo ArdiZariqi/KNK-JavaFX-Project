@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class UserService implements UserServiceInterface {
-    private final UserRepositoryInterface userRepository;
+    private UserRepositoryInterface userRepository;
 
     public UserService() {
         this.userRepository = new UserRepository();
