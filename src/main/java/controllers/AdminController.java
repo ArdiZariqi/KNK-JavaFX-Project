@@ -164,8 +164,6 @@ public class AdminController implements Initializable {
     @FXML
     private Label yearLabel;
     @FXML
-    private Label courseLabel;
-    @FXML
     private Label fNameLabel;
     @FXML
     private Label lNameLabel;
