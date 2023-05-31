@@ -22,7 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import static Models.Users.questionList;
+import static Models.Lists.questionList;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -395,7 +395,7 @@ public class LoginController implements Initializable {
         String selectedLanguage = loginLanguage2.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
-        forgetPwLabel.setText(LanguageUtil.getMessage("change.password"));
+        forgetPwLabel1.setText(LanguageUtil.getMessage("change.password"));
         changePw_newPassword.setPromptText(LanguageUtil.getMessage("new.password"));
         changePW_confirmPassword.setPromptText(LanguageUtil.getMessage("prompt.confirmPassword"));
         changePw_proceedBtn.setText(LanguageUtil.getMessage("change.password"));
@@ -406,7 +406,7 @@ public class LoginController implements Initializable {
         String selectedLanguage = loginLanguage1.getValue();
         LanguageUtil.setLanguage(selectedLanguage);
 
-        forgetPwLabel1.setText(LanguageUtil.getMessage("forgot.password.label"));
+        forgetPwLabel.setText(LanguageUtil.getMessage("forgot.password.label"));
         forgetPw_username.setPromptText(LanguageUtil.getMessage("prompt.username"));
         forgetPw_selectQuestion.setPromptText(LanguageUtil.getMessage("prompt.selectQuestion"));
         ObservableList questionList = FXCollections.observableArrayList(

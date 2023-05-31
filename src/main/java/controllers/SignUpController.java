@@ -1,5 +1,6 @@
 package controllers;
 
+import Models.Lists;
 import Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 
-import static Models.Users.questionList;
+import static Models.Lists.questionList;
 
 public class SignUpController implements Initializable {
     @FXML
@@ -146,7 +147,7 @@ public class SignUpController implements Initializable {
     }
 
     public void signUpSelectUser() {
-        ObservableList<String> listData = FXCollections.observableArrayList(Models.Users.users);
+        ObservableList<String> listData = FXCollections.observableArrayList(Lists.users);
         adminSignUp_user.setItems(listData);
     }
 

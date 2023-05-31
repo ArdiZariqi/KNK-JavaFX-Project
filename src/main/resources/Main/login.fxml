@@ -20,7 +20,7 @@
       <AnchorPane fx:id="forgotPw_form" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="white-form" stylesheets="@Design/loginDesign.css" visible="false">
          <children>
             <FontAwesomeIcon fill="#5073bb" glyphName="LOCK" layoutX="134.0" layoutY="106.0" size="6em" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0" />
-            <Label fx:id="forgetPwLabel" alignment="CENTER" layoutX="85.0" layoutY="116.0" text="Forget Password" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <Label fx:id="forgetPwLabel" alignment="CENTER" layoutX="85.0" layoutY="116.0" text="Forget Password" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                <font>
                   <Font name="Tahoma" size="20.0" />
                </font>
@@ -33,7 +33,7 @@
             </Button>
 
             <ComboBox fx:id="forgetPw_selectQuestion" layoutX="35.0" layoutY="232.0" prefHeight="40.0" prefWidth="310.0" promptText="Select Question" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" />
-            <TextField fx:id="forgetPw_username" layoutX="34.0" layoutY="180.0" prefHeight="40.0" prefWidth="310.0" promptText="Username" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" />
+            <TextField fx:id="forgetPw_username" layoutX="34.0" layoutY="180.0" prefHeight="40.0" prefWidth="310.0" promptText="Username" styleClass="textfield" stylesheets="@Design/loginDesign.css" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" />
             <Button fx:id="forgetPw_backBtn" layoutX="31.0" layoutY="460.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="250.0" styleClass="btn" stylesheets="@Design/loginDesign.css" text="Back" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0">
                <font>
                   <Font size="15.0" />
