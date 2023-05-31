@@ -568,7 +568,7 @@ public class TeacherDashboardController implements Initializable {
 
                 logout.getScene().getWindow().hide();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/KNK_Projekti/login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Main/login.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
 
